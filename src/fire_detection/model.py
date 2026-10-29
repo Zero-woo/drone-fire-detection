@@ -72,6 +72,10 @@ class YoloDetector:
         except ImportError as exc:
             raise RuntimeError("ML packages missing. Run scripts/setup.ps1 first.") from exc
         settings.update({"sync": False})
+        self._torch = torch
+        # A string "cpu" makes Ultralytics reset PyTorch's thread count.
+        # Its device selector preserves an explicit torch.device instead.
+        self.device = torch.device("cpu")
         torch.set_num_threads(config["threads"])
         self.model = YOLO(str(checkpoint), task="detect")
         actual = {int(key): value for key, value in self.model.names.items()}
@@ -80,12 +84,31 @@ class YoloDetector:
             raise ValueError("Checkpoint class names do not match the registered fire/smoke model.")
         self.config = config
 
+    def runtime_settings(self):
+        predictor = self.model.predictor
+        shape = getattr(predictor, "imgsz", None)
+        return {
+            "device": str(getattr(predictor, "device", self.device)),
+            "torch_num_threads": self._torch.get_num_threads(),
+            "torch_num_interop_threads": self._torch.get_num_interop_threads(),
+            "inference_shape": [int(size) for size in shape] if shape is not None else None,
+        }
+
+    def _verify_threads(self):
+        actual = self._torch.get_num_threads()
+        if actual != self.config["threads"]:
+            raise RuntimeError(
+                f"CPU threads changed: requested {self.config['threads']}, observed {actual}."
+            )
+
     def predict(self, frame):
+        self._verify_threads()
         result = self.model.predict(
             source=frame, imgsz=self.config["imgsz"], conf=self.config["confidence"],
-            iou=self.config["iou"], device="cpu", batch=1, rect=False,
+            iou=self.config["iou"], device=self.device, batch=1, rect=False,
             max_det=self.config["max_detections"], verbose=False, save=False,
         )[0]
+        self._verify_threads()
         output = []
         if result.boxes is None:
             return output

@@ -100,6 +100,18 @@ class ExperimentTests(unittest.TestCase):
         self.assertEqual(summary["detections_by_class"], {})
         self.assertEqual(summary["processed_frames"], 1)
 
+    def test_runtime_metadata_uses_observed_values(self):
+        class RuntimeDetector(FakeDetector):
+            def runtime_settings(self):
+                return {"torch_num_threads": 7, "test_double": True}
+
+        result = run_experiment(self.images, self.config, self.spec, root=self.root,
+                                detector_factory=RuntimeDetector)
+        metadata = read_json(result / "run.json")
+        self.assertEqual(metadata["config"]["threads"], 4)
+        self.assertEqual(metadata["runtime"]["torch_num_threads"], 7)
+        self.assertTrue(metadata["runtime"]["test_double"])
+
     def test_repeated_runs_never_overwrite(self):
         first = self.run_fake(max_frames=1)
         second = self.run_fake(max_frames=1)

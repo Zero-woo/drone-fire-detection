@@ -74,6 +74,7 @@ def run_experiment(source, config, spec, *, root=ROOT, max_frames=None,
     )
     samples, counts, detected_frames = [], Counter(), 0
     preview = None
+    detector = None
     iterator = None
     started = None
     reason = "not_started"
@@ -90,6 +91,10 @@ def run_experiment(source, config, spec, *, root=ROOT, max_frames=None,
         warmup = np.zeros((config["imgsz"], config["imgsz"], 3), dtype=np.uint8)
         for _ in range(config["warmup_frames"]):
             detector.predict(warmup)
+        runtime_settings = getattr(detector, "runtime_settings", None)
+        if callable(runtime_settings):
+            metadata["runtime"] = runtime_settings()
+            write_json(run_dir / "run.json", metadata)
         if save_preview:
             preview = PreviewWriter(run_dir / "preview", kind, config["frame_stride"])
         iterator = frames(files, kind, config["frame_stride"])
@@ -137,6 +142,9 @@ def run_experiment(source, config, spec, *, root=ROOT, max_frames=None,
         reason = "error"
         raise
     finally:
+        runtime_settings = getattr(detector, "runtime_settings", None)
+        if callable(runtime_settings):
+            metadata["runtime"] = runtime_settings()
         if iterator is not None:
             iterator.close()
         if preview is not None:
