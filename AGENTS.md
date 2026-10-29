@@ -1,5 +1,7 @@
 # Working rules
 - University club project, initially CPU-only Windows. Explain results to the user in Korean.
+- Install project dependencies and run project commands with the repository's .venv.
+  On Windows, use .\.venv\Scripts\python.exe explicitly; do not install into system Python.
 - Write every README.md file and all commit messages (subjects and bodies) in English.
 - Keep the root README concise: project purpose and directory structure only.
   Subdirectory READMEs should briefly describe that directory's purpose and contents.

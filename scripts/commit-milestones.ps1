@@ -26,7 +26,9 @@ try {
     if ($LASTEXITCODE -ne 0) { throw 'Cannot inspect the Git index.' }
     if ($taskStaged) { throw 'Existing staged changes found. Review/commit them before running this script.' }
     $taskPython = Join-Path $taskRoot '.venv\Scripts\python.exe'
-    if (-not (Test-Path -LiteralPath $taskPython)) { $taskPython = 'python' }
+    if (-not (Test-Path -LiteralPath $taskPython)) {
+        throw 'Project .venv is missing. Run scripts/setup.ps1 -SkipModel first.'
+    }
     & $taskPython -m unittest discover -s tests -v
     if ($LASTEXITCODE -ne 0) { throw 'Tests failed; no commits or push performed.' }
 

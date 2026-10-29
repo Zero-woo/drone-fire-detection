@@ -6,21 +6,52 @@ Windows PowerShell을 **이 저장소 폴더에서** 열고 실행합니다. Pyt
 시스템 Python을 바꾸지 않고 `.venv`에 CPU용 실행 환경을 준비합니다.
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\setup.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\setup.ps1 -SkipModel
 ```
 
 실행 정책 지정은 해당 프로세스에만 적용되며 시스템 정책은 변경하지 않습니다.
-설치 스크립트는 CPU PyTorch와 주요 패키지를 지정 버전으로 설치하고,
-고정된 revision의 공개 모델을 내려받아 SHA256을 확인합니다.
+설치 스크립트는 CPU PyTorch와 주요 패키지를 지정 버전으로 `.venv`에 설치하고
+의존성과 자동화 테스트를 확인합니다. 이미 설치된 지정 버전은 그대로 사용합니다.
+`-SkipModel`은 모델 다운로드를 생략하므로 가상환경만 먼저 준비할 수 있습니다.
 초기 다운로드에 인터넷과 디스크 공간이 필요합니다.
 
+실험용 모델을 준비할 때는 별도로 실행합니다. 고정된 revision에서 내려받아 SHA256을 확인합니다.
+
 ```powershell
+.\.venv\Scripts\python.exe firelab.py fetch-model
 .\.venv\Scripts\python.exe firelab.py doctor
 .\.venv\Scripts\python.exe -m unittest discover -s tests -v
 ```
 
 `requirements.txt`는 주요 패키지 고정이며 전체 전이 의존성 lock은 아닙니다.
 설치 시 `work/installed-requirements.txt`, 실험마다 `packages.txt`에 실제 버전을 기록합니다.
+
+### VS Code에서 사용할 Python
+
+프로젝트 폴더를 열고 `Ctrl+Shift+P` → `Python: Select Interpreter`에서
+`.venv\Scripts\python.exe`를 선택하세요. 목록에 없으면 `Enter interpreter path`로 지정합니다.
+이미 열린 터미널은 닫고 새로 열면 선택한 환경을 사용하기 쉽습니다.
+
+선택적으로 PowerShell에서 환경을 활성화할 수 있습니다.
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+python -c "import sys; print(sys.executable)"
+```
+
+출력 경로가 이 프로젝트의 `.venv\Scripts\python.exe`인지 확인하세요.
+활성화가 실행 정책에 막히거나 현재 인터프리터가 불확실하면,
+이 문서의 명령처럼 `.\.venv\Scripts\python.exe`를 직접 사용하면 됩니다.
+활성화는 필수 조건이 아니며 시스템 실행 정책을 바꿀 필요가 없습니다.
+
+추가 패키지를 설치할 때도 `pip` 단독 호출 대신 다음 형식을 사용합니다.
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+```
+
+위 명령은 CPU PyTorch를 먼저 설치하는 `setup.ps1` 실행 이후의 의존성 갱신용입니다.
+`.venv/`는 각 PC에서 따로 생성하며 Git에 올리지 않습니다.
 
 ## 2. 첫 이미지 실험
 
@@ -114,7 +145,7 @@ manifests/template.csv를 복사해 출처와 촬영 조건을 기록합니다.
 
 ## Model management
 
-`python firelab.py fetch-model`로 등록된 모델을 준비합니다.
+`.\.venv\Scripts\python.exe firelab.py fetch-model`로 등록된 모델을 준비합니다.
 revision·파일 크기·SHA256은 configs/model_registry.json에 기록합니다.
 다운로드 파일은 검증 후에만 최종 위치로 변경합니다.
 기존 파일이 검증과 다르면 자동으로 덮어쓰지 않습니다.
