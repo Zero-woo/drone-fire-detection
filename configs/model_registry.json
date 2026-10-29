@@ -1,0 +1,18 @@
+{
+  "id": "rabahdev-fire-smoke-yolov8n",
+  "repository": "rabahdev/fire-smoke-yolov8n",
+  "revision": "9841e3bc9373116d1a756969aa5be3f016ad3782",
+  "filename": "best.pt",
+  "url": "https://huggingface.co/rabahdev/fire-smoke-yolov8n/resolve/9841e3bc9373116d1a756969aa5be3f016ad3782/best.pt",
+  "sha256": "b91633799ceb052c814b4f8b77a37efc9a40f002d528df97d74463585fa4f28f",
+  "size_bytes": 6229802,
+  "local_path": "models/fire-smoke-yolov8n/best.pt",
+  "classes": {
+    "0": "smoke",
+    "1": "fire"
+  },
+  "publisher_license": "AGPL-3.0",
+  "source": "https://huggingface.co/rabahdev/fire-smoke-yolov8n",
+  "verified_metadata_date": "2026-10-29",
+  "note": "Publisher metadata checked; checkpoint has not yet been downloaded or executed here."
+}
