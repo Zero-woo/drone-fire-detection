@@ -87,7 +87,7 @@ python -c "import sys; print(sys.executable)"
 
 | 파일 | 내용 |
 |---|---|
-| run.json | 모델·입력 SHA256, 설정, Git 상태, 버전, 완료/오류 상태 |
+| run.json | 모델·입력 SHA256, 설정, 실제 runtime, Git 상태, 버전, 완료/오류 상태 |
 | detections.jsonl | 프레임 번호, 영상 시각, 탐지 박스·클래스·점수 |
 | timings.csv | 프레임별 모델 호출 시간 |
 | summary.json / summary.md | 처리 수, 클래스별 탐지 수, 평균·중앙값·p95 시간 |
@@ -98,6 +98,9 @@ python -c "import sys; print(sys.executable)"
 전체 처리 시간은 입력 읽기·추론·결과 저장을 포함하며 실시간 end-to-end 지연과 다릅니다.
 **정답 라벨이 없으므로 정확도·정밀도·재현율은 계산하지 않습니다.**
 탐지 수나 불이 표시된 비율을 정확도로 해석하면 안 됩니다.
+
+`runtime`은 실제 실행 장치, PyTorch 스레드 수, 모델 입력 크기를 기록합니다.
+요청한 CPU 스레드 수가 추론 중 바뀌면 오류로 중단합니다.
 
 `reports/experiment_template.md`를 복사하여 검토한 결과와 다음 판단을 기록하세요.
 정식 비교는 같은 입력·설정·깨끗한 코드 커밋에서 수행하고 한 번에 한 조건만 바꿉니다.

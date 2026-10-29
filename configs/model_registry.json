@@ -14,5 +14,5 @@
   "publisher_license": "AGPL-3.0",
   "source": "https://huggingface.co/rabahdev/fire-smoke-yolov8n",
   "verified_metadata_date": "2026-10-29",
-  "note": "Publisher metadata checked; checkpoint has not yet been downloaded or executed here."
+  "note": "Checkpoint SHA256 verified and CPU inference completed on six FIRESENSE videos; see reports/001_firesense_baseline.md."
 }
