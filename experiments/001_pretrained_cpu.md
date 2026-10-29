@@ -1,6 +1,6 @@
 # EXP-001 — 공개 모델 CPU 기준 실험
 
-상태: **구현 준비. 실제 모델 실험 미실행.**
+상태: **FIRESENSE 입력과 실행 조건 고정. 실행 결과는 별도 보고서에 기록.**
 
 ## 질문
 노트북에서 이미 학습된 작은 불꽃·연기 모델을 실행하고 탐지 위치와 시간을 기록할 수 있는가?
@@ -15,6 +15,35 @@
 불꽃 사진, 불이 없는 사진, 주황색 물체/반사광, 실제 카메라의 저장 영상.
 `data/manifests/template.csv`에 출처와 촬영 조건을 기록합니다.
 공개 모델 학습 데이터와 중복되는 영상은 독립 시험으로 사용하지 않습니다.
+
+## 2026-10-30 첫 영상 실행 계획
+
+- 출처: [FIRESENSE v1](https://zenodo.org/records/836749), `fire_videos.1406.zip`.
+- 전체 입력: 화재 11개, 비화재 16개. 모든 영상의 첫 프레임 열기를 확인했습니다.
+- ZIP 크기: 622,676,845 bytes.
+- 배포처 MD5 대조: `7cfe8286cc4b45193149186bf67ea00d`, 일치.
+- 로컬 ZIP SHA256: `15bff18ba386d98769bd9d8c992ad6a16af38170eb49c0d8bb7fec8bc0f72982`.
+- 추론 결과를 보기 전에 각 그룹에서 숫자 순으로 1~3번 영상, 총 6개를 고정합니다.
+- 입력 목록·개별 SHA256: `data/manifests/001_firesense_baseline.csv`.
+- 원본의 처음부터 연속 최대 300프레임, 프레임 간격 1, 박스 미리보기 저장.
+- 예상 처리 수: 화재 893프레임, 비화재 615프레임, 합계 1,508프레임.
+- 영상마다 FPS가 달라 처리하는 영상 길이는 동일하지 않습니다. 전체 27개 평가가 아닙니다.
+- 제공된 pos/neg는 영상 단위 분류이며 프레임·박스 정답을 대신하지 않습니다.
+- 현재 모델의 학습 자료와의 중복은 미확인입니다. 이번 자료는 `baseline_review`이며
+  독립적인 최종 평가로 주장하지 않습니다. 원본을 가공하거나 추가 학습에 사용하지 않습니다.
+- 실행은 순차적으로 진행하고, 이후 조건 비교에서도 같은 파일과 프레임 범위를 유지합니다.
+
+재실행 명령 (프로젝트 폴더, 모델·입력 체크섬이 동일한지 먼저 확인):
+
+```powershell
+Import-Csv .\data\manifests\001_firesense_baseline.csv | ForEach-Object {
+    if ((Get-FileHash -LiteralPath $_.relative_path -Algorithm SHA256).Hash.ToLowerInvariant() -ne $_.sha256) {
+        throw "Input checksum mismatch: $($_.relative_path)"
+    }
+    & .\.venv\Scripts\python.exe firelab.py run --source $_.relative_path --config configs/001_pretrained_cpu.json --max-frames 300 --save-preview
+    if ($LASTEXITCODE -ne 0) { throw "Run failed: $($_.relative_path)" }
+}
+```
 
 ## 완료 판단
 실제 모델로 유효한 입력 1개 이상 처리하고 SHA256·설정·버전·Git 상태·처리 시간을 저장합니다.
