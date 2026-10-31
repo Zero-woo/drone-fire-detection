@@ -10,7 +10,7 @@ from pathlib import Path
 from .common import (ROOT, environment, file_sha256, inside, new_run, read_json,
                      resolve, utc_now, write_json, yolo_class)
 from .config import experiment_config
-from .dataset import verify_dataset
+from .dataset import verify_dataset, verify_unchanged_dataset
 from .model import spec_for, verify_model
 
 
@@ -44,7 +44,7 @@ def train(suite_path=None, experiment_id=None, resume_run=None):
         config = experiment_config(suite_path, experiment_id)
         spec = spec_for("coco")
         checkpoint = verify_model(resolve(spec["local_path"]), spec)
-        run = new_run(experiment_id)
+        run = None
         record = {"kind": "training", "experiment_id": experiment_id, "config": config,
                   "initial_model": spec, "attempts": [], "created_at_utc": utc_now()}
     dataset_path = resolve(config["dataset_config"]["prepared_root"])
@@ -56,6 +56,8 @@ def train(suite_path=None, experiment_id=None, resume_run=None):
     env = environment(cuda_probe=True)
     if env.get("cuda_compute_probe") != "passed":
         raise RuntimeError("CUDA convolution/backward probe failed; GPU training was not started.")
+    if run is None:
+        run = new_run(experiment_id)
     record["dataset_fingerprint"] = dataset["fingerprint"]
     attempt_id = len(record["attempts"]) + 1
     import psutil
@@ -72,6 +74,8 @@ def train(suite_path=None, experiment_id=None, resume_run=None):
     start = time.perf_counter()
 
     def effective(trainer):
+        # Ultralytics scans images while building loaders; detect any automatic rewrite now.
+        verify_unchanged_dataset(dataset_path, record["dataset_fingerprint"])
         if trainer.batch_size != config["training"]["batch"]:
             raise RuntimeError("Effective batch changed; define a separate experiment instead.")
         groups = [{"lr": float(group["lr"]), "initial_lr": float(group.get("initial_lr", group["lr"])),
@@ -119,6 +123,7 @@ def train(suite_path=None, experiment_id=None, resume_run=None):
             model.train(**config["training"], data=str(dataset_path / "data.yaml"),
                         project=str(run), name="train", exist_ok=False)
         # Ultralytics strips optimizer at completion, changing checkpoint hashes.
+        verify_unchanged_dataset(dataset_path, record["dataset_fingerprint"])
         saved(model.trainer)
         record["best_path"] = str(model.trainer.best)
         record["best_sha256"] = file_sha256(model.trainer.best)

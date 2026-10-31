@@ -24,7 +24,7 @@ PyTorch 2.10.0 / torchvision 0.25.0과 고정된 의존성을 설치한다.
 .\.venv\Scripts\python.exe firelab.py fetch-models
 ```
 
-이미 준비된 `data/processed/dfire-fold1`은 덮어쓰지 않는다. 현재 폴더에는 검증된
+이미 준비된 `data/processed/dfire-fold1-v2`는 덮어쓰지 않는다. 현재 폴더에는 검증된
 보정본이 준비되어 있으므로 `verify-data`로 확인하면 된다. 재생성하려면 설정의
 `prepared_root`에 새로운 경로를 지정한다.
 
@@ -39,9 +39,16 @@ PyTorch 2.10.0 / torchvision 0.25.0과 고정된 의존성을 설치한다.
 빈 label은 정상 negative다. 내용이 동일한 픽셀의 이미지가 split을 넘으면 기본적으로
 실패한다. 출처별 video/session ID가 없어 근접 프레임 누수까지 보장하지는 않는다.
 
+JPEG 종료 마커 뒤의 부가 바이트는 보정본에서만 제거한다. RGB 픽셀이 완전히 같은지
+확인하며 재압축하지 않는다. 원본 SHA256과 보정본 SHA256을 따로 기록한다.
+이는 Ultralytics가 JPEG를 자동 재저장하여 입력 해시를 바꾸는 것을 방지한다.
+이전 `dfire-fold1`은 과거 실행 근거로 남기고 현재 설정은 `dfire-fold1-v2`를 사용한다.
+
 학습용 `data.yaml`에는 test 항목이 없다. 원본 수정을 피하기 위해 이미지와 라벨을
 독립 복사하며 Ultralytics cache는 보정본 디렉터리에만 생성된다.
 학습·평가 시작 때 모든 보정 이미지·라벨 및 YAML·목록의 SHA256을 재검증한다.
+학습 loader 준비 후와 학습·평가 종료 시에도 재검증해 실행 중 입력 변경을 감지한다.
+입력이 바뀐 과거 평가의 `invalidated.json` 표시는 비교와 최종 모델 선택에서 제외한다.
 
 ## Baseline과 단계별 학습
 

@@ -10,7 +10,7 @@ from pathlib import Path
 from .common import (ROOT, environment, file_sha256, new_run, object_sha256, read_json,
                      resolve, utc_now, write_json, yolo_class)
 from .config import experiment_config
-from .dataset import verify_dataset
+from .dataset import verify_dataset, verify_unchanged_dataset
 from .model import spec_for, verify_model
 
 
@@ -171,6 +171,7 @@ def evaluate_checkpoint(checkpoint, config, dataset_fingerprint, split="val", se
         record["confusion_matrix"] = {"matrix": matrix.tolist(), "axes": "rows=predicted, columns=true; smoke,fire,background",
                                        "note": "Ultralytics AP-validation confusion matrix; fixed operating metrics are separate."}
         record["operating"] = operating_analysis(model, dataset_path, manifest, split, config, settings, run)
+        verify_unchanged_dataset(dataset_path, dataset_fingerprint)
         record["status"] = "completed"
     except BaseException as exc:
         record["status"] = "failed"
@@ -214,6 +215,8 @@ def evaluate_validation(training_run=None, published=False, suite_path=None, ope
 
 def freeze_selection(evaluation_dir, rationale):
     evaluation_path = resolve(evaluation_dir) / "evaluation.json"
+    if (evaluation_path.parent / "invalidated.json").is_file():
+        raise ValueError("This evaluation was invalidated; select a new validated run")
     record = read_json(evaluation_path)
     if record["status"] != "completed" or record["split"] != "val" or record["model_role"] != "trained":
         raise ValueError("Final selection requires completed validation of a trained model")
@@ -238,6 +241,8 @@ def evaluate_test(selection_path):
     if object_sha256(selection) != digest:
         raise ValueError("Final selection checksum mismatch")
     selection["selection_sha256"] = digest
+    if (Path(selection["validation_record"]).parent / "invalidated.json").is_file():
+        raise ValueError("Frozen validation was invalidated; select and freeze a new validated run")
     if file_sha256(selection["validation_record"]) != selection["validation_record_sha256"]:
         raise ValueError("Frozen validation record changed")
     if file_sha256(selection["checkpoint"]) != selection["checkpoint_sha256"]:

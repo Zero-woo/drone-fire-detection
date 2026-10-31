@@ -129,6 +129,55 @@ class DatasetTests(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     dataset.parse_label(self.label("train"))
 
+    def test_jpeg_trailer_is_removed_without_pixel_change_or_ultralytics_rewrite(self):
+        from PIL import Image
+        png = self.root / "raw/train/images/train.png"
+        jpeg = png.with_suffix(".jpg")
+        with Image.open(png) as im:
+            im.save(jpeg, "JPEG")
+        png.unlink()
+        jpeg.write_bytes(jpeg.read_bytes() + b"MediaType=default\n")
+        (self.root / "train.txt").write_text("train.jpg\n")
+        source_hash = file_sha256(jpeg)
+        raw_pixels = dataset.inspect_image(jpeg)["pixel_sha256"]
+        prepared = self.prepare()
+        target = prepared / "train/images/train.jpg"
+        self.assertTrue(target.read_bytes().endswith(b"\xff\xd9"))
+        self.assertNotEqual(file_sha256(target), source_hash)
+        self.assertEqual(dataset.inspect_image(target)["pixel_sha256"], raw_pixels)
+        self.assertEqual(file_sha256(jpeg), source_hash)
+        manifest = dataset.verify_dataset(prepared)
+        row = next(r for r in manifest["records"] if r["split"] == "train")
+        self.assertEqual(row["source_image_sha256"], source_hash)
+        self.assertEqual(row["image_changes"][0]["removed_bytes"], len(b"MediaType=default\n"))
+        # Exercise the exact installed third-party path that rewrote the original copies.
+        common.yolo_class()
+        from ultralytics.data.utils import verify_image_label
+        digest = file_sha256(target)
+        for _ in range(2):
+            result = verify_image_label((str(target), str(prepared / "train/labels/train.txt"), "", False, 2, 0, 0, False))
+            self.assertEqual(result[8], 0, result[9])
+            self.assertNotIn("restored", result[9])
+            self.assertEqual(file_sha256(target), digest)
+        dataset.verify_unchanged_dataset(prepared, manifest["fingerprint"])
+
+    def test_missing_jpeg_eoi_is_not_silently_reencoded(self):
+        from PIL import Image
+        image = self.root / "broken.jpg"
+        Image.new("RGB", (20, 20)).save(image)
+        image.write_bytes(image.read_bytes()[:-2])
+        before = file_sha256(image)
+        with self.assertRaises((OSError, ValueError)):
+            dataset.inspect_image(image)
+        self.assertEqual(file_sha256(image), before)
+
+    def test_execution_guard_rejects_rewritten_image(self):
+        prepared = self.prepare()
+        manifest = dataset.verify_dataset(prepared)
+        (prepared / "train/images/train.png").write_bytes(b"unexpected rewrite")
+        with self.assertRaisesRegex(ValueError, "content checksum mismatch"):
+            dataset.verify_unchanged_dataset(prepared, manifest["fingerprint"])
+
 
 if __name__ == "__main__":
     unittest.main()

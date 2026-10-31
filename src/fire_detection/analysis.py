@@ -13,6 +13,8 @@ def compare_runs(run_paths):
     evaluations, trainings = [], []
     for folder in run_paths:
         folder = Path(folder)
+        if (folder / "invalidated.json").is_file():
+            continue
         if (folder / "evaluation.json").is_file():
             evaluations.append((folder, read_json(folder / "evaluation.json")))
         if (folder / "training.json").is_file():

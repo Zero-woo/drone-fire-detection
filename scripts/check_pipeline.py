@@ -20,7 +20,7 @@ from fire_detection.evaluation import evaluate_validation
 
 def main():
     import yaml
-    base = ROOT / "data/processed/dfire-fold1"
+    base = ROOT / read_json(ROOT / "configs/dataset.json")["prepared_root"]
     source = verify_dataset(base)
     output = new_run("pipeline-check", ROOT / "work")
     prepared = ROOT / "data/processed" / output.name

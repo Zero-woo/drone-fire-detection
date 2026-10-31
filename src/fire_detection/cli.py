@@ -16,7 +16,7 @@ def parser():
     validate = sub.add_parser("validate-data", help="Audit raw data and create validated copies")
     validate.add_argument("--config", default="configs/dataset.json")
     verify = sub.add_parser("verify-data", help="Rehash all prepared images, labels and split artifacts")
-    verify.add_argument("--path", default="data/processed/dfire-fold1")
+    verify.add_argument("--path", help="Defaults to prepared_root in configs/dataset.json")
     sub.add_parser("fetch-models", help="Download pinned COCO and published checkpoints")
     for name in ("plan", "train", "batch"):
         command = sub.add_parser(name)
@@ -61,7 +61,8 @@ def main(argv=None):
             print(prepare_dataset(resolve(args.config)))
         elif args.command == "verify-data":
             from .dataset import verify_dataset
-            report = verify_dataset(resolve(args.path))
+            dataset_path = args.path or read_json(ROOT / "configs/dataset.json")["prepared_root"]
+            report = verify_dataset(resolve(dataset_path))
             print(json.dumps({"fingerprint": report["fingerprint"], "summary": report["summary"]}, indent=2))
         elif args.command == "fetch-models":
             from .model import fetch_model

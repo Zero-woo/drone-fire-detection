@@ -112,6 +112,14 @@ class ProtocolTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "No completed"):
             compare_runs([self.root])
 
+    def test_invalidated_evaluation_cannot_be_frozen_or_compared(self):
+        folder = self.validation_fixture()
+        write_json(folder / "invalidated.json", {"reason": "Unit-test input mutation fixture"})
+        with self.assertRaisesRegex(ValueError, "invalidated"):
+            freeze_selection(folder, "Fixture")
+        with self.assertRaisesRegex(ValueError, "No completed"):
+            compare_runs([folder])
+
 
 if __name__ == "__main__":
     unittest.main()

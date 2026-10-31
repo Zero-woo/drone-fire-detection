@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import hashlib
+import io
 import math
 import shutil
 from collections import Counter, defaultdict
@@ -54,21 +55,49 @@ def parse_label(path):
     return read_annotations(path)[0]
 
 
-def inspect_pair(pair):
+def inspect_image(image):
+    """Strip bytes after JPEG EOI without recompression; verify identical decoded pixels."""
     from PIL import Image
+    source = Path(image).read_bytes()
+    with Image.open(io.BytesIO(source)) as im:
+        image_format = im.format
+        im.verify()
+    with Image.open(io.BytesIO(source)) as im:
+        rgb = im.convert("RGB")
+        width, height = rgb.size
+        pixels = rgb.tobytes()
+    if min(width, height) < 10:
+        raise ValueError("Image is smaller than 10 pixels")
+    effective, changes = source, []
+    if image_format == "JPEG" and not source.endswith(b"\xff\xd9"):
+        marker = source.rfind(b"\xff\xd9")
+        if marker < 0:
+            raise ValueError("JPEG has no EOI marker; refusing lossy automatic repair")
+        effective = source[:marker + 2]
+        with Image.open(io.BytesIO(effective)) as im:
+            im.verify()
+        with Image.open(io.BytesIO(effective)) as im:
+            normalized = im.convert("RGB")
+            if normalized.size != (width, height) or normalized.tobytes() != pixels:
+                raise ValueError("JPEG trailer normalization changed decoded pixels")
+        changes = [{"action": "strip_jpeg_trailing_bytes", "removed_bytes": len(source) - len(effective),
+                    "decoded_pixels_unchanged": True}]
+    return {"source_image_sha256": hashlib.sha256(source).hexdigest(),
+            "image_sha256": hashlib.sha256(effective).hexdigest(),
+            "pixel_sha256": hashlib.sha256(f"{width}x{height}:".encode() + pixels).hexdigest(),
+            "width": width, "height": height, "image_changes": changes,
+            "effective_image_bytes": effective if changes else None}
+
+
+def inspect_pair(pair):
     image, label, policy = pair
     try:
-        with Image.open(image) as im:
-            im.verify()
-        with Image.open(image) as im:
-            rgb = im.convert("RGB")
-            width, height = rgb.size
-            if min(width, height) < 10:
-                raise ValueError("Image is smaller than 10 pixels")
-            pixel_hash = hashlib.sha256(f"{width}x{height}:".encode() + rgb.tobytes()).hexdigest()
-        record = {"image": str(image), "label": str(label), "image_sha256": file_sha256(image),
+        image_record = inspect_image(image)
+        # Reconstruct changed bytes only while copying; manifests contain hashes and actions.
+        image_record.pop("effective_image_bytes")
+        record = {"image": str(image), "label": str(label), **image_record,
                   "label_sha256": file_sha256(label), "source_label_sha256": file_sha256(label),
-                  "pixel_sha256": pixel_hash, "width": width, "height": height}
+                  }
         try:
             boxes, changes = read_annotations(label, policy)
             record.update(boxes=boxes, annotation_changes=changes)
@@ -194,6 +223,9 @@ def prepare_dataset(config_path):
                                       "effective_label_sha256": r["label_sha256"], "changes": r["annotation_changes"]}
                                      for name, r in records.items() if r["annotation_changes"]]
     report["annotation_change_counts"] = dict(Counter(change["action"] for r in records.values() for change in r["annotation_changes"]))
+    report["image_changes"] = [{"image": name, "source_image_sha256": r["source_image_sha256"],
+                                "effective_image_sha256": r["image_sha256"], "changes": r["image_changes"]}
+                               for name, r in records.items() if r["image_changes"]]
     write_json(audit_dir / "audit.json", report)
     print(f"Audit: {audit_dir / 'audit.json'}; errors={len(errors)}, duplicate_groups={len(duplicate_groups)}", flush=True)
     if errors:
@@ -210,8 +242,13 @@ def prepare_dataset(config_path):
                 target_label = destination / split / "labels" / (Path(name).stem + ".txt")
                 target_image.parent.mkdir(parents=True, exist_ok=True)
                 target_label.parent.mkdir(parents=True, exist_ok=True)
-                # Copies protect raw even if a third-party library repairs a JPEG.
-                shutil.copyfile(resolve(record["image"]), target_image)
+                if record["image_changes"]:
+                    normalized = inspect_image(resolve(record["image"]))
+                    if normalized["source_image_sha256"] != record["source_image_sha256"] or normalized["image_sha256"] != record["image_sha256"]:
+                        raise ValueError("Source JPEG changed between audit and preparation")
+                    target_image.write_bytes(normalized["effective_image_bytes"])
+                else:
+                    shutil.copyfile(resolve(record["image"]), target_image)
                 if "effective_label_text" in record:
                     target_label.write_bytes(record["effective_label_text"].encode("utf-8"))
                 else:
@@ -252,4 +289,11 @@ def verify_dataset(path):
                 raise ValueError(f"Dataset content checksum mismatch: {file}")
     with ThreadPoolExecutor(max_workers=8) as pool:
         list(pool.map(verify_record, manifest["records"]))
+    return manifest
+
+
+def verify_unchanged_dataset(path, expected_fingerprint):
+    manifest = verify_dataset(path)
+    if manifest["fingerprint"] != expected_fingerprint:
+        raise ValueError("Dataset fingerprint changed during model execution")
     return manifest
