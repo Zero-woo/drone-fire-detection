@@ -215,3 +215,22 @@ Test는 최종 모델 선택 후에만 평가한다.
 
 실제 Colab GPU에서의 설치·학습은 이 저장소의 로컬 검증만으로 확인할 수 없다.
 로컬에서는 노트북 구문, 전체 데이터 이전·경로 재작성, 입력 무결성 및 단위 테스트를 검증한다.
+
+### Colab inline backend 오류
+
+`module://matplotlib_inline.backend_inline is not a valid value for backend`는
+Colab 커널의 화면 출력 설정이 별도 `.venv` 프로세스에 전달돼 발생할 수 있다.
+메시지 앞에 `Dataset ... data.yaml error`가 붙어 있어도 실제 원인은 그래프 backend일 수 있다.
+
+현재 열린 구버전 노트북에서는 학습 셀 바로 위에 다음 셀을 실행한다.
+
+```python
+TRAIN_ENV["MPLBACKEND"] = "Agg"
+TRAIN_ENV["MPLCONFIGDIR"] = str(REPO / "work/matplotlib")
+RESUME_RUN_NAME = ""
+run([PYTHON, "-c", "import matplotlib; print(matplotlib.get_backend())"], cwd=REPO, env=TRAIN_ENV)
+```
+
+`Agg`가 출력되면 학습 셀을 다시 실행한다. 데이터 재업로드나 패키지 재설치는 필요하지 않다.
+이 오류가 첫 epoch 전에 발생했다면 checkpoint가 없으므로 새 run으로 시작한다.
+최신 노트북은 모든 subprocess에 파일 저장용 `Agg`를 지정하며 커널의 inline 설정은 유지한다.

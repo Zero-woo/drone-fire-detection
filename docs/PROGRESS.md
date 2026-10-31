@@ -60,3 +60,12 @@
   E0와 같은 데이터 fingerprint를 유지함을 확인했다.
 - 단위 테스트 35개를 통과했다. 실제 Colab GPU에서 학습한 결과는 아직 없다.
 - 자세한 준비·검증 근거는 [Colab 준비 보고서](../reports/005_colab_preparation.md)에 기록했다.
+
+## 2026-11-01: Colab Matplotlib backend 충돌 수정
+
+- 사용자 Colab 로그에서 T4 인식 후 데이터 준비 단계의 inline backend 오류를 확인했다.
+- Colab의 `MPLBACKEND=module://matplotlib_inline.backend_inline`이 별도 `.venv`에 상속되는
+  문제를 로컬에서 같은 Matplotlib 3.10.8로 재현했다.
+- 노트북 subprocess와 프로젝트 파일 출력 경로에 `Agg` 및 전용 설정 폴더를 지정했다.
+- 수정 후 PNG 렌더링과 단위 테스트 37개를 통과했다. 실제 Colab 학습 완료는 미확인이다.
+- 상세 원인·우회 방법은 [backend 수정 보고서](../reports/006_colab_backend_fix.md)에 기록했다.

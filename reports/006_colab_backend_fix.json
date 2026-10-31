@@ -1,0 +1,20 @@
+{
+  "kind": "matplotlib_backend_regression_verification",
+  "implementation_commit": "a4f2fead5507bd2b6dec59a33eec63575557ca63",
+  "actual_colab_execution": false,
+  "model_training_performed": false,
+  "regression": {
+    "kind": "inherited_notebook_backend_regression",
+    "actual_colab_execution": false,
+    "model_training_performed": false,
+    "inherited_backend": "module://matplotlib_inline.backend_inline",
+    "before_returncode": 1,
+    "before_error": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"C:\\git\\drone-fire-detection\\.venv\\lib\\site-packages\\matplotlib\\__init__.py\", line 1299, in <module>\n    rcParams['backend'] = os.environ.get('MPLBACKEND')\n  File \"C:\\git\\drone-fire-detection\\.venv\\lib\\site-packages\\matplotlib\\__init__.py\", line 774, in __setitem__\n    raise ValueError(f\"Key {key}: {ve}\") from None\nValueError: Key backend: 'module://matplotlib_inline.backend_inline' is not a valid value for backend; supported values are ['gtk3agg', 'gtk3cairo', 'gtk4agg', 'gtk4cairo', 'macosx', 'nbagg', 'notebook', 'qtagg', 'qtcairo', 'qt5agg', 'qt5cairo', 'tkagg', 'tkcairo', 'webagg', 'wx', 'wxagg', 'wxcairo', 'agg', 'cairo', 'pdf', 'pgf', 'ps', 'svg', 'template']\n",
+    "after_returncode": 0,
+    "after_output": "{\"backend\": \"Agg\", \"matplotlib\": \"3.10.8\"}\n",
+    "png_sha256": "1d514d184f677664abe95e88a6d8a050f2391223900b5ed512908111ed91fb36"
+  },
+  "unit_tests_passed": 37,
+  "unit_test_log_sha256": "45e0be70d5991879f31b997d82297c8d0affb7fe3787aa7384afa3ed597514bc",
+  "notebook_sha256": "c92779b383b13f3ae71a9a6193e674527cd1d547a1bdef867da6c41dbbb3b505"
+}
