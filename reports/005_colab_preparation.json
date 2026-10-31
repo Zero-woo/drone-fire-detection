@@ -1,0 +1,62 @@
+{
+  "kind": "colab_preparation_and_local_transfer_verification",
+  "actual_colab_execution": false,
+  "model_training_performed": false,
+  "implementation_commit": "162c21d15ff06e41a01c9896cd7c097acffef5f1",
+  "git_at_verification": {
+    "commit": "162c21d15ff06e41a01c9896cd7c097acffef5f1",
+    "status": "M docs/PROGRESS.md\n M notebooks/colab_training.ipynb\n?? reports/005_colab_preparation.md",
+    "dirty": true,
+    "tracked_diff_sha256": "dc55fc3d473d4298f56fb499e7eabde57494e338bf3328cdf7efcc69e0f3ef26"
+  },
+  "bundle": {
+    "schema": 1,
+    "created_at_utc": "2026-10-31T14:30:50.361640+00:00",
+    "source_git": {
+      "commit": "6eb3b38ee5bd56b2f1833bdb3c45d85cf8e72459",
+      "status": "M src/fire_detection/cli.py\n M src/fire_detection/common.py\n M src/fire_detection/training.py\n?? src/fire_detection/colab.py\n?? tests/test_colab.py",
+      "dirty": true,
+      "tracked_diff_sha256": "827fc16028b605150f88a8abb3e5a0ed353fc5d4a421a4cba199924c67f30610"
+    },
+    "dataset_fingerprint": "c3d63dfa73314a36b5522f4651f5fd7d784bd8a054e78916f821160729862e2b",
+    "dataset_config": {
+      "raw_root": "data/raw/D-Fire",
+      "prepared_root": "data/processed/dfire-fold1-v2",
+      "image_policy": "strip_jpeg_trailing_bytes_without_recompression",
+      "split_files": {
+        "train": "data/raw/Data splitting/5-fold cross validation/dfire_train1.txt",
+        "val": "data/raw/Data splitting/5-fold cross validation/dfire_valid1.txt",
+        "test": "data/raw/Data splitting/dfire_test.txt"
+      },
+      "names": [
+        "smoke",
+        "fire"
+      ],
+      "annotation_policy": "clip_drop_degenerate",
+      "annotation_policy_authorization": "User approved derived clipping and zero-area removal on 2026-10-31; raw is preserved.",
+      "cross_split_duplicates": "error",
+      "source_group_identity_available": false,
+      "published_split_identity_verified": false
+    },
+    "input_files": 43061,
+    "images": 21527,
+    "archive": "C:\\git\\drone-fire-detection\\outputs\\colab-data_20261031T143050Z_e8b156a2\\dfire-fold1-v2.zip",
+    "archive_size_bytes": 3149560983,
+    "archive_sha256": "cb6c4abbaca83496d4dc578ec804b3e5b5d839ce7c89f1fe58ffc66e4f6a0476"
+  },
+  "local_transfer": {
+    "kind": "local_cross_directory_transfer_verification",
+    "actual_colab_execution": false,
+    "target_root": "C:\\git\\drone-fire-detection\\work\\colab-transfer-verification_20261031T143517Z_d136a6d6",
+    "archive_sha256": "cb6c4abbaca83496d4dc578ec804b3e5b5d839ce7c89f1fe58ffc66e4f6a0476",
+    "dataset_fingerprint": "c3d63dfa73314a36b5522f4651f5fd7d784bd8a054e78916f821160729862e2b",
+    "images_verified": 21527,
+    "labels_verified": 21527,
+    "rewritten_path_sample": "C:/git/drone-fire-detection/work/colab-transfer-verification_20261031T143517Z_d136a6d6/data/processed/dfire-fold1-v2/train/images/AoF00000.jpg",
+    "status": "passed",
+    "model_training_performed": false
+  },
+  "unit_tests_passed": 35,
+  "unit_test_log_sha256": "43401d5ce5d511fd0541ffbeb1aea51a2e6931d4717c9f408d137052ea3c4a36",
+  "notebook_sha256": "3e20eee7dd588a7d64cab20f7c1587e3cafce0de3001d245f7348084a0dd5bf3"
+}

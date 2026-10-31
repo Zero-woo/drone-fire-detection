@@ -51,3 +51,12 @@
 - 학습·평가 종료 후 데이터 무결성 검사를 통과했다. 최종 Test 성능은 미평가다.
 - 학습 곡선과 상세 결과를 [E0 보고서](../reports/004_e0_baseline.md)에 기록했다.
 - 다음 단계는 동일한 COCO 가중치에서 E1 100 epoch를 새로 학습하는 것이다. E1은 아직 미실행이다.
+
+## 2026-10-31: Colab 실행 준비
+
+- E1을 기본으로 하는 Colab 노트북과 입력 ZIP export/import 명령을 추가했다.
+- checkpoint·평가 결과를 Drive에 저장하는 `FIRELAB_RUNS_DIR` 설정을 지원한다.
+- 약 3.15 GB ZIP을 생성했고 실제 입력 43,054개 파일을 다른 경로로 이전해
+  E0와 같은 데이터 fingerprint를 유지함을 확인했다.
+- 단위 테스트 35개를 통과했다. 실제 Colab GPU에서 학습한 결과는 아직 없다.
+- 자세한 준비·검증 근거는 [Colab 준비 보고서](../reports/005_colab_preparation.md)에 기록했다.
