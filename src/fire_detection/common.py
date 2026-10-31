@@ -1,21 +1,17 @@
-"""Standard-library utilities; usable before ML dependencies are installed."""
+"""Provenance and filesystem utilities shared by every command."""
 from __future__ import annotations
 
 import hashlib
 import importlib.metadata
 import json
-import math
 import os
 import platform
-import re
-import statistics
 import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
+from uuid import uuid4
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_CONFIG = ROOT / "configs/001_pretrained_cpu.json"
-REGISTRY = ROOT / "configs/model_registry.json"
 
 
 def utc_now():
@@ -27,10 +23,12 @@ def read_json(path):
 
 
 def write_json(path, value):
-    Path(path).write_text(
-        json.dumps(value, ensure_ascii=False, indent=2, allow_nan=False) + "\n",
-        encoding="utf-8",
-    )
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_name(path.name + "." + uuid4().hex + ".tmp")
+    temporary.write_text(json.dumps(value, ensure_ascii=False, indent=2, allow_nan=False)
+                         + "\n", encoding="utf-8")
+    temporary.replace(path)
 
 
 def file_sha256(path):
@@ -41,80 +39,87 @@ def file_sha256(path):
     return digest.hexdigest()
 
 
-def load_config(path):
-    value = read_json(path)
-    expected = {
-        "experiment_id", "imgsz", "confidence", "iou", "device", "threads",
-        "warmup_frames", "frame_stride", "max_detections",
-    }
-    if not isinstance(value, dict) or set(value) != expected:
-        raise ValueError("Config must contain exactly: " + ", ".join(sorted(expected)))
-    if not isinstance(value["experiment_id"], str) or not re.fullmatch(
-        r"[a-zA-Z0-9_-]{1,64}", value["experiment_id"]
-    ):
-        raise ValueError("experiment_id must use letters, numbers, underscore or hyphen.")
-    for key in ("imgsz", "threads", "warmup_frames", "frame_stride", "max_detections"):
-        if type(value[key]) is not int:
-            raise ValueError(key + " must be an integer.")
-        minimum = 0 if key == "warmup_frames" else 1
-        if value[key] < minimum:
-            raise ValueError(key + " is too small.")
-    if value["imgsz"] % 32:
-        raise ValueError("imgsz must be a multiple of 32.")
-    for key in ("confidence", "iou"):
-        number = value[key]
-        if type(number) not in (int, float) or not math.isfinite(number) or not 0 < number <= 1:
-            raise ValueError(key + " must be in (0, 1].")
-    if value["device"] != "cpu":
-        raise ValueError("EXP-001 supports only device=cpu.")
-    return value
+def object_sha256(value):
+    return hashlib.sha256(json.dumps(value, sort_keys=True, ensure_ascii=True,
+                                    allow_nan=False).encode()).hexdigest()
 
 
-def git_state(root):
+def resolve(path):
+    return (ROOT / path).resolve()
+
+
+def inside(path, parent):
+    path, parent = Path(path).resolve(), Path(parent).resolve()
+    if path == parent or not path.is_relative_to(parent):
+        raise ValueError(f"Expected a path below {parent}: {path}")
+    return path
+
+
+def new_run(prefix, parent=None):
+    parent = Path(parent) if parent else ROOT / "experiments/runs"
+    stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    path = parent / f"{prefix}_{stamp}_{uuid4().hex[:8]}"
+    path.mkdir(parents=True, exist_ok=False)
+    return path
+
+
+def git_state():
     def call(*args):
-        result = subprocess.run(
-            ["git", "-C", str(root), *args], capture_output=True,
-            text=True, encoding="utf-8", errors="replace", timeout=10,
-        )
+        result = subprocess.run(["git", "-C", str(ROOT), *args], capture_output=True,
+                                text=True, encoding="utf-8", errors="replace", timeout=15)
         return result.stdout.strip() if result.returncode == 0 else None
     try:
-        head = call("rev-parse", "HEAD")
-        status = call("status", "--porcelain", "--untracked-files=normal")
-        return {"commit": head, "dirty": bool(status) if status is not None else None}
+        status = call("status", "--porcelain")
+        diff = subprocess.run(["git", "-C", str(ROOT), "diff", "HEAD", "--binary"],
+                              capture_output=True, timeout=15).stdout
+        return {"commit": call("rev-parse", "HEAD"), "status": status,
+                "dirty": bool(status), "tracked_diff_sha256": hashlib.sha256(diff).hexdigest()}
     except (OSError, subprocess.SubprocessError):
         return {"commit": None, "dirty": None}
 
 
-def package_versions():
-    versions = {}
-    for distribution in importlib.metadata.distributions():
-        name = distribution.metadata.get("Name")
-        if name:
-            versions[name.lower().replace("_", "-")] = distribution.version
-    return dict(sorted(versions.items()))
+def environment(cuda_probe=False):
+    versions = {d.metadata["Name"]: d.version for d in importlib.metadata.distributions()
+                if d.metadata.get("Name")}
+    report = {"created_at_utc": utc_now(), "python": platform.python_version(),
+              "platform": platform.platform(), "packages": dict(sorted(versions.items())),
+              "git": git_state()}
+    if cuda_probe:
+        import torch
+        report.update(torch=torch.__version__, cuda_runtime=torch.version.cuda,
+                      cudnn=torch.backends.cudnn.version(), cuda_available=torch.cuda.is_available())
+        if torch.cuda.is_available():
+            report["gpus"] = [{"index": i, "name": torch.cuda.get_device_name(i),
+                               "capability": list(torch.cuda.get_device_capability(i)),
+                               "memory_bytes": torch.cuda.get_device_properties(i).total_memory}
+                              for i in range(torch.cuda.device_count())]
+            try:
+                # Exercise a CUDA convolution and backward, not only device discovery.
+                layer = torch.nn.Conv2d(3, 8, 3).cuda()
+                layer(torch.ones(2, 3, 32, 32, device="cuda")).sum().backward()
+                torch.cuda.synchronize()
+                report["cuda_compute_probe"] = "passed"
+            except Exception as exc:
+                report["cuda_compute_probe"] = "failed"
+                report["cuda_error"] = str(exc)
+        try:
+            result = subprocess.run(["nvidia-smi", "--query-gpu=name,driver_version,memory.total",
+                                     "--format=csv,noheader"], capture_output=True, text=True, timeout=15)
+            report["nvidia_smi"] = result.stdout.strip()
+        except (OSError, subprocess.SubprocessError) as exc:
+            report["nvidia_smi"] = str(exc)
+    return report
 
 
-def environment():
-    packages = package_versions()
-    return {
-        "python": platform.python_version(),
-        "platform": platform.platform(),
-        "processor": os.environ.get("PROCESSOR_IDENTIFIER", platform.processor()),
-        "logical_cpus": os.cpu_count(),
-        "packages": packages,
-    }
-
-
-def timing_summary(samples_ms):
-    if not samples_ms:
-        return {"count": 0, "mean_ms": None, "median_ms": None, "p95_ms": None,
-                "model_call_fps": None}
-    values = sorted(samples_ms)
-    mean = statistics.mean(values)
-    return {
-        "count": len(values),
-        "mean_ms": mean,
-        "median_ms": statistics.median(values),
-        "p95_ms": values[math.ceil(0.95 * len(values)) - 1],
-        "model_call_fps": 1000 / mean if mean > 0 else None,
-    }
+def yolo_class():
+    settings_dir = ROOT / "work/ultralytics"
+    settings_dir.mkdir(parents=True, exist_ok=True)
+    os.environ["YOLO_CONFIG_DIR"] = str(settings_dir)
+    os.environ["YOLO_AUTOINSTALL"] = "false"
+    os.environ["YOLO_OFFLINE"] = "true"
+    os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
+    from ultralytics import YOLO, settings
+    settings.update({"sync": False, "wandb": False, "mlflow": False,
+                     "comet": False, "clearml": False, "neptune": False,
+                     "tensorboard": False, "dvc": False, "hub": False})
+    return YOLO

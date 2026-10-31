@@ -1,7 +1,6 @@
 # Data
 
-Input media and dataset provenance for fire-detection experiments.
+Original and prepared D-Fire datasets.
 
-- `raw/`: original images and videos, excluded from Git.
-- `processed/`: extracted frames and derived data, excluded from Git.
-- `manifests/`: source information and recording conditions.
+- `raw/`: original D-Fire images, labels, archives, and official split lists.
+- `processed/`: validated copies, traced label corrections, manifests, and YOLO YAML files.

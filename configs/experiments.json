@@ -1,0 +1,33 @@
+{
+  "dataset_config": "configs/dataset.json",
+  "training": {
+    "epochs": 50, "imgsz": 640, "batch": 16, "seed": 42,
+    "optimizer": "MuSGD", "lr0": 0.01, "lrf": 0.01, "cos_lr": false,
+    "momentum": 0.937, "weight_decay": 0.0005,
+    "warmup_epochs": 3.0, "warmup_momentum": 0.8, "warmup_bias_lr": 0.1,
+    "hsv_h": 0.015, "hsv_s": 0.7, "hsv_v": 0.4,
+    "degrees": 0.0, "translate": 0.1, "scale": 0.5, "shear": 0.0,
+    "perspective": 0.0, "flipud": 0.0, "fliplr": 0.5,
+    "mosaic": 1.0, "mixup": 0.0, "copy_paste": 0.0, "close_mosaic": 10,
+    "device": "0", "workers": 0, "patience": 0,
+    "deterministic": true, "amp": false, "cache": false, "nbs": 64,
+    "save_period": 1, "val": true, "plots": true, "compile": false
+  },
+  "evaluation": {
+    "ap_conf": 0.001, "operating_conf": 0.25,
+    "nms_iou": 0.7, "match_iou": 0.5, "max_det": 300,
+    "batch": 16, "warmup_images": 3, "max_case_images": 20
+  },
+  "experiments": [
+    {"id": "E0", "stage": "baseline", "reference": null, "overrides": {}},
+    {"id": "E1", "stage": "epochs", "reference": "E0", "overrides": {"epochs": 100}},
+    {"id": "E2-A", "stage": "lr", "reference": "E1", "overrides": {"epochs": 100, "lr0": 0.005}},
+    {"id": "E2-C", "stage": "lr", "reference": "E1", "overrides": {"epochs": 100, "lr0": 0.02}},
+    {"id": "E3-HSV", "stage": "augmentation", "reference": "E1", "overrides": {"epochs": 100, "hsv_s": 0.5, "hsv_v": 0.2}},
+    {"id": "E3-Mosaic", "stage": "augmentation", "reference": "E1", "overrides": {"epochs": 100, "mosaic": 0.5}},
+    {"id": "E4-800", "stage": "resolution", "reference": "E1", "overrides": {"epochs": 100, "imgsz": 800}},
+    {"id": "E5-8", "stage": "batch", "reference": "E1", "overrides": {"epochs": 100, "batch": 8}},
+    {"id": "E5-32", "stage": "batch", "reference": "E1", "overrides": {"epochs": 100, "batch": 32}},
+    {"id": "E6", "stage": "combined", "reference": "E1", "enabled": false, "overrides": {"epochs": 100}, "selection_evidence": []}
+  ]
+}

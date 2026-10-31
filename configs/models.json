@@ -1,0 +1,27 @@
+{
+  "coco": {
+    "id": "coco-yolov8n",
+    "revision": "github-release-asset:340060940",
+    "url": "https://github.com/ultralytics/assets/releases/download/v8.4.0/yolov8n.pt",
+    "sha256": "f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36",
+    "size_bytes": 6549796,
+    "local_path": "models/coco/yolov8n.pt",
+    "source": "https://github.com/ultralytics/assets/releases/tag/v8.4.0"
+  },
+  "published": {
+    "id": "rabahdev-fire-smoke-yolov8n",
+    "revision": "9841e3bc9373116d1a756969aa5be3f016ad3782",
+    "url": "https://huggingface.co/rabahdev/fire-smoke-yolov8n/resolve/9841e3bc9373116d1a756969aa5be3f016ad3782/best.pt",
+    "sha256": "b91633799ceb052c814b4f8b77a37efc9a40f002d528df97d74463585fa4f28f",
+    "size_bytes": 6229802,
+    "local_path": "models/published/best.pt",
+    "source": "https://huggingface.co/rabahdev/fire-smoke-yolov8n",
+    "publisher_reported": {
+      "map50": 0.754, "map50_95": 0.430, "precision": 0.766, "recall": 0.688,
+      "train_images": 14122, "val_images": 3099, "test_images": 4306,
+      "epochs": 50, "imgsz": 640, "batch": 16,
+      "optimizer": "MuSGD (auto)", "lr0_stated": 0.01, "device": "Apple MPS"
+    },
+    "split_identity_verified": false
+  }
+}

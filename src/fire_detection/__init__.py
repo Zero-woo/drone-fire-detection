@@ -1,2 +1,2 @@
-"""Reproducible, CPU-first fire-detection experiments."""
-__version__ = "0.1.0"
+"""Reproducible D-Fire YOLOv8n training experiments."""
+__version__ = "0.2.0"

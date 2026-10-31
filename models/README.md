@@ -1,8 +1,7 @@
 # Models
 
-Local pretrained fire and smoke detection checkpoints.
+Checksummed pretrained checkpoints used by the experiments.
 
-- `fire-smoke-yolov8n/`: the baseline checkpoint and its download metadata.
-- Model files and generated metadata are excluded from Git.
-- Model sources, revisions, and checksums are defined in
-  [`configs/model_registry.json`](../configs/model_registry.json).
+- `coco/`: COCO-pretrained YOLOv8n initialization for independent training runs.
+- `published/`: the published D-Fire fire/smoke reference model.
+- Sources, revisions, and checksums are defined in `configs/models.json`.

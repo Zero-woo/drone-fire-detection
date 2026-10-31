@@ -1,0 +1,15 @@
+{
+  "raw_root": "data/raw/D-Fire",
+  "prepared_root": "data/processed/dfire-fold1",
+  "split_files": {
+    "train": "data/raw/Data splitting/5-fold cross validation/dfire_train1.txt",
+    "val": "data/raw/Data splitting/5-fold cross validation/dfire_valid1.txt",
+    "test": "data/raw/Data splitting/dfire_test.txt"
+  },
+  "names": ["smoke", "fire"],
+  "annotation_policy": "clip_drop_degenerate",
+  "annotation_policy_authorization": "User approved derived clipping and zero-area removal on 2026-10-31; raw is preserved.",
+  "cross_split_duplicates": "error",
+  "source_group_identity_available": false,
+  "published_split_identity_verified": false
+}

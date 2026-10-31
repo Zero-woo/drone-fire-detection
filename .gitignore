@@ -15,6 +15,7 @@ Thumbs.db
 .idea/
 data/raw/*
 !data/raw/.gitkeep
+raw/
 data/processed/*
 !data/processed/.gitkeep
 models/*
@@ -31,3 +32,5 @@ outputs/*
 *.mov
 *.mkv
 *.part
+*.zip
+*.cache
