@@ -1,0 +1,257 @@
+{
+  "kind": "data_environment_and_integration_verification",
+  "implementation_git": {
+    "commit": "63b02ea9a3c51f694859fa777bc9060c21e56560",
+    "status": "",
+    "dirty": false,
+    "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "dataset": {
+    "fingerprint": "d4e942ea1e7cc8ca5da801c16fa6ee1e48330209e83fd2b2c8dd0ba8bd840d54",
+    "summary": {
+      "train": {
+        "images": 13776,
+        "valid_images": 13776,
+        "negative_images": 6223,
+        "objects": {
+          "smoke": 7654,
+          "fire": 9653
+        },
+        "images_with_class": {
+          "smoke": 6778,
+          "fire": 3819
+        }
+      },
+      "val": {
+        "images": 3445,
+        "valid_images": 3445,
+        "negative_images": 1610,
+        "objects": {
+          "smoke": 1889,
+          "fire": 2154
+        },
+        "images_with_class": {
+          "smoke": 1666,
+          "fire": 888
+        }
+      },
+      "test": {
+        "images": 4306,
+        "valid_images": 4306,
+        "negative_images": 2005,
+        "objects": {
+          "smoke": 2311,
+          "fire": 2878
+        },
+        "images_with_class": {
+          "smoke": 2081,
+          "fire": 1115
+        }
+      }
+    },
+    "split_sources": {
+      "train": {
+        "path": "data/raw/Data splitting/5-fold cross validation/dfire_train1.txt",
+        "sha256": "16968c188a4573dbdc16f7c083023449701f8dc2fe04afdf8efb641f186d210c",
+        "count": 13776
+      },
+      "val": {
+        "path": "data/raw/Data splitting/5-fold cross validation/dfire_valid1.txt",
+        "sha256": "8050e2210717f6f508ef5d67239e824bd130ca76f5ff85bb578e8f0e4f2545dc",
+        "count": 3445
+      },
+      "test": {
+        "path": "data/raw/Data splitting/dfire_test.txt",
+        "sha256": "6164d7d26255c1ff55366d5d12e855dc7077e635df85210703f89799e60bf3b1",
+        "count": 4306
+      }
+    },
+    "manifest_sha256": "c88f34c79c8755314f304dcd1fa7f7fa7e37e889abf25c0198a849dc2d1d296e",
+    "audit_sha256": "fa6d348fe689a58185770d59882027b913c9109cd756b30d3648b275311b0e61",
+    "corrected_images": 340,
+    "annotation_change_counts": {
+      "drop_degenerate": 18,
+      "clip": 379
+    },
+    "duplicate_groups": 0,
+    "warnings": [
+      "Source video/session IDs unavailable: exact-pixel checks cannot rule out near-frame leakage.",
+      "Publisher split identity unverified: published scores are contextual references only."
+    ],
+    "raw_preservation": {
+      "raw_images_verified": 21527,
+      "raw_labels_verified": 21527,
+      "result": "all_match_audit_hashes",
+      "wall_seconds": 7.33493039989844,
+      "git": {
+        "commit": "63b02ea9a3c51f694859fa777bc9060c21e56560",
+        "status": "",
+        "dirty": false,
+        "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  },
+  "models": {
+    "coco": {
+      "id": "coco-yolov8n",
+      "revision": "github-release-asset:340060940",
+      "url": "https://github.com/ultralytics/assets/releases/download/v8.4.0/yolov8n.pt",
+      "sha256": "f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36",
+      "size_bytes": 6549796,
+      "local_path": "models/coco/yolov8n.pt",
+      "source": "https://github.com/ultralytics/assets/releases/tag/v8.4.0"
+    },
+    "published": {
+      "id": "rabahdev-fire-smoke-yolov8n",
+      "revision": "9841e3bc9373116d1a756969aa5be3f016ad3782",
+      "url": "https://huggingface.co/rabahdev/fire-smoke-yolov8n/resolve/9841e3bc9373116d1a756969aa5be3f016ad3782/best.pt",
+      "sha256": "b91633799ceb052c814b4f8b77a37efc9a40f002d528df97d74463585fa4f28f",
+      "size_bytes": 6229802,
+      "local_path": "models/published/best.pt",
+      "source": "https://huggingface.co/rabahdev/fire-smoke-yolov8n",
+      "publisher_reported": {
+        "map50": 0.754,
+        "map50_95": 0.43,
+        "precision": 0.766,
+        "recall": 0.688,
+        "train_images": 14122,
+        "val_images": 3099,
+        "test_images": 4306,
+        "epochs": 50,
+        "imgsz": 640,
+        "batch": 16,
+        "optimizer": "MuSGD (auto)",
+        "lr0_stated": 0.01,
+        "device": "Apple MPS"
+      },
+      "split_identity_verified": false
+    }
+  },
+  "integration": {
+    "kind": "real_data_gpu_integration_check",
+    "not_a_baseline_result": true,
+    "train_images": 64,
+    "val_images": 16,
+    "epochs": 2,
+    "imgsz": 160,
+    "batch": 4,
+    "interruption_and_resume": "passed",
+    "training_run": "C:\\git\\drone-fire-detection\\experiments\\runs\\PIPELINE-CHECK_20261031T093723Z_685e38d6",
+    "evaluation_run": "C:\\git\\drone-fire-detection\\experiments\\runs\\val-PIPELINE-CHECK_20261031T093732Z_30c614ae",
+    "source_dataset_fingerprint": "d4e942ea1e7cc8ca5da801c16fa6ee1e48330209e83fd2b2c8dd0ba8bd840d54",
+    "test_evaluated": false,
+    "training_record_sha256": "4b59e8fe55f1eeb36f7f81995a40b7a9b1b837e23ca9ce7a6493bf7ded13b25e",
+    "evaluation_record_sha256": "2dd743ab9e181310f9a07717e78fe9bf16424f09710f61f9696b67d8ca136d44",
+    "status": "completed",
+    "attempts": 2,
+    "attempt_wall_seconds": [
+      2.8257697001099586,
+      4.808147799922153
+    ],
+    "peak_allocated_bytes": 196872192,
+    "peak_reserved_bytes": 218103808,
+    "optimizer_class": "MuSGD",
+    "environment": {
+      "created_at_utc": "2026-10-31T09:37:27.036981+00:00",
+      "python": "3.10.0",
+      "platform": "Windows-10-10.0.26200-SP0",
+      "packages": {
+        "Jinja2": "3.1.6",
+        "MarkupSafe": "3.0.3",
+        "PyYAML": "6.0.3",
+        "certifi": "2026.10.23",
+        "charset-normalizer": "3.5.2",
+        "contourpy": "1.3.2",
+        "cycler": "0.12.1",
+        "filelock": "4.1.0",
+        "fonttools": "4.65.0",
+        "fsspec": "2026.9.0",
+        "idna": "3.20",
+        "kiwisolver": "1.5.1",
+        "matplotlib": "3.10.8",
+        "mpmath": "1.3.0",
+        "networkx": "3.4.2",
+        "numpy": "2.2.6",
+        "opencv-python": "4.12.0.88",
+        "packaging": "26.3",
+        "pillow": "12.1.0",
+        "pip": "21.2.3",
+        "polars": "2.0.0",
+        "polars-runtime-32": "2.0.0",
+        "psutil": "7.2.2",
+        "pyparsing": "3.3.3",
+        "python-dateutil": "3.0.0",
+        "requests": "2.34.2",
+        "scipy": "1.15.3",
+        "setuptools": "57.4.0",
+        "six": "1.17.0",
+        "sympy": "1.14.0",
+        "torch": "2.10.0+cu128",
+        "torchvision": "0.25.0+cu128",
+        "typing_extensions": "4.16.0",
+        "tzdata": "2026.6",
+        "ultralytics": "8.4.0",
+        "ultralytics-thop": "2.2.3",
+        "urllib3": "2.8.0"
+      },
+      "git": {
+        "commit": "d851bfa6218342350831cb5130694a80f7623d61",
+        "status": "M .gitignore\n D configs/001_pretrained_cpu.json\n D configs/model_registry.json\n M data/README.md\n M docs/USAGE.md\n M experiments/README.md\n M models/README.md\n M requirements.txt\n D scripts/commit-milestones.ps1\n M scripts/setup.ps1\n M src/fire_detection/__init__.py\n M src/fire_detection/cli.py\n M src/fire_detection/common.py\n D src/fire_detection/experiment.py\n D src/fire_detection/media.py\n M src/fire_detection/model.py\n D tests/test_core.py\n D tests/test_experiment.py\n D tests/test_model_runtime.py\n?? configs/dataset.json\n?? configs/experiments.json\n?? configs/models.json\n?? requirements-lock.txt\n?? scripts/check_pipeline.py\n?? src/fire_detection/analysis.py\n?? src/fire_detection/config.py\n?? src/fire_detection/dataset.py\n?? src/fire_detection/evaluation.py\n?? src/fire_detection/inference.py\n?? src/fire_detection/training.py\n?? tests/test_dataset.py\n?? tests/test_protocol.py",
+        "dirty": true,
+        "tracked_diff_sha256": "3399c744fa38a1a9bcf7487db4aa76b9497357dd54ce9e7ec39b87887d2ead11"
+      },
+      "torch": "2.10.0+cu128",
+      "cuda_runtime": "12.8",
+      "cudnn": 91002,
+      "cuda_available": true,
+      "gpus": [
+        {
+          "index": 0,
+          "name": "NVIDIA GeForce RTX 5070",
+          "capability": [
+            12,
+            0
+          ],
+          "memory_bytes": 12820480000
+        }
+      ],
+      "cuda_compute_probe": "passed",
+      "nvidia_smi": "NVIDIA GeForce RTX 5070, 610.88, 12227 MiB"
+    }
+  },
+  "unit_tests": {
+    "command": ".venv/Scripts/python.exe -m unittest discover -s tests -v",
+    "passed": 24,
+    "log_sha256": "8a116b8c231aca0d5d27ce25e68853e3a137494256f9db5d0eb10c420693f298"
+  },
+  "baseline_50_epochs_status": "not_started",
+  "test_evaluated": false,
+  "offline_inference_checks": [
+    {
+      "input": "C:\\git\\drone-fire-detection\\data\\raw\\D-Fire\\train\\images\\AoF00000.jpg",
+      "input_sha256": "a739524936c76e9467da33d04f1ad39e8a0f5610f6128636a1c9de5aa4f07cc9",
+      "model_sha256": "b91633799ceb052c814b4f8b77a37efc9a40f002d528df97d74463585fa4f28f",
+      "settings": {
+        "confidence": 0.25,
+        "iou": 0.7,
+        "imgsz": 640,
+        "device": "0"
+      },
+      "status": "completed",
+      "frames": 1
+    },
+    {
+      "input": "C:\\git\\drone-fire-detection\\work\\integration-input.avi",
+      "input_sha256": "a5db329e84e4da2b91ae5633bbb6647c0e123403c3998638728bea6393180b56",
+      "model_sha256": "b91633799ceb052c814b4f8b77a37efc9a40f002d528df97d74463585fa4f28f",
+      "settings": {
+        "confidence": 0.25,
+        "iou": 0.7,
+        "imgsz": 640,
+        "device": "0"
+      },
+      "status": "completed",
+      "frames": 3
+    }
+  ]
+}

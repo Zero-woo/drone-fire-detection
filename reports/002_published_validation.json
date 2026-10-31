@@ -1,0 +1,295 @@
+{
+  "kind": "evaluation",
+  "split": "val",
+  "status": "completed",
+  "created_at_utc": "2026-10-31T09:38:45.820357+00:00",
+  "experiment_id": "published",
+  "model_role": "published",
+  "config": {
+    "experiment": {
+      "id": "published",
+      "stage": "reference",
+      "reference": null
+    },
+    "training": {
+      "epochs": 50,
+      "imgsz": 640,
+      "batch": 16,
+      "seed": 42,
+      "optimizer": "MuSGD",
+      "lr0": 0.01,
+      "lrf": 0.01,
+      "cos_lr": false,
+      "momentum": 0.937,
+      "weight_decay": 0.0005,
+      "warmup_epochs": 3.0,
+      "warmup_momentum": 0.8,
+      "warmup_bias_lr": 0.1,
+      "hsv_h": 0.015,
+      "hsv_s": 0.7,
+      "hsv_v": 0.4,
+      "degrees": 0.0,
+      "translate": 0.1,
+      "scale": 0.5,
+      "shear": 0.0,
+      "perspective": 0.0,
+      "flipud": 0.0,
+      "fliplr": 0.5,
+      "mosaic": 1.0,
+      "mixup": 0.0,
+      "copy_paste": 0.0,
+      "close_mosaic": 10,
+      "device": "0",
+      "workers": 0,
+      "patience": 0,
+      "deterministic": true,
+      "amp": false,
+      "cache": false,
+      "nbs": 64,
+      "save_period": 1,
+      "val": true,
+      "plots": true,
+      "compile": false
+    },
+    "evaluation": {
+      "ap_conf": 0.001,
+      "operating_conf": 0.25,
+      "nms_iou": 0.7,
+      "match_iou": 0.5,
+      "max_det": 300,
+      "batch": 16,
+      "warmup_images": 3,
+      "max_case_images": 20
+    },
+    "dataset_config": {
+      "raw_root": "data/raw/D-Fire",
+      "prepared_root": "data/processed/dfire-fold1",
+      "split_files": {
+        "train": "data/raw/Data splitting/5-fold cross validation/dfire_train1.txt",
+        "val": "data/raw/Data splitting/5-fold cross validation/dfire_valid1.txt",
+        "test": "data/raw/Data splitting/dfire_test.txt"
+      },
+      "names": [
+        "smoke",
+        "fire"
+      ],
+      "annotation_policy": "clip_drop_degenerate",
+      "annotation_policy_authorization": "User approved derived clipping and zero-area removal on 2026-10-31; raw is preserved.",
+      "cross_split_duplicates": "error",
+      "source_group_identity_available": false,
+      "published_split_identity_verified": false
+    },
+    "suite_path": "configs\\experiments.json",
+    "config_sha256": "3c72c2f72e686b864ed30af4f80bb03fc35ea19b6e04ad33b7f5097f64beb8cf"
+  },
+  "checkpoint_sha256": "b91633799ceb052c814b4f8b77a37efc9a40f002d528df97d74463585fa4f28f",
+  "dataset_fingerprint": "d4e942ea1e7cc8ca5da801c16fa6ee1e48330209e83fd2b2c8dd0ba8bd840d54",
+  "dataset_summary": {
+    "train": {
+      "images": 13776,
+      "valid_images": 13776,
+      "negative_images": 6223,
+      "objects": {
+        "smoke": 7654,
+        "fire": 9653
+      },
+      "images_with_class": {
+        "smoke": 6778,
+        "fire": 3819
+      }
+    },
+    "val": {
+      "images": 3445,
+      "valid_images": 3445,
+      "negative_images": 1610,
+      "objects": {
+        "smoke": 1889,
+        "fire": 2154
+      },
+      "images_with_class": {
+        "smoke": 1666,
+        "fire": 888
+      }
+    },
+    "test": {
+      "images": 4306,
+      "valid_images": 4306,
+      "negative_images": 2005,
+      "objects": {
+        "smoke": 2311,
+        "fire": 2878
+      },
+      "images_with_class": {
+        "smoke": 2081,
+        "fire": 1115
+      }
+    }
+  },
+  "environment": {
+    "created_at_utc": "2026-10-31T09:38:45.457127+00:00",
+    "python": "3.10.0",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "packages": {
+      "Jinja2": "3.1.6",
+      "MarkupSafe": "3.0.3",
+      "PyYAML": "6.0.3",
+      "certifi": "2026.10.23",
+      "charset-normalizer": "3.5.2",
+      "contourpy": "1.3.2",
+      "cycler": "0.12.1",
+      "filelock": "4.1.0",
+      "fonttools": "4.65.0",
+      "fsspec": "2026.9.0",
+      "idna": "3.20",
+      "kiwisolver": "1.5.1",
+      "matplotlib": "3.10.8",
+      "mpmath": "1.3.0",
+      "networkx": "3.4.2",
+      "numpy": "2.2.6",
+      "opencv-python": "4.12.0.88",
+      "packaging": "26.3",
+      "pillow": "12.1.0",
+      "pip": "21.2.3",
+      "polars": "2.0.0",
+      "polars-runtime-32": "2.0.0",
+      "psutil": "7.2.2",
+      "pyparsing": "3.3.3",
+      "python-dateutil": "3.0.0",
+      "requests": "2.34.2",
+      "scipy": "1.15.3",
+      "setuptools": "57.4.0",
+      "six": "1.17.0",
+      "sympy": "1.14.0",
+      "torch": "2.10.0+cu128",
+      "torchvision": "0.25.0+cu128",
+      "typing_extensions": "4.16.0",
+      "tzdata": "2026.6",
+      "ultralytics": "8.4.0",
+      "ultralytics-thop": "2.2.3",
+      "urllib3": "2.8.0"
+    },
+    "git": {
+      "commit": "63b02ea9a3c51f694859fa777bc9060c21e56560",
+      "status": "",
+      "dirty": false,
+      "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "torch": "2.10.0+cu128",
+    "cuda_runtime": "12.8",
+    "cudnn": 91002,
+    "cuda_available": true,
+    "gpus": [
+      {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 5070",
+        "capability": [
+          12,
+          0
+        ],
+        "memory_bytes": 12820480000
+      }
+    ],
+    "cuda_compute_probe": "passed",
+    "nvidia_smi": "NVIDIA GeForce RTX 5070, 610.88, 12227 MiB"
+  },
+  "published_split_identity_verified": false,
+  "metrics": {
+    "precision": 0.831516655465809,
+    "recall": 0.7724136254540354,
+    "map50": 0.8562399685335406,
+    "map50_95": 0.5497209228667964,
+    "f1_macro": 0.8008204853476575,
+    "classes": {
+      "smoke": {
+        "precision": 0.8855324036967991,
+        "recall": 0.835449349329612,
+        "ap50": 0.9103813848041667,
+        "ap50_95": 0.6330791289415905,
+        "f1": 0.859762131908466
+      },
+      "fire": {
+        "precision": 0.7775009072348189,
+        "recall": 0.7093779015784587,
+        "ap50": 0.8020985522629144,
+        "ap50_95": 0.46636271679200264,
+        "f1": 0.7418788387868489
+      }
+    },
+    "point_note": "Ultralytics P/R/F1 use the best mean-F1 confidence on this split; AP integrates confidence.",
+    "speed_ms_per_image": {
+      "preprocess": 0.10017796854808905,
+      "inference": 0.8413263281647803,
+      "loss": 0.0005016833305877941,
+      "postprocess": 0.5284430478065557
+    }
+  },
+  "operating": {
+    "settings": {
+      "ap_conf": 0.001,
+      "operating_conf": 0.25,
+      "nms_iou": 0.7,
+      "match_iou": 0.5,
+      "max_det": 300,
+      "batch": 16,
+      "warmup_images": 3,
+      "max_case_images": 20
+    },
+    "matching": "class-aware greedy descending IoU, one-to-one",
+    "classes": {
+      "smoke": {
+        "tp": 1642,
+        "fp": 353,
+        "fn": 247,
+        "precision": 0.8230576441102757,
+        "recall": 0.8692429857067231,
+        "f1": 0.8455200823892893
+      },
+      "fire": {
+        "tp": 1674,
+        "fp": 734,
+        "fn": 480,
+        "precision": 0.6951827242524917,
+        "recall": 0.7771587743732591,
+        "f1": 0.7338886453309953
+      }
+    },
+    "images": 3445,
+    "negative_images": 1610,
+    "negative_fp_detections": 31,
+    "negative_images_with_fp": 29,
+    "inference_ms_per_image": 4.765570042749491,
+    "inference_fps": 209.83848543395888,
+    "pipeline_ms_per_image": 6.619534715847889,
+    "pipeline_fps": 151.06801957030163,
+    "analysis_wall_seconds_including_io_and_case_export": 30.256304300157353,
+    "timing_note": "Batch=1, FP32; warmed before measurement. Inference FPS excludes I/O, preprocessing and NMS."
+  },
+  "confusion_matrix": {
+    "matrix": [
+      [
+        1663.0,
+        12.0,
+        321.0
+      ],
+      [
+        2.0,
+        1712.0,
+        691.0
+      ],
+      [
+        224.0,
+        430.0,
+        0.0
+      ]
+    ],
+    "axes": "rows=predicted, columns=true; smoke,fire,background",
+    "note": "Ultralytics AP-validation confusion matrix; fixed operating metrics are separate."
+  },
+  "wall_seconds": 56.041683700168505,
+  "peak_allocated_bytes": 433683456,
+  "peak_reserved_bytes": 513802240,
+  "source_record": "experiments\\runs\\val-published_20261031T093845Z_ac5d8ef4\\evaluation.json",
+  "source_record_sha256": "7630a0434045b0a4670a0c12169f97cbcfe816dbb1f085823d6951d262e764bb",
+  "limitation": "Local validation may overlap publisher training data. Not a generalization estimate or a reproduction of publisher test scores.",
+  "comparison_directory": "outputs/comparison_20261031T094017Z_cef386e0"
+}
