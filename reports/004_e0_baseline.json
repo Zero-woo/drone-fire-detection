@@ -1,0 +1,1463 @@
+{
+  "kind": "measured_E0_baseline",
+  "training_run": "C:\\git\\drone-fire-detection\\experiments\\runs\\E0_20261031T101348Z_cb79e173",
+  "training": {
+    "kind": "training",
+    "experiment_id": "E0",
+    "config": {
+      "experiment": {
+        "id": "E0",
+        "stage": "baseline",
+        "reference": null,
+        "overrides": {}
+      },
+      "training": {
+        "epochs": 50,
+        "imgsz": 640,
+        "batch": 16,
+        "seed": 42,
+        "optimizer": "MuSGD",
+        "lr0": 0.01,
+        "lrf": 0.01,
+        "cos_lr": false,
+        "momentum": 0.937,
+        "weight_decay": 0.0005,
+        "warmup_epochs": 3.0,
+        "warmup_momentum": 0.8,
+        "warmup_bias_lr": 0.1,
+        "hsv_h": 0.015,
+        "hsv_s": 0.7,
+        "hsv_v": 0.4,
+        "degrees": 0.0,
+        "translate": 0.1,
+        "scale": 0.5,
+        "shear": 0.0,
+        "perspective": 0.0,
+        "flipud": 0.0,
+        "fliplr": 0.5,
+        "mosaic": 1.0,
+        "mixup": 0.0,
+        "copy_paste": 0.0,
+        "close_mosaic": 10,
+        "device": "0",
+        "workers": 0,
+        "patience": 0,
+        "deterministic": true,
+        "amp": false,
+        "cache": false,
+        "nbs": 64,
+        "save_period": 1,
+        "val": true,
+        "plots": true,
+        "compile": false
+      },
+      "evaluation": {
+        "ap_conf": 0.001,
+        "operating_conf": 0.25,
+        "nms_iou": 0.7,
+        "match_iou": 0.5,
+        "max_det": 300,
+        "batch": 16,
+        "warmup_images": 3,
+        "max_case_images": 20
+      },
+      "dataset_config": {
+        "raw_root": "data/raw/D-Fire",
+        "prepared_root": "data/processed/dfire-fold1-v2",
+        "image_policy": "strip_jpeg_trailing_bytes_without_recompression",
+        "split_files": {
+          "train": "data/raw/Data splitting/5-fold cross validation/dfire_train1.txt",
+          "val": "data/raw/Data splitting/5-fold cross validation/dfire_valid1.txt",
+          "test": "data/raw/Data splitting/dfire_test.txt"
+        },
+        "names": [
+          "smoke",
+          "fire"
+        ],
+        "annotation_policy": "clip_drop_degenerate",
+        "annotation_policy_authorization": "User approved derived clipping and zero-area removal on 2026-10-31; raw is preserved.",
+        "cross_split_duplicates": "error",
+        "source_group_identity_available": false,
+        "published_split_identity_verified": false
+      },
+      "suite_path": "configs\\experiments.json",
+      "config_sha256": "abc3cb9f82acdc7e8b25e496d9722dbd8938a87382ac8dc0b32ff66a0d72f11d"
+    },
+    "initial_model": {
+      "id": "coco-yolov8n",
+      "revision": "github-release-asset:340060940",
+      "url": "https://github.com/ultralytics/assets/releases/download/v8.4.0/yolov8n.pt",
+      "sha256": "f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36",
+      "size_bytes": 6549796,
+      "local_path": "models/coco/yolov8n.pt",
+      "source": "https://github.com/ultralytics/assets/releases/tag/v8.4.0"
+    },
+    "attempts": [
+      {
+        "number": 1,
+        "started_at_utc": "2026-10-31T10:13:48.684620+00:00",
+        "environment": {
+          "created_at_utc": "2026-10-31T10:13:48.310247+00:00",
+          "python": "3.10.0",
+          "platform": "Windows-10-10.0.26200-SP0",
+          "packages": {
+            "Jinja2": "3.1.6",
+            "MarkupSafe": "3.0.3",
+            "PyYAML": "6.0.3",
+            "certifi": "2026.10.23",
+            "charset-normalizer": "3.5.2",
+            "contourpy": "1.3.2",
+            "cycler": "0.12.1",
+            "filelock": "4.1.0",
+            "fonttools": "4.65.0",
+            "fsspec": "2026.9.0",
+            "idna": "3.20",
+            "kiwisolver": "1.5.1",
+            "matplotlib": "3.10.8",
+            "mpmath": "1.3.0",
+            "networkx": "3.4.2",
+            "numpy": "2.2.6",
+            "opencv-python": "4.12.0.88",
+            "packaging": "26.3",
+            "pillow": "12.1.0",
+            "pip": "21.2.3",
+            "polars": "2.0.0",
+            "polars-runtime-32": "2.0.0",
+            "psutil": "7.2.2",
+            "pyparsing": "3.3.3",
+            "python-dateutil": "3.0.0",
+            "requests": "2.34.2",
+            "scipy": "1.15.3",
+            "setuptools": "57.4.0",
+            "six": "1.17.0",
+            "sympy": "1.14.0",
+            "torch": "2.10.0+cu128",
+            "torchvision": "0.25.0+cu128",
+            "typing_extensions": "4.16.0",
+            "tzdata": "2026.6",
+            "ultralytics": "8.4.0",
+            "ultralytics-thop": "2.2.3",
+            "urllib3": "2.8.0"
+          },
+          "git": {
+            "commit": "44e9e24087cfc9db8dd765bab01ea55d6349dbb6",
+            "status": "",
+            "dirty": false,
+            "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "torch": "2.10.0+cu128",
+          "cuda_runtime": "12.8",
+          "cudnn": 91002,
+          "cuda_available": true,
+          "gpus": [
+            {
+              "index": 0,
+              "name": "NVIDIA GeForce RTX 5070",
+              "capability": [
+                12,
+                0
+              ],
+              "memory_bytes": 12820480000
+            }
+          ],
+          "cuda_compute_probe": "passed",
+          "nvidia_smi": "NVIDIA GeForce RTX 5070, 610.88, 12227 MiB"
+        },
+        "pid": 25808,
+        "process_created_at": 1793441608.8445008,
+        "resume": false,
+        "checkpoint": "C:\\git\\drone-fire-detection\\models\\coco\\yolov8n.pt",
+        "checkpoint_sha256": "f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36",
+        "wall_seconds": 11270.472325999988,
+        "finished_at_utc": "2026-10-31T13:21:39.191118+00:00",
+        "peak_allocated_bytes": 3487164928,
+        "peak_reserved_bytes": 5595201536
+      }
+    ],
+    "created_at_utc": "2026-10-31T10:13:31.793088+00:00",
+    "dataset_fingerprint": "c3d63dfa73314a36b5522f4651f5fd7d784bd8a054e78916f821160729862e2b",
+    "status": "completed",
+    "best_path": "C:\\git\\drone-fire-detection\\experiments\\runs\\E0_20261031T101348Z_cb79e173\\train\\weights\\best.pt",
+    "best_sha256": "6181df582cf9dfbfbeaacf61481df39c565e5f8ac9ddca4765f8c03349c1b696",
+    "epochs_completed": 50,
+    "training_wall_seconds": 11270.472325999988
+  },
+  "source_training_record_sha256": "85700f739b3f85153d3d79c8d3d1316cdeb08d6a3d0fffade049ce8f28e267cf",
+  "source_epoch_csv_sha256": "29877f21547f5af6f0d73a4a6ad3a8dbe09503756c28d85b6775edbc80905b4b",
+  "effective_settings": {
+    "args": {
+      "task": "detect",
+      "mode": "train",
+      "model": "C:\\git\\drone-fire-detection\\models\\coco\\yolov8n.pt",
+      "data": "C:\\git\\drone-fire-detection\\data\\processed\\dfire-fold1-v2\\data.yaml",
+      "epochs": 50,
+      "time": null,
+      "patience": 0,
+      "batch": 16,
+      "imgsz": 640,
+      "save": true,
+      "save_period": 1,
+      "cache": false,
+      "device": "0",
+      "workers": 0,
+      "project": "C:\\git\\drone-fire-detection\\experiments\\runs\\E0_20261031T101348Z_cb79e173",
+      "name": "train",
+      "exist_ok": false,
+      "pretrained": true,
+      "optimizer": "MuSGD",
+      "verbose": true,
+      "seed": 42,
+      "deterministic": true,
+      "single_cls": false,
+      "rect": false,
+      "cos_lr": false,
+      "close_mosaic": 10,
+      "resume": false,
+      "amp": false,
+      "fraction": 1.0,
+      "profile": false,
+      "freeze": null,
+      "multi_scale": 0.0,
+      "compile": false,
+      "overlap_mask": true,
+      "mask_ratio": 4,
+      "dropout": 0.0,
+      "val": true,
+      "split": "val",
+      "save_json": false,
+      "conf": null,
+      "iou": 0.7,
+      "max_det": 300,
+      "half": false,
+      "dnn": false,
+      "plots": true,
+      "source": null,
+      "vid_stride": 1,
+      "stream_buffer": false,
+      "visualize": false,
+      "augment": false,
+      "agnostic_nms": false,
+      "classes": null,
+      "retina_masks": false,
+      "embed": null,
+      "show": false,
+      "save_frames": false,
+      "save_txt": false,
+      "save_conf": false,
+      "save_crop": false,
+      "show_labels": true,
+      "show_conf": true,
+      "show_boxes": true,
+      "line_width": null,
+      "format": "torchscript",
+      "keras": false,
+      "optimize": false,
+      "int8": false,
+      "dynamic": false,
+      "simplify": true,
+      "opset": null,
+      "workspace": null,
+      "nms": false,
+      "lr0": 0.01,
+      "lrf": 0.01,
+      "momentum": 0.937,
+      "weight_decay": 0.0005,
+      "warmup_epochs": 3.0,
+      "warmup_momentum": 0.8,
+      "warmup_bias_lr": 0.1,
+      "box": 7.5,
+      "cls": 0.5,
+      "dfl": 1.5,
+      "pose": 12.0,
+      "kobj": 1.0,
+      "rle": 1.0,
+      "angle": 1.0,
+      "nbs": 64,
+      "hsv_h": 0.015,
+      "hsv_s": 0.7,
+      "hsv_v": 0.4,
+      "degrees": 0.0,
+      "translate": 0.1,
+      "scale": 0.5,
+      "shear": 0.0,
+      "perspective": 0.0,
+      "flipud": 0.0,
+      "fliplr": 0.5,
+      "bgr": 0.0,
+      "mosaic": 1.0,
+      "mixup": 0.0,
+      "cutmix": 0.0,
+      "copy_paste": 0.0,
+      "copy_paste_mode": "flip",
+      "auto_augment": "randaugment",
+      "erasing": 0.4,
+      "cfg": null,
+      "tracker": "botsort.yaml",
+      "save_dir": "C:\\git\\drone-fire-detection\\experiments\\runs\\E0_20261031T101348Z_cb79e173\\train"
+    },
+    "optimizer_class": "MuSGD",
+    "parameter_groups": [
+      {
+        "lr": 0.03,
+        "initial_lr": 0.03,
+        "weight_decay": 0.0005,
+        "parameter_count": 0,
+        "use_muon": false
+      },
+      {
+        "lr": 0.01,
+        "initial_lr": 0.01,
+        "weight_decay": 0.0005,
+        "parameter_count": 0,
+        "use_muon": false
+      },
+      {
+        "lr": 0.03,
+        "initial_lr": 0.03,
+        "weight_decay": 0.0,
+        "parameter_count": 0,
+        "use_muon": false
+      },
+      {
+        "lr": 0.01,
+        "initial_lr": 0.01,
+        "weight_decay": 0.0,
+        "parameter_count": 5200,
+        "use_muon": false
+      },
+      {
+        "lr": 0.03,
+        "initial_lr": 0.03,
+        "weight_decay": 0.0,
+        "parameter_count": 0,
+        "use_muon": false
+      },
+      {
+        "lr": 0.01,
+        "initial_lr": 0.01,
+        "weight_decay": 0.0,
+        "parameter_count": 5398,
+        "use_muon": false
+      },
+      {
+        "lr": 0.03,
+        "initial_lr": 0.03,
+        "weight_decay": 0.0005,
+        "parameter_count": 0,
+        "use_muon": true
+      },
+      {
+        "lr": 0.01,
+        "initial_lr": 0.01,
+        "weight_decay": 0.0005,
+        "parameter_count": 3000640,
+        "use_muon": true
+      }
+    ],
+    "accumulate": 4,
+    "scheduler": "LambdaLR",
+    "warmup_note": "First batch is logged separately; warmup changes actual group learning rates."
+  },
+  "best_training_epoch": 46,
+  "best_training_epoch_metrics": {
+    "epoch": 46.0,
+    "time": 10383.1,
+    "train/box_loss": 1.21891,
+    "train/cls_loss": 0.82244,
+    "train/dfl_loss": 1.22357,
+    "metrics/precision(B)": 0.76282,
+    "metrics/recall(B)": 0.70827,
+    "metrics/mAP50(B)": 0.77143,
+    "metrics/mAP50-95(B)": 0.45303,
+    "val/box_loss": 1.12921,
+    "val/cls_loss": 1.19671,
+    "val/dfl_loss": 1.06541,
+    "lr/pg0": 0.00327,
+    "lr/pg1": 0.00109,
+    "lr/pg2": 0.00327,
+    "lr/pg3": 0.00109,
+    "lr/pg4": 0.00327,
+    "lr/pg5": 0.00109,
+    "lr/pg6": 0.00327,
+    "lr/pg7": 0.00109
+  },
+  "last_training_epoch_metrics": {
+    "epoch": 50.0,
+    "time": 11212.8,
+    "train/box_loss": 1.171,
+    "train/cls_loss": 0.77476,
+    "train/dfl_loss": 1.19599,
+    "metrics/precision(B)": 0.78119,
+    "metrics/recall(B)": 0.70088,
+    "metrics/mAP50(B)": 0.7697,
+    "metrics/mAP50-95(B)": 0.45269,
+    "val/box_loss": 1.14271,
+    "val/cls_loss": 1.13878,
+    "val/dfl_loss": 1.0763,
+    "lr/pg0": 0.000894,
+    "lr/pg1": 0.000298,
+    "lr/pg2": 0.000894,
+    "lr/pg3": 0.000298,
+    "lr/pg4": 0.000894,
+    "lr/pg5": 0.000298,
+    "lr/pg6": 0.000894,
+    "lr/pg7": 0.000298
+  },
+  "sampled_training_epochs": [
+    {
+      "epoch": 1.0,
+      "time": 262.599,
+      "train/box_loss": 1.61572,
+      "train/cls_loss": 2.73873,
+      "train/dfl_loss": 1.51355,
+      "metrics/precision(B)": 0.48251,
+      "metrics/recall(B)": 0.36815,
+      "metrics/mAP50(B)": 0.35906,
+      "metrics/mAP50-95(B)": 0.16392,
+      "val/box_loss": 1.41027,
+      "val/cls_loss": 17.3051,
+      "val/dfl_loss": 1.20099,
+      "lr/pg0": 0.0766938,
+      "lr/pg1": 0.00332946,
+      "lr/pg2": 0.00998839,
+      "lr/pg3": 0.00332946,
+      "lr/pg4": 0.00998839,
+      "lr/pg5": 0.00332946,
+      "lr/pg6": 0.00998839,
+      "lr/pg7": 0.00332946
+    },
+    {
+      "epoch": 10.0,
+      "time": 2501.66,
+      "train/box_loss": 1.53982,
+      "train/cls_loss": 1.46466,
+      "train/dfl_loss": 1.44381,
+      "metrics/precision(B)": 0.64344,
+      "metrics/recall(B)": 0.56232,
+      "metrics/mAP50(B)": 0.60596,
+      "metrics/mAP50-95(B)": 0.31516,
+      "val/box_loss": 1.31386,
+      "val/cls_loss": 3.07162,
+      "val/dfl_loss": 1.18773,
+      "lr/pg0": 0.024654,
+      "lr/pg1": 0.008218,
+      "lr/pg2": 0.024654,
+      "lr/pg3": 0.008218,
+      "lr/pg4": 0.024654,
+      "lr/pg5": 0.008218,
+      "lr/pg6": 0.024654,
+      "lr/pg7": 0.008218
+    },
+    {
+      "epoch": 20.0,
+      "time": 4703.93,
+      "train/box_loss": 1.43073,
+      "train/cls_loss": 1.23592,
+      "train/dfl_loss": 1.36691,
+      "metrics/precision(B)": 0.73469,
+      "metrics/recall(B)": 0.65292,
+      "metrics/mAP50(B)": 0.72362,
+      "metrics/mAP50-95(B)": 0.40742,
+      "val/box_loss": 1.17739,
+      "val/cls_loss": 2.08606,
+      "val/dfl_loss": 1.08687,
+      "lr/pg0": 0.018714,
+      "lr/pg1": 0.006238,
+      "lr/pg2": 0.018714,
+      "lr/pg3": 0.006238,
+      "lr/pg4": 0.018714,
+      "lr/pg5": 0.006238,
+      "lr/pg6": 0.018714,
+      "lr/pg7": 0.006238
+    },
+    {
+      "epoch": 30.0,
+      "time": 6932.04,
+      "train/box_loss": 1.33498,
+      "train/cls_loss": 1.08568,
+      "train/dfl_loss": 1.3021,
+      "metrics/precision(B)": 0.76487,
+      "metrics/recall(B)": 0.67635,
+      "metrics/mAP50(B)": 0.75187,
+      "metrics/mAP50-95(B)": 0.43346,
+      "val/box_loss": 1.16118,
+      "val/cls_loss": 1.65913,
+      "val/dfl_loss": 1.07296,
+      "lr/pg0": 0.012774,
+      "lr/pg1": 0.004258,
+      "lr/pg2": 0.012774,
+      "lr/pg3": 0.004258,
+      "lr/pg4": 0.012774,
+      "lr/pg5": 0.004258,
+      "lr/pg6": 0.012774,
+      "lr/pg7": 0.004258
+    },
+    {
+      "epoch": 40.0,
+      "time": 9126.82,
+      "train/box_loss": 1.2558,
+      "train/cls_loss": 0.96327,
+      "train/dfl_loss": 1.24435,
+      "metrics/precision(B)": 0.76797,
+      "metrics/recall(B)": 0.70931,
+      "metrics/mAP50(B)": 0.76692,
+      "metrics/mAP50-95(B)": 0.44965,
+      "val/box_loss": 1.13092,
+      "val/cls_loss": 1.3658,
+      "val/dfl_loss": 1.05482,
+      "lr/pg0": 0.006834,
+      "lr/pg1": 0.002278,
+      "lr/pg2": 0.006834,
+      "lr/pg3": 0.002278,
+      "lr/pg4": 0.006834,
+      "lr/pg5": 0.002278,
+      "lr/pg6": 0.006834,
+      "lr/pg7": 0.002278
+    },
+    {
+      "epoch": 46.0,
+      "time": 10383.1,
+      "train/box_loss": 1.21891,
+      "train/cls_loss": 0.82244,
+      "train/dfl_loss": 1.22357,
+      "metrics/precision(B)": 0.76282,
+      "metrics/recall(B)": 0.70827,
+      "metrics/mAP50(B)": 0.77143,
+      "metrics/mAP50-95(B)": 0.45303,
+      "val/box_loss": 1.12921,
+      "val/cls_loss": 1.19671,
+      "val/dfl_loss": 1.06541,
+      "lr/pg0": 0.00327,
+      "lr/pg1": 0.00109,
+      "lr/pg2": 0.00327,
+      "lr/pg3": 0.00109,
+      "lr/pg4": 0.00327,
+      "lr/pg5": 0.00109,
+      "lr/pg6": 0.00327,
+      "lr/pg7": 0.00109
+    },
+    {
+      "epoch": 50.0,
+      "time": 11212.8,
+      "train/box_loss": 1.171,
+      "train/cls_loss": 0.77476,
+      "train/dfl_loss": 1.19599,
+      "metrics/precision(B)": 0.78119,
+      "metrics/recall(B)": 0.70088,
+      "metrics/mAP50(B)": 0.7697,
+      "metrics/mAP50-95(B)": 0.45269,
+      "val/box_loss": 1.14271,
+      "val/cls_loss": 1.13878,
+      "val/dfl_loss": 1.0763,
+      "lr/pg0": 0.000894,
+      "lr/pg1": 0.000298,
+      "lr/pg2": 0.000894,
+      "lr/pg3": 0.000298,
+      "lr/pg4": 0.000894,
+      "lr/pg5": 0.000298,
+      "lr/pg6": 0.000894,
+      "lr/pg7": 0.000298
+    }
+  ],
+  "validation": {
+    "kind": "evaluation",
+    "split": "val",
+    "status": "completed",
+    "created_at_utc": "2026-10-31T13:53:27.570330+00:00",
+    "experiment_id": "E0",
+    "model_role": "trained",
+    "training_run": "C:\\git\\drone-fire-detection\\experiments\\runs\\E0_20261031T101348Z_cb79e173",
+    "config": {
+      "experiment": {
+        "id": "E0",
+        "stage": "baseline",
+        "reference": null,
+        "overrides": {}
+      },
+      "training": {
+        "epochs": 50,
+        "imgsz": 640,
+        "batch": 16,
+        "seed": 42,
+        "optimizer": "MuSGD",
+        "lr0": 0.01,
+        "lrf": 0.01,
+        "cos_lr": false,
+        "momentum": 0.937,
+        "weight_decay": 0.0005,
+        "warmup_epochs": 3.0,
+        "warmup_momentum": 0.8,
+        "warmup_bias_lr": 0.1,
+        "hsv_h": 0.015,
+        "hsv_s": 0.7,
+        "hsv_v": 0.4,
+        "degrees": 0.0,
+        "translate": 0.1,
+        "scale": 0.5,
+        "shear": 0.0,
+        "perspective": 0.0,
+        "flipud": 0.0,
+        "fliplr": 0.5,
+        "mosaic": 1.0,
+        "mixup": 0.0,
+        "copy_paste": 0.0,
+        "close_mosaic": 10,
+        "device": "0",
+        "workers": 0,
+        "patience": 0,
+        "deterministic": true,
+        "amp": false,
+        "cache": false,
+        "nbs": 64,
+        "save_period": 1,
+        "val": true,
+        "plots": true,
+        "compile": false
+      },
+      "evaluation": {
+        "ap_conf": 0.001,
+        "operating_conf": 0.25,
+        "nms_iou": 0.7,
+        "match_iou": 0.5,
+        "max_det": 300,
+        "batch": 16,
+        "warmup_images": 3,
+        "max_case_images": 20
+      },
+      "dataset_config": {
+        "raw_root": "data/raw/D-Fire",
+        "prepared_root": "data/processed/dfire-fold1-v2",
+        "image_policy": "strip_jpeg_trailing_bytes_without_recompression",
+        "split_files": {
+          "train": "data/raw/Data splitting/5-fold cross validation/dfire_train1.txt",
+          "val": "data/raw/Data splitting/5-fold cross validation/dfire_valid1.txt",
+          "test": "data/raw/Data splitting/dfire_test.txt"
+        },
+        "names": [
+          "smoke",
+          "fire"
+        ],
+        "annotation_policy": "clip_drop_degenerate",
+        "annotation_policy_authorization": "User approved derived clipping and zero-area removal on 2026-10-31; raw is preserved.",
+        "cross_split_duplicates": "error",
+        "source_group_identity_available": false,
+        "published_split_identity_verified": false
+      },
+      "suite_path": "configs\\experiments.json",
+      "config_sha256": "abc3cb9f82acdc7e8b25e496d9722dbd8938a87382ac8dc0b32ff66a0d72f11d"
+    },
+    "checkpoint": "C:\\git\\drone-fire-detection\\experiments\\runs\\E0_20261031T101348Z_cb79e173\\train\\weights\\best.pt",
+    "checkpoint_sha256": "6181df582cf9dfbfbeaacf61481df39c565e5f8ac9ddca4765f8c03349c1b696",
+    "dataset_fingerprint": "c3d63dfa73314a36b5522f4651f5fd7d784bd8a054e78916f821160729862e2b",
+    "dataset_summary": {
+      "train": {
+        "images": 13776,
+        "valid_images": 13776,
+        "negative_images": 6223,
+        "objects": {
+          "smoke": 7654,
+          "fire": 9653
+        },
+        "images_with_class": {
+          "smoke": 6778,
+          "fire": 3819
+        }
+      },
+      "val": {
+        "images": 3445,
+        "valid_images": 3445,
+        "negative_images": 1610,
+        "objects": {
+          "smoke": 1889,
+          "fire": 2154
+        },
+        "images_with_class": {
+          "smoke": 1666,
+          "fire": 888
+        }
+      },
+      "test": {
+        "images": 4306,
+        "valid_images": 4306,
+        "negative_images": 2005,
+        "objects": {
+          "smoke": 2311,
+          "fire": 2878
+        },
+        "images_with_class": {
+          "smoke": 2081,
+          "fire": 1115
+        }
+      }
+    },
+    "environment": {
+      "created_at_utc": "2026-10-31T13:53:27.126760+00:00",
+      "python": "3.10.0",
+      "platform": "Windows-10-10.0.26200-SP0",
+      "packages": {
+        "Jinja2": "3.1.6",
+        "MarkupSafe": "3.0.3",
+        "PyYAML": "6.0.3",
+        "certifi": "2026.10.23",
+        "charset-normalizer": "3.5.2",
+        "contourpy": "1.3.2",
+        "cycler": "0.12.1",
+        "filelock": "4.1.0",
+        "fonttools": "4.65.0",
+        "fsspec": "2026.9.0",
+        "idna": "3.20",
+        "kiwisolver": "1.5.1",
+        "matplotlib": "3.10.8",
+        "mpmath": "1.3.0",
+        "networkx": "3.4.2",
+        "numpy": "2.2.6",
+        "opencv-python": "4.12.0.88",
+        "packaging": "26.3",
+        "pillow": "12.1.0",
+        "pip": "21.2.3",
+        "polars": "2.0.0",
+        "polars-runtime-32": "2.0.0",
+        "psutil": "7.2.2",
+        "pyparsing": "3.3.3",
+        "python-dateutil": "3.0.0",
+        "requests": "2.34.2",
+        "scipy": "1.15.3",
+        "setuptools": "57.4.0",
+        "six": "1.17.0",
+        "sympy": "1.14.0",
+        "torch": "2.10.0+cu128",
+        "torchvision": "0.25.0+cu128",
+        "typing_extensions": "4.16.0",
+        "tzdata": "2026.6",
+        "ultralytics": "8.4.0",
+        "ultralytics-thop": "2.2.3",
+        "urllib3": "2.8.0"
+      },
+      "git": {
+        "commit": "44e9e24087cfc9db8dd765bab01ea55d6349dbb6",
+        "status": "",
+        "dirty": false,
+        "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "torch": "2.10.0+cu128",
+      "cuda_runtime": "12.8",
+      "cudnn": 91002,
+      "cuda_available": true,
+      "gpus": [
+        {
+          "index": 0,
+          "name": "NVIDIA GeForce RTX 5070",
+          "capability": [
+            12,
+            0
+          ],
+          "memory_bytes": 12820480000
+        }
+      ],
+      "cuda_compute_probe": "passed",
+      "nvidia_smi": "NVIDIA GeForce RTX 5070, 610.88, 12227 MiB"
+    },
+    "selection": null,
+    "published_split_identity_verified": false,
+    "metrics": {
+      "precision": 0.7739392620052554,
+      "recall": 0.7003204277449923,
+      "map50": 0.7682703613062294,
+      "map50_95": 0.4474509895147398,
+      "f1_macro": 0.7351824544622252,
+      "classes": {
+        "smoke": {
+          "precision": 0.8329457528187415,
+          "recall": 0.7707439073089857,
+          "ap50": 0.8388586587910832,
+          "ap50_95": 0.5242200557284544,
+          "f1": 0.8006385275974276
+        },
+        "fire": {
+          "precision": 0.7149327711917693,
+          "recall": 0.6298969481809988,
+          "ap50": 0.6976820638213757,
+          "ap50_95": 0.3706819233010251,
+          "f1": 0.6697263813270228
+        }
+      },
+      "point_note": "Ultralytics P/R/F1 use the best mean-F1 confidence on this split; AP integrates confidence.",
+      "speed_ms_per_image": {
+        "preprocess": 0.0983785195830339,
+        "inference": 0.8374371552361374,
+        "loss": 0.00033082733814792466,
+        "postprocess": 0.4996189265005042
+      }
+    },
+    "confusion_matrix": {
+      "matrix": [
+        [
+          1548.0,
+          13.0,
+          429.0
+        ],
+        [
+          4.0,
+          1546.0,
+          853.0
+        ],
+        [
+          337.0,
+          595.0,
+          0.0
+        ]
+      ],
+      "axes": "rows=predicted, columns=true; smoke,fire,background",
+      "note": "Ultralytics AP-validation confusion matrix; fixed operating metrics are separate."
+    },
+    "operating": {
+      "settings": {
+        "ap_conf": 0.001,
+        "operating_conf": 0.25,
+        "nms_iou": 0.7,
+        "match_iou": 0.5,
+        "max_det": 300,
+        "batch": 16,
+        "warmup_images": 3,
+        "max_case_images": 20
+      },
+      "matching": "class-aware greedy descending IoU, one-to-one",
+      "classes": {
+        "smoke": {
+          "tp": 1530,
+          "fp": 467,
+          "fn": 359,
+          "precision": 0.7661492238357537,
+          "recall": 0.8099523557437798,
+          "f1": 0.7874420998455995
+        },
+        "fire": {
+          "tp": 1488,
+          "fp": 922,
+          "fn": 666,
+          "precision": 0.6174273858921162,
+          "recall": 0.6908077994428969,
+          "f1": 0.6520595968448729
+        }
+      },
+      "images": 3445,
+      "negative_images": 1610,
+      "negative_fp_detections": 41,
+      "negative_images_with_fp": 37,
+      "inference_ms_per_image": 4.905711085074656,
+      "inference_fps": 203.84404679730173,
+      "pipeline_ms_per_image": 6.819207746270606,
+      "pipeline_fps": 146.64460113374543,
+      "analysis_wall_seconds_including_io_and_case_export": 31.118089199997485,
+      "timing_note": "Batch=1, FP32; warmed before measurement. Inference FPS excludes I/O, preprocessing and NMS."
+    },
+    "wall_seconds": 71.13231829996221,
+    "peak_allocated_bytes": 355068928,
+    "peak_reserved_bytes": 461373440
+  },
+  "source_evaluation_record_sha256": "92cbc689fc1e97b89bd755d29d59da358a8699d9dbae33a679332b530b076df6",
+  "protocol_diagnostic": {
+    "run": "C:\\git\\drone-fire-detection\\experiments\\runs\\E0-evaluation-protocol-check_20261031T135606Z_2a23bd34",
+    "kind": "evaluation_protocol_diagnostic",
+    "not_a_new_training_experiment": true,
+    "checkpoint_sha256": "6181df582cf9dfbfbeaacf61481df39c565e5f8ac9ddca4765f8c03349c1b696",
+    "dataset_fingerprint": "c3d63dfa73314a36b5522f4651f5fd7d784bd8a054e78916f821160729862e2b",
+    "settings": {
+      "data": "C:\\git\\drone-fire-detection\\data\\processed\\dfire-fold1-v2\\data.yaml",
+      "split": "val",
+      "imgsz": 640,
+      "batch": 32,
+      "rect": true,
+      "device": "0",
+      "workers": 0,
+      "conf": 0.001,
+      "iou": 0.7,
+      "max_det": 300,
+      "half": false,
+      "augment": false,
+      "seed": 42,
+      "deterministic": true,
+      "plots": false,
+      "save_json": false,
+      "project": "C:\\git\\drone-fire-detection\\experiments\\runs\\E0-evaluation-protocol-check_20261031T135606Z_2a23bd34",
+      "name": "rectangular",
+      "exist_ok": false
+    },
+    "observed": {
+      "rect": true,
+      "batch": 32,
+      "image_count": 3445,
+      "batch_shapes": [
+        [
+          320,
+          672
+        ],
+        [
+          352,
+          672
+        ],
+        [
+          352,
+          672
+        ],
+        [
+          352,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          384,
+          672
+        ],
+        [
+          416,
+          672
+        ],
+        [
+          416,
+          672
+        ],
+        [
+          448,
+          672
+        ],
+        [
+          448,
+          672
+        ],
+        [
+          448,
+          672
+        ],
+        [
+          448,
+          672
+        ],
+        [
+          448,
+          672
+        ],
+        [
+          480,
+          672
+        ],
+        [
+          512,
+          672
+        ],
+        [
+          512,
+          672
+        ],
+        [
+          512,
+          672
+        ],
+        [
+          512,
+          672
+        ],
+        [
+          512,
+          672
+        ],
+        [
+          512,
+          672
+        ],
+        [
+          512,
+          672
+        ],
+        [
+          512,
+          672
+        ],
+        [
+          512,
+          672
+        ],
+        [
+          544,
+          672
+        ],
+        [
+          672,
+          672
+        ],
+        [
+          672,
+          672
+        ],
+        [
+          672,
+          512
+        ],
+        [
+          672,
+          384
+        ],
+        [
+          672,
+          384
+        ]
+      ]
+    },
+    "metrics": {
+      "map50_95": 0.45291057197351786,
+      "map50": 0.7713882223181847,
+      "precision": 0.76347772611845,
+      "recall": 0.7085330798991178
+    },
+    "wall_seconds": 31.5886848999653,
+    "environment": {
+      "created_at_utc": "2026-10-31T13:56:40.812908+00:00",
+      "python": "3.10.0",
+      "platform": "Windows-10-10.0.26200-SP0",
+      "packages": {
+        "Jinja2": "3.1.6",
+        "MarkupSafe": "3.0.3",
+        "PyYAML": "6.0.3",
+        "certifi": "2026.10.23",
+        "charset-normalizer": "3.5.2",
+        "contourpy": "1.3.2",
+        "cycler": "0.12.1",
+        "filelock": "4.1.0",
+        "fonttools": "4.65.0",
+        "fsspec": "2026.9.0",
+        "idna": "3.20",
+        "kiwisolver": "1.5.1",
+        "matplotlib": "3.10.8",
+        "mpmath": "1.3.0",
+        "networkx": "3.4.2",
+        "numpy": "2.2.6",
+        "opencv-python": "4.12.0.88",
+        "packaging": "26.3",
+        "pillow": "12.1.0",
+        "pip": "21.2.3",
+        "polars": "2.0.0",
+        "polars-runtime-32": "2.0.0",
+        "psutil": "7.2.2",
+        "pyparsing": "3.3.3",
+        "python-dateutil": "3.0.0",
+        "requests": "2.34.2",
+        "scipy": "1.15.3",
+        "setuptools": "57.4.0",
+        "six": "1.17.0",
+        "sympy": "1.14.0",
+        "torch": "2.10.0+cu128",
+        "torchvision": "0.25.0+cu128",
+        "typing_extensions": "4.16.0",
+        "tzdata": "2026.6",
+        "ultralytics": "8.4.0",
+        "ultralytics-thop": "2.2.3",
+        "urllib3": "2.8.0"
+      },
+      "git": {
+        "commit": "44e9e24087cfc9db8dd765bab01ea55d6349dbb6",
+        "status": "",
+        "dirty": false,
+        "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  },
+  "published_reference": {
+    "source": "C:\\git\\drone-fire-detection\\experiments\\runs\\val-published_20261031T100414Z_e58fb232\\evaluation.json",
+    "source_sha256": "a865da59a2dab97359887ad6e392a93b6fb782fae90c10be8f83f9bc0af2e147",
+    "metrics": {
+      "precision": 0.831516655465809,
+      "recall": 0.7724136254540354,
+      "map50": 0.8562418385432302,
+      "map50_95": 0.5497056791454831,
+      "f1_macro": 0.8008204853476575,
+      "classes": {
+        "smoke": {
+          "precision": 0.8855324036967991,
+          "recall": 0.835449349329612,
+          "ap50": 0.9103840329101366,
+          "ap50_95": 0.6330789961672381,
+          "f1": 0.859762131908466
+        },
+        "fire": {
+          "precision": 0.7775009072348189,
+          "recall": 0.7093779015784587,
+          "ap50": 0.8020996441763237,
+          "ap50_95": 0.46633236212372814,
+          "f1": 0.7418788387868489
+        }
+      },
+      "point_note": "Ultralytics P/R/F1 use the best mean-F1 confidence on this split; AP integrates confidence.",
+      "speed_ms_per_image": {
+        "preprocess": 0.09709944913409792,
+        "inference": 0.85354304787296,
+        "loss": 0.0003685630690333459,
+        "postprocess": 0.5159575327236006
+      }
+    },
+    "operating": {
+      "settings": {
+        "ap_conf": 0.001,
+        "operating_conf": 0.25,
+        "nms_iou": 0.7,
+        "match_iou": 0.5,
+        "max_det": 300,
+        "batch": 16,
+        "warmup_images": 3,
+        "max_case_images": 20
+      },
+      "matching": "class-aware greedy descending IoU, one-to-one",
+      "classes": {
+        "smoke": {
+          "tp": 1642,
+          "fp": 353,
+          "fn": 247,
+          "precision": 0.8230576441102757,
+          "recall": 0.8692429857067231,
+          "f1": 0.8455200823892893
+        },
+        "fire": {
+          "tp": 1674,
+          "fp": 734,
+          "fn": 480,
+          "precision": 0.6951827242524917,
+          "recall": 0.7771587743732591,
+          "f1": 0.7338886453309953
+        }
+      },
+      "images": 3445,
+      "negative_images": 1610,
+      "negative_fp_detections": 31,
+      "negative_images_with_fp": 29,
+      "inference_ms_per_image": 5.544730801275879,
+      "inference_fps": 180.35140673915015,
+      "pipeline_ms_per_image": 7.604814923053448,
+      "pipeline_fps": 131.49563929144048,
+      "analysis_wall_seconds_including_io_and_case_export": 34.32149209990166,
+      "timing_note": "Batch=1, FP32; warmed before measurement. Inference FPS excludes I/O, preprocessing and NMS."
+    },
+    "limitation": "Unknown overlap with publisher training data; contextual reference only."
+  },
+  "negative_image_fp_rate": 0.02298136645962733,
+  "test_evaluated": false,
+  "next_planned_experiment": "E1: fresh COCO initialization, 100 epochs",
+  "comparison_directory": "outputs/comparison_20261031T135601Z_a8e7e069"
+}
