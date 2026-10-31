@@ -6,7 +6,7 @@ import statistics
 from collections import defaultdict
 from pathlib import Path
 
-from .common import ROOT, new_run, object_sha256, read_json, write_json
+from .common import ROOT, configure_plotting, new_run, object_sha256, read_json, write_json
 
 
 def compare_runs(run_paths):
@@ -76,6 +76,7 @@ def compare_runs(run_paths):
                       "map50_95_sample_std": statistics.stdev(r["map50_95"] for r in values) if len(values) > 1 else None}
                 for key, values in groups.items()}
     write_json(output / "seed-summary.json", repeated)
+    configure_plotting()
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt

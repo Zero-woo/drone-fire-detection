@@ -4,7 +4,7 @@ import json
 import sys
 from pathlib import Path
 
-from .common import ROOT, environment, read_json, resolve, write_json
+from .common import ROOT, configure_plotting, environment, read_json, resolve, write_json
 
 
 def parser():
@@ -55,6 +55,7 @@ def parser():
 
 
 def main(argv=None):
+    configure_plotting()
     args = parser().parse_args(argv)
     try:
         if args.command == "doctor":

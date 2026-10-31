@@ -2,8 +2,10 @@
 import ast
 import json
 import os
+import subprocess
 import sys
 import unittest
+import tempfile
 import zipfile
 from pathlib import Path
 from unittest.mock import patch
@@ -99,6 +101,46 @@ class ColabTests(unittest.TestCase):
                 ast.parse("".join(cell["source"]))
                 self.assertIsNone(cell["execution_count"])
                 self.assertEqual(cell["outputs"], [])
+
+
+class PlotEnvironmentTests(unittest.TestCase):
+    def test_fresh_process_renders_png_with_inherited_colab_inline_backend(self):
+        root = Path(__file__).resolve().parents[1]
+        with tempfile.TemporaryDirectory(dir=root / "work") as temporary:
+            png = Path(temporary) / "regression.png"
+            env = os.environ.copy()
+            env["MPLBACKEND"] = "module://matplotlib_inline.backend_inline"
+            script = (
+                "import sys,json;sys.path.insert(0,sys.argv[1]);"
+                "from fire_detection.common import configure_plotting;configure_plotting();"
+                "import matplotlib;import matplotlib.pyplot as plt;"
+                "fig,ax=plt.subplots();ax.plot([0,1],[0,1]);fig.savefig(sys.argv[2]);plt.close(fig);"
+                "print(json.dumps({'backend':matplotlib.get_backend()}))"
+            )
+            result = subprocess.run([sys.executable, "-c", script, str(root / "src"), str(png)],
+                                    env=env, capture_output=True, text=True, timeout=60)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(json.loads(result.stdout)["backend"].lower(), "agg")
+            self.assertTrue(png.read_bytes().startswith(b"\x89PNG\r\n\x1a\n"))
+
+    def test_notebook_sanitizes_child_environment_without_changing_kernel_settings(self):
+        path = Path(__file__).resolve().parents[1] / "notebooks/colab_training.ipynb"
+        notebook = read_json(path)
+        source = next("".join(c["source"]) for c in notebook["cells"]
+                      if c["cell_type"] == "code" and "def run(arguments" in "".join(c["source"]))
+        namespace = {}
+        exec(compile(source, str(path), "exec"), namespace)
+        inherited = {"MPLBACKEND": "module://matplotlib_inline.backend_inline",
+                     "CUDA_VISIBLE_DEVICES": "0", "FIRELAB_RUNS_DIR": "/drive/runs"}
+        with patch("subprocess.Popen") as popen:
+            popen.return_value.stdout = iter(())
+            popen.return_value.wait.return_value = 0
+            namespace["run"](["fixture-python"], env=inherited)
+            child = popen.call_args.kwargs["env"]
+        self.assertEqual(child["MPLBACKEND"], "Agg")
+        self.assertEqual(child["CUDA_VISIBLE_DEVICES"], "0")
+        self.assertEqual(child["FIRELAB_RUNS_DIR"], "/drive/runs")
+        self.assertEqual(inherited["MPLBACKEND"], "module://matplotlib_inline.backend_inline")
 
 
 if __name__ == "__main__":

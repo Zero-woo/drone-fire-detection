@@ -89,7 +89,7 @@ def environment(cuda_probe=False):
                 if d.metadata.get("Name")}
     report = {"created_at_utc": utc_now(), "python": platform.python_version(),
               "platform": platform.platform(), "packages": dict(sorted(versions.items())),
-              "git": git_state()}
+              "git": git_state(), "matplotlib_backend_env": os.environ.get("MPLBACKEND")}
     if cuda_probe:
         import torch
         report.update(torch=torch.__version__, cuda_runtime=torch.version.cuda,
@@ -117,7 +117,16 @@ def environment(cuda_probe=False):
     return report
 
 
+def configure_plotting():
+    """File-rendering subprocesses must not inherit the notebook kernel's inline backend."""
+    os.environ["MPLBACKEND"] = "Agg"
+    config = ROOT / "work/matplotlib"
+    config.mkdir(parents=True, exist_ok=True)
+    os.environ["MPLCONFIGDIR"] = str(config)
+
+
 def yolo_class():
+    configure_plotting()
     settings_dir = ROOT / "work/ultralytics"
     settings_dir.mkdir(parents=True, exist_ok=True)
     os.environ["YOLO_CONFIG_DIR"] = str(settings_dir)
