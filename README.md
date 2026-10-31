@@ -1,29 +1,23 @@
 # Drone Fire Detection
 
-CPU-first fire and smoke detection for a university drone project. The software
-uses pretrained models to analyze images and recorded videos, with reproducible
-settings and experiment records. The broader project aims to connect visual
-fire detection with drone navigation and water-balloon release.
+Reproducible YOLOv8n fine-tuning on D-Fire to study the effect of training
+hyperparameters on fire and smoke detection with an NVIDIA RTX 5070.
 
 ## Project Structure
 
 ```text
-configs/                Model provenance and experiment settings
-src/fire_detection/     Model preparation, media input, and inference
+configs/                Dataset, model provenance, and staged experiment settings
+src/fire_detection/     Dataset audit, training, evaluation, and analysis
 firelab.py              Command-line entry point
-scripts/                Environment setup and milestone commits
+scripts/                Windows CUDA environment setup
 tests/                  Automated checks
-data/raw/               Original images and videos
-data/processed/         Extracted frames and processed data
-data/manifests/         Data sources and recording conditions
+data/raw/               Unmodified D-Fire data and official split lists
+data/processed/         Validated training copies, manifests, and data.yaml
 models/                 Downloaded model checkpoints
-experiments/            Experiment plans and roadmap
+experiments/            Experiment roadmap
 experiments/runs/       Generated results for individual runs
-reports/                Reviewed experiment reports
-docs/                   Usage instructions and progress notes
+reports/                Reviewed validation and experiment reports
+docs/                   Usage, project plan, and progress notes
 outputs/                Exported results for sharing
 work/                   Temporary files
 ```
-
-Raw media, model weights, environments, and generated run files are excluded
-from Git.
