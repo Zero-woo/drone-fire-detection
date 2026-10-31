@@ -156,3 +156,62 @@ test는 사용하지 않는다. 기본 compare 대상에서도 제외한다.
 
 가중치·원본·환경·전체 run은 Git에 올리지 않는다. 준비·구현·측정 기록을 별도
 마일스톤으로 커밋한다. 실험 순서는 [ROADMAP](../experiments/ROADMAP.md)을 따른다.
+
+## Colab에서 학습하기
+
+[Colab 노트북](../notebooks/colab_training.ipynb)을 Colab에 업로드하거나 GitHub에서 연다.
+GPU 런타임을 선택하고 위에서부터 실행한다. 기본 실험은 E1이며 자동으로 전체 suite를 실행하지 않는다.
+Python 3.10~3.13을 대상으로 하며 `.venv/bin/python`으로 고정된 프로젝트 의존성을 설치한다.
+노트북 커널에는 프로젝트 패키지를 설치하지 않는다. 첫 설치와 데이터 복사에는 별도 시간이 든다.
+
+PC에서 데이터 ZIP을 준비하는 명령은 다음과 같다.
+
+```powershell
+.\.venv\Scripts\python.exe firelab.py export-colab
+```
+
+현재 데이터에 대해서는 `outputs/colab-data_20261031T143050Z_e8b156a2/dfire-fold1-v2.zip`을
+이미 생성했다. 약 3.15 GB이며 보정된 이미지·라벨, split 목록, manifest/audit만 들어 있다.
+모델·원본 raw 디렉터리·가상환경·전체 학습 run은 포함하지 않는다.
+
+1. Google Drive의 `내 드라이브/drone-fire-detection/` 폴더를 만든다.
+2. 준비된 ZIP을 그 폴더에 업로드한다.
+3. Colab에서 노트북을 열고 `런타임 → 런타임 유형 변경 → GPU`를 선택한다.
+4. 기본 `EXPERIMENT_ID="E1"`을 확인하고 설치·Drive 연결·데이터 import 셀을 실행한다.
+5. 학습 셀과 Validation 셀을 순서대로 실행한다.
+
+ZIP SHA256은 노트북에 고정돼 있다. ZIP을 새로 export하면 출력된 새 SHA256으로
+노트북의 `ARCHIVE_SHA256`도 변경해야 한다. 불일치하면 압축을 풀지 않는다.
+import는 PC에서 기록한 이미지·라벨 바이트를 그대로 검증하고, Windows 절대 경로가 있던
+split 목록과 YAML만 새 경로로 다시 만든다. 데이터 fingerprint는 E0와 같은 값을 유지한다.
+Colab에서는 원본 raw가 필요하지 않으며 `validate-data` 대신 import된 데이터의 검증을 사용한다.
+
+데이터는 `/content/drone-fire-detection/data/processed/`에 놓는다.
+Drive에 있는 수만 개 이미지를 직접 읽지 않고 ZIP 하나를 Colab 로컬 디스크로 복사한다.
+Google도 많은 작은 Drive I/O 대신 archive를 로컬에 풀어 사용하는 방법을 안내한다.
+[Colab FAQ](https://research.google.com/colaboratory/faq.html)
+
+학습·평가 subprocess에 `FIRELAB_RUNS_DIR=/content/drive/MyDrive/drone-fire-detection/runs`를
+지정하므로 checkpoint·JSON·epoch CSV·평가 그림은 Drive에 저장된다.
+이 변수를 지정하지 않으면 기존 Windows 실행 경로와 동작을 유지한다.
+
+런타임이 종료된 경우 설치·Drive 연결·데이터 import를 다시 수행한 뒤
+`RESUME_RUN_NAME`에 해당 Colab run 폴더 이름을 넣고 학습 셀을 실행한다.
+같은 환경 변수와 입력 fingerprint를 사용하며 정상 저장된 `last.pt`의 해시를 확인한다.
+중간 저장이 완료되지 않은 checkpoint는 거부한다. 마지막 정상 저장 epoch 이후 진행분은
+복구되지 않을 수 있다. Windows의 진행 중 run을 그대로 이동해 재개하는 기능은 별도 작업이다.
+
+GPU 종류·사용 시간·메모리는 Colab의 가용성·요금제에 따라 달라진다. 무료 Colab이 RTX 5070보다
+빠르다고 보장할 수 없다. 실제 GPU 이름과 epoch 시간을 확인한 뒤 계속할지 판단한다.
+유료 요금제도 원하는 GPU가 항상 배정되는 것은 아니다.
+[공식 리소스 안내](https://research.google.com/colaboratory/faq.html#resource-limits)
+
+기본 notebook은 FP32·workers 0 등 기존 실험 조건을 유지한다. 속도 개선을 위해 AMP,
+worker 수나 batch를 바꾸면 별도 설정·실험으로 기록한다. Colab과 Windows의 속도는
+같은 하드웨어에서의 학습 조건 비교와 구분하고 환경을 함께 보고한다.
+Windows E0와 Colab E1 사이에는 GPU·OS·Python 환경 차이가 생길 수 있다.
+엄격한 epoch 효과 비교에는 Colab에서도 E0와 E1을 같은 환경으로 실행하는 것이 좋다.
+Test는 최종 모델 선택 후에만 평가한다.
+
+실제 Colab GPU에서의 설치·학습은 이 저장소의 로컬 검증만으로 확인할 수 없다.
+로컬에서는 노트북 구문, 전체 데이터 이전·경로 재작성, 입력 무결성 및 단위 테스트를 검증한다.

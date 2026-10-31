@@ -8,7 +8,7 @@ import traceback
 from pathlib import Path
 
 from .common import (ROOT, environment, file_sha256, inside, new_run, read_json,
-                     resolve, utc_now, write_json, yolo_class)
+                     resolve, runs_root, utc_now, write_json, yolo_class)
 from .config import experiment_config
 from .dataset import verify_dataset, verify_unchanged_dataset
 from .model import spec_for, verify_model
@@ -20,7 +20,7 @@ def train(suite_path=None, experiment_id=None, resume_run=None):
     from ultralytics.optim import MuSGD  # Fail visibly if the pinned optimizer is unavailable.
 
     if resume_run:
-        run = inside(resolve(resume_run), ROOT / "experiments/runs")
+        run = inside(resolve(resume_run), runs_root())
         record = read_json(run / "training.json")
         if record["status"] not in ("failed", "interrupted", "running"):
             raise ValueError("Only an unfinished experiment can be resumed.")

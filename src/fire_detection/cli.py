@@ -18,6 +18,13 @@ def parser():
     verify = sub.add_parser("verify-data", help="Rehash all prepared images, labels and split artifacts")
     verify.add_argument("--path", help="Defaults to prepared_root in configs/dataset.json")
     sub.add_parser("fetch-models", help="Download pinned COCO and published checkpoints")
+    export = sub.add_parser("export-colab", help="Bundle exact prepared inputs for Colab")
+    export.add_argument("--config", default="configs/dataset.json")
+    export.add_argument("--output")
+    importing = sub.add_parser("import-colab", help="Verify and relocate a Colab input bundle")
+    importing.add_argument("--archive", required=True)
+    importing.add_argument("--sha256", required=True)
+    importing.add_argument("--config", default="configs/dataset.json")
     for name in ("plan", "train", "batch"):
         command = sub.add_parser(name)
         command.add_argument("--suite", default="configs/experiments.json")
@@ -68,6 +75,12 @@ def main(argv=None):
             from .model import fetch_model
             for name in ("coco", "published"):
                 print(fetch_model(name))
+        elif args.command == "export-colab":
+            from .colab import export_data
+            print(json.dumps(export_data(resolve(args.config), resolve(args.output) if args.output else None), indent=2))
+        elif args.command == "import-colab":
+            from .colab import import_data
+            print(import_data(resolve(args.archive), args.sha256, resolve(args.config)))
         elif args.command == "plan":
             from .config import experiment_config
             print(json.dumps(experiment_config(resolve(args.suite), args.id), ensure_ascii=False, indent=2))

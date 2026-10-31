@@ -10,6 +10,7 @@ configs/                Dataset, model provenance, and staged experiment setting
 src/fire_detection/     Dataset audit, training, evaluation, and analysis
 firelab.py              Command-line entry point
 scripts/                Windows CUDA environment setup
+notebooks/              Colab training notebook
 tests/                  Automated checks
 data/raw/               Unmodified D-Fire data and official split lists
 data/processed/         Validated training copies, manifests, and data.yaml

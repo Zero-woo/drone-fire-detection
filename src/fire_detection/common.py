@@ -55,8 +55,14 @@ def inside(path, parent):
     return path
 
 
+def runs_root():
+    """Allow explicit persistent run storage, e.g. a mounted Colab Drive directory."""
+    configured = os.environ.get("FIRELAB_RUNS_DIR")
+    return resolve(configured) if configured else ROOT / "experiments/runs"
+
+
 def new_run(prefix, parent=None):
-    parent = Path(parent) if parent else ROOT / "experiments/runs"
+    parent = Path(parent) if parent else runs_root()
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     path = parent / f"{prefix}_{stamp}_{uuid4().hex[:8]}"
     path.mkdir(parents=True, exist_ok=False)

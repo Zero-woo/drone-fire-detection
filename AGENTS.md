@@ -1,7 +1,8 @@
 # Working rules
-- University club project, Windows with an NVIDIA RTX 5070. Explain results to the user in Korean.
+- University club project, Windows with an NVIDIA RTX 5070 and optional Colab GPU runs. Explain results to the user in Korean.
 - Install project dependencies and run project commands with the repository's .venv.
   On Windows, use .\.venv\Scripts\python.exe explicitly; do not install into system Python.
+  On Colab/Linux, use the repository's .venv/bin/python explicitly.
 - Write every README.md file and all commit messages (subjects and bodies) in English.
 - Keep the root README concise: project purpose and directory structure only.
   Subdirectory READMEs should briefly describe that directory's purpose and contents.
@@ -24,3 +25,4 @@
 - The user authorized ordinary milestone commits/pushes to
   https://github.com/Zero-woo/drone-fire-detection.git. Never force-push.
 - Use work/ for scratch, experiments/runs/ for generated runs, outputs/ for exports.
+- Colab can set FIRELAB_RUNS_DIR to a mounted Drive folder for persistent runs; keep input data on the runtime's local disk.
