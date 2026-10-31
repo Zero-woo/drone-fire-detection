@@ -253,5 +253,6 @@
       "status": "completed",
       "frames": 3
     }
-  ]
+  ],
+  "superseded_dataset_note": "Historical preparation snapshot. Active dataset is dfire-fold1-v2; see reports/003_jpeg_integrity_fix.json."
 }

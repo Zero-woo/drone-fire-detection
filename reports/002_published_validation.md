@@ -1,5 +1,11 @@
 # 공개 모델 로컬 Validation 실행
 
+**비교에서 제외된 과거 기록:** 2026-10-31에 이 실행 중 Ultralytics가 JPEG 6개를
+재저장해 입력 바이트가 기록된 manifest와 달라졌음을 확인했다. 아래 수치는 당시
+실행의 이력으로만 보존하며 모델 선택이나 성능 비교에 사용하지 않는다.
+현재 데이터는 픽셀 재압축 없이 JPEG 뒤 부가 바이트를 제거한 `dfire-fold1-v2`이다.
+수정 및 재검증 근거는 [003_jpeg_integrity_fix.md](003_jpeg_integrity_fix.md)에 기록한다.
+
 날짜: 2026-10-31 (KST). 실행 소스: `63b02ea9a3c51f694859fa777bc9060c21e56560`, Git clean.
 전체 수치·설정·환경·해시는 [002_published_validation.json](002_published_validation.json)에 있다.
 

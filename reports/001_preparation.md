@@ -1,5 +1,9 @@
 # D-Fire 환경·데이터 준비 및 통합 점검
 
+이 문서는 최초 준비 시점의 기록이다. 이후 JPEG 자동 재저장 문제를 수정하여
+현재 데이터 경로와 fingerprint가 변경됐다. 최신 상태는
+[003_jpeg_integrity_fix.md](003_jpeg_integrity_fix.md)를 따른다.
+
 날짜: 2026-10-31 (KST). 구현 기준 커밋: `63b02ea9a3c51f694859fa777bc9060c21e56560`.
 기계가 읽을 수 있는 근거와 해시는 [001_preparation.json](001_preparation.json)에 있다.
 

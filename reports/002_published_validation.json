@@ -291,5 +291,20 @@
   "source_record": "experiments\\runs\\val-published_20261031T093845Z_ac5d8ef4\\evaluation.json",
   "source_record_sha256": "7630a0434045b0a4670a0c12169f97cbcfe816dbb1f085823d6951d262e764bb",
   "limitation": "Local validation may overlap publisher training data. Not a generalization estimate or a reproduction of publisher test scores.",
-  "comparison_directory": "outputs/comparison_20261031T094017Z_cef386e0"
+  "comparison_directory": "outputs/comparison_20261031T094017Z_cef386e0",
+  "valid_for_comparison": false,
+  "invalidation": {
+    "reason": "Ultralytics rewrote six validation JPEG copies after the pre-run checksum check. Input bytes no longer match the recorded manifest; scores must not be used for comparisons.",
+    "recorded_at_utc": "2026-10-31T10:00:49.120982+00:00",
+    "evidence": "work/jpeg-mismatch-diagnosis.json",
+    "affected_images": [
+      "val/images/WEB07271.jpg",
+      "val/images/WEB07297.jpg",
+      "val/images/WEB07540.jpg",
+      "val/images/WEB07541.jpg",
+      "val/images/WEB07555.jpg",
+      "val/images/WEB07639.jpg"
+    ],
+    "replacement_prepared_root": "data/processed/dfire-fold1-v2"
+  }
 }
