@@ -69,3 +69,23 @@
 - 노트북 subprocess와 프로젝트 파일 출력 경로에 `Agg` 및 전용 설정 폴더를 지정했다.
 - 수정 후 PNG 렌더링과 단위 테스트 37개를 통과했다. 실제 Colab 학습 완료는 미확인이다.
 - 상세 원인·우회 방법은 [backend 수정 보고서](../reports/006_colab_backend_fix.md)에 기록했다.
+
+## 2026-11-04: 원격 MIG 서버 준비 및 E0 실행
+
+- 사용자가 준비한 원격 checkout에 SSH로 접속해 설치와 데이터를 확인했다.
+- Ubuntu 22.04.2 / Python 3.10.12 / PyTorch 2.10.0+cu128에서 A100 MIG 1g.10gb
+  (GPU 메모리 9,728 MiB)의 CUDA convolution/backward 검사를 통과했다.
+- 최소 이미지에 누락된 `libGL.so.1`을 `libgl1` 및 `libglib2.0-0` 설치로 보완했다.
+  고정된 OpenCV 4.12.0.88을 유지했고 원격 단위 테스트 37개가 모두 통과했다.
+- 데이터 전체 해시 검증에서 기존 fingerprint
+  `c3d63dfa73314a36b5522f4651f5fd7d784bd8a054e78916f821160729862e2b`를 확인했다.
+  COCO checkpoint의 고정 SHA256도 검증했다.
+- 소스 `f9b93483c95a122860e736d2080fb30cbc95d597`의 깨끗한 checkout에서
+  `E0_20261103T164735Z_40e89a6c`를 실행했다. 조건은 50 epochs / 640 / batch 16 /
+  seed 42 / MuSGD / FP32 / workers 0이다.
+- 학습이 정상 완료된 후에만 Validation을 자동 실행하도록 원격 `work/`에 실행기를 두었다.
+  원격 로그는 `work/remote-E0-console.log`, 작업 상태는 `work/remote-e0-job.json`이다.
+- 첫 epoch의 실제 학습 batch 진행을 확인했다. 실행기는 PID 1 아래에서 SIGHUP을
+  무시하며 입출력이 터미널에서 분리돼 있다. SSH 로그아웃·재접속 후에도 동일 PID의
+  학습 진행을 확인했다. PC 종료 후에도 서버가 유지되는 동안 E0와 이후 Validation을 실행한다.
+- 이 항목은 실행 시작 기록이며 완료 성능을 의미하지 않는다. 원격 E1과 최종 Test는 미실행이다.

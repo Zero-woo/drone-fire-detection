@@ -234,3 +234,53 @@ run([PYTHON, "-c", "import matplotlib; print(matplotlib.get_backend())"], cwd=RE
 `Agg`가 출력되면 학습 셀을 다시 실행한다. 데이터 재업로드나 패키지 재설치는 필요하지 않다.
 이 오류가 첫 epoch 전에 발생했다면 checkpoint가 없으므로 새 run으로 시작한다.
 최신 노트북은 모든 subprocess에 파일 저장용 `Agg`를 지정하며 커널의 inline 설정은 유지한다.
+
+## 일반 Linux GPU 서버에서 학습하기
+
+일반 Jupyter/SSH 서버에서는 터미널을 사용한다. Colab 전용 Drive 연결 셀은 사용하지 않는다.
+Python 3.10~3.13과 glibc 2.28 이상이 필요하며, 원격 서버에서도 프로젝트의
+`.venv/bin/python`으로 패키지와 명령을 실행한다. 다음은 새 checkout의 설치 예시다.
+
+```bash
+git clone https://github.com/Zero-woo/drone-fire-detection.git
+cd drone-fire-detection
+python3 -m venv .venv
+.venv/bin/python -m pip install --upgrade pip
+.venv/bin/python -m pip install torch==2.10.0 torchvision==0.25.0 --index-url https://download.pytorch.org/whl/cu128
+.venv/bin/python -m pip install -r requirements.txt -c requirements-lock.txt
+.venv/bin/python -m pip check
+.venv/bin/python firelab.py doctor --require-gpu
+```
+
+Ubuntu 최소 이미지에서 `ImportError: libGL.so.1`이 발생하면 프로젝트 패키지 대신
+누락된 OS 공유 라이브러리를 설치한다. 다음은 root 터미널 기준이며 일반 계정은
+관리자 권한이 필요하다. OpenCV를 다른 배포판으로 바꿔 고정 환경을 우회하지 않는다.
+
+```bash
+apt-get update
+apt-get install -y --no-install-recommends libgl1 libglib2.0-0
+.venv/bin/python -c "import cv2; print(cv2.__version__)"
+.venv/bin/python -m unittest discover -s tests -v
+```
+
+준비된 `dfire-fold1-v2.zip`을 checkout의 `work/`에 업로드하고 다음 명령으로 가져온다.
+`import-colab`은 일반 Linux 서버에서도 사용할 수 있다. ZIP을 수동으로 풀거나
+Windows의 `data.yaml`을 그대로 사용하지 않는다.
+
+```bash
+.venv/bin/python firelab.py import-colab --archive work/dfire-fold1-v2.zip --sha256 cb6c4abbaca83496d4dc578ec804b3e5b5d839ce7c89f1fe58ffc66e4f6a0476
+.venv/bin/python firelab.py verify-data
+.venv/bin/python firelab.py fetch-models
+.venv/bin/python firelab.py plan --id E0
+nohup .venv/bin/python -u firelab.py train --id E0 > work/E0-console.log 2>&1 < /dev/null &
+tail -f work/E0-console.log
+```
+
+위 예시는 E0 단독 학습이다. `tail`의 Ctrl+C는 로그 보기만 종료한다. 완료 후 출력된
+학습 run 경로로 `evaluate --run`을 실행한다. E1은 같은 서버에서 COCO 가중치로
+새로 시작하며 E0 checkpoint를 이어 학습하지 않는다.
+
+MIG `1g.10gb`는 A100의 일부 자원만 제공하므로 전체 A100의 속도로 가정하지 않는다.
+epoch 시간과 메모리를 실제로 확인한다. 서버의 영구 저장 경로와 반환 시 보존 정책을
+확인하고, 반환 전에 `experiments/runs/`의 학습·평가 폴더 전체를 백업한다.
+SSH 비밀번호와 개인키는 소스·보고서·실험 메타데이터에 저장하지 않는다.
