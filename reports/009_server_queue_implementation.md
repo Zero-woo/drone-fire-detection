@@ -30,6 +30,9 @@
 `work/server-detach-probe.log`였다. 이 검증은 실제 SSH 연결을 끊는 대신 부모 종료와
 SIGHUP을 재현했으며 학습/GPU를 사용하지 않았다. 동명 JSON에 근거를 보존한다.
 `.venv/bin/python -m pip check`에서도 의존성 충돌이 없음을 확인했다.
+Linux 전용 큐 테스트는 Windows에서 해당 모듈을 import하기 전에 건너뛰도록 처리했다.
+수정 후 Linux 전체 50개를 다시 통과했다. 플랫폼 분기 모의 점검은 통과했지만
+Windows 네이티브 실행을 검증한 것은 아니다. 학습 중 production 소스는 변경하지 않았다.
 
 핵심 검증은 중복 잠금 거부, PID 재사용 구분, launcher 종료 및 SIGHUP 이후 probe 완료,
 등록 checkpoint 변조 거부, 학습 조건 drift 거부, 다른 run의 평가 연결 거부,

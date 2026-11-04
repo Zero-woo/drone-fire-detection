@@ -10,10 +10,12 @@ from pathlib import Path
 from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
-from fire_detection import queue
+if sys.platform == "linux":
+    from fire_detection import queue
 from fire_detection.common import ROOT, file_sha256, read_json, write_json
 
 
+@unittest.skipUnless(sys.platform == "linux", "Detached queue uses Linux flock, signals and /proc")
 class QueueTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory(dir=ROOT / "work")

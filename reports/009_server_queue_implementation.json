@@ -20,5 +20,13 @@
     "note": "Non-training detachment probe; no model result"
   },
   "baseline_config_matches": true,
-  "dependency_check": "No broken requirements found."
+  "dependency_check": "No broken requirements found.",
+  "portability_followup": {
+    "passed_linux_tests": 50,
+    "log": "work/server-queue-unit-tests-portability.log",
+    "log_sha256": "70c68223537c407488760d2af414f3c5055a1ec885b2f8af7262e18c473eed8d",
+    "platform_guard_simulation": "passed",
+    "native_windows_tested": false,
+    "production_sources_changed_during_training": false
+  }
 }
