@@ -284,3 +284,35 @@ MIG `1g.10gb`는 A100의 일부 자원만 제공하므로 전체 A100의 속도�
 epoch 시간과 메모리를 실제로 확인한다. 서버의 영구 저장 경로와 반환 시 보존 정책을
 확인하고, 반환 전에 `experiments/runs/`의 학습·평가 폴더 전체를 백업한다.
 SSH 비밀번호와 개인키는 소스·보고서·실험 메타데이터에 저장하지 않는다.
+
+## GPU 서버의 Codex 세션 유지
+
+서버에 설치·로그인된 Codex CLI를 tmux 안에서 실행하면 PC 대신 서버가 Codex 프로세스를
+유지한다. 새 대화의 인계 지시는 [서버 Codex 프롬프트](SERVER_CODEX_PROMPT.md)를 사용한다.
+준비된 세션에 접속하는 명령은 다음과 같다.
+
+```bash
+tmux attach -t firelab-codex
+```
+
+tmux에서 빠져나올 때는 `Ctrl+B`를 누른 다음 `D`를 누른다. SSH 종료 후에도 세션은 남는다.
+다시 접속하면 같은 attach 명령을 사용한다. 작업 중 세션에서 `exit`하거나
+`tmux kill-session`을 실행하면 프로세스를 종료할 수 있으므로 detach를 사용한다.
+
+현재 서버 컨테이너는 Codex 내부 샌드박스 생성 시 `bwrap: Failed to make / slave:
+Permission denied`가 발생한다. 준비한 `work/start-server-codex.sh`는 해당 세션에만
+`--sandbox danger-full-access --ask-for-approval never`를 적용하고, 외부 서버 컨테이너
+안에서 프로젝트 명령을 직접 실행한다. 전역 Codex 설정이나 기존 모델 선택은 바꾸지 않는다.
+이 세션은 root 권한이므로 작업 범위를 인계 프롬프트의 저장소·실험으로 한정한다.
+
+Codex가 정상 종료됐다면 같은 tmux 창에서 다음 명령으로 이전 대화를 다시 열 수 있다.
+
+```bash
+bash work/start-server-codex.sh resume --last
+```
+
+새 SSH 셸에서 `codex`를 찾지 못하면 `/root/.local/bin/codex`를 사용한다.
+
+tmux는 세션을 유지한다. Codex의 사용량 제한·인증 만료·서버 재시작으로 인한 중단까지
+해결하지는 않는다. 학습 큐는 Codex와 별개의 서버 작업자로 실행하고, 상태 JSON·로그와
+checkpoint로 진행 상태와 재개 방법을 남기도록 인계 프롬프트에 명시했다.
