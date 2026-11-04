@@ -1,0 +1,1165 @@
+{
+  "observed_at_utc": "2026-11-04T05:59:46.728349+00:00",
+  "status": "training_in_progress",
+  "completed_experiment": false,
+  "training_run": "/root/drone-fire-detection/experiments/runs/E1_20261104T055200Z_0a27f400",
+  "plan_sha256": "5145c3ddcb708feb6f8634306b985076c7d06416de2400c15bb9b78273a2f95f",
+  "queue": {
+    "kind": "detached_core_queue",
+    "status": "training",
+    "plan_path": "/root/drone-fire-detection/work/server-queue-plan.json",
+    "plan_sha256": "5145c3ddcb708feb6f8634306b985076c7d06416de2400c15bb9b78273a2f95f",
+    "created_at_utc": "2026-11-04T05:50:11.014592+00:00",
+    "tasks": [
+      {
+        "id": "E1",
+        "status": "training",
+        "training_run": "/root/drone-fire-detection/experiments/runs/E1_20261104T055200Z_0a27f400",
+        "validation_run": null,
+        "last_completed_epoch": 1,
+        "started_at_utc": "2026-11-04T05:51:15.713102+00:00",
+        "workers": [
+          {
+            "pid": 5517,
+            "process_created_at": 1793771475.69,
+            "stage": "train",
+            "log": "/root/drone-fire-detection/work/server-queue-jobs/E1/train-1.log",
+            "receipt": "/root/drone-fire-detection/work/server-queue-jobs/E1/train-1.json",
+            "started_at_utc": "2026-11-04T05:51:15.717614+00:00"
+          }
+        ],
+        "train_receipt": "/root/drone-fire-detection/work/server-queue-jobs/E1/train-1.json",
+        "train_log": "/root/drone-fire-detection/work/server-queue-jobs/E1/train-1.log",
+        "worker": {
+          "pid": 5517,
+          "process_created_at": 1793771475.69,
+          "stage": "train",
+          "log": "/root/drone-fire-detection/work/server-queue-jobs/E1/train-1.log",
+          "receipt": "/root/drone-fire-detection/work/server-queue-jobs/E1/train-1.json",
+          "started_at_utc": "2026-11-04T05:51:15.717614+00:00"
+        }
+      },
+      {
+        "id": "E2-A",
+        "status": "pending",
+        "training_run": null,
+        "validation_run": null,
+        "last_completed_epoch": 0
+      },
+      {
+        "id": "E2-C",
+        "status": "pending",
+        "training_run": null,
+        "validation_run": null,
+        "last_completed_epoch": 0
+      },
+      {
+        "id": "E3-HSV",
+        "status": "pending",
+        "training_run": null,
+        "validation_run": null,
+        "last_completed_epoch": 0
+      },
+      {
+        "id": "E3-Mosaic",
+        "status": "pending",
+        "training_run": null,
+        "validation_run": null,
+        "last_completed_epoch": 0
+      },
+      {
+        "id": "E4-800",
+        "status": "pending",
+        "training_run": null,
+        "validation_run": null,
+        "last_completed_epoch": 0
+      }
+    ],
+    "next_action": "verify training then common Validation",
+    "manager": {
+      "pid": 5472,
+      "process_created_at": 1793771426.61,
+      "sid": 5472
+    },
+    "updated_at_utc": "2026-11-04T05:59:46.395977+00:00",
+    "started_at_utc": "2026-11-04T05:50:26.729529+00:00",
+    "plan": {
+      "kind": "authorized_core_queue",
+      "created_at_utc": "2026-11-04T05:49:52.420007+00:00",
+      "ids": [
+        "E1",
+        "E2-A",
+        "E2-C",
+        "E3-HSV",
+        "E3-Mosaic",
+        "E4-800"
+      ],
+      "configs": {
+        "E1": {
+          "experiment": {
+            "id": "E1",
+            "stage": "epochs",
+            "reference": "E0",
+            "overrides": {
+              "epochs": 100
+            }
+          },
+          "training": {
+            "epochs": 100,
+            "imgsz": 640,
+            "batch": 16,
+            "seed": 42,
+            "optimizer": "MuSGD",
+            "lr0": 0.01,
+            "lrf": 0.01,
+            "cos_lr": false,
+            "momentum": 0.937,
+            "weight_decay": 0.0005,
+            "warmup_epochs": 3.0,
+            "warmup_momentum": 0.8,
+            "warmup_bias_lr": 0.1,
+            "hsv_h": 0.015,
+            "hsv_s": 0.7,
+            "hsv_v": 0.4,
+            "degrees": 0.0,
+            "translate": 0.1,
+            "scale": 0.5,
+            "shear": 0.0,
+            "perspective": 0.0,
+            "flipud": 0.0,
+            "fliplr": 0.5,
+            "mosaic": 1.0,
+            "mixup": 0.0,
+            "copy_paste": 0.0,
+            "close_mosaic": 10,
+            "device": "0",
+            "workers": 0,
+            "patience": 0,
+            "deterministic": true,
+            "amp": false,
+            "cache": false,
+            "nbs": 64,
+            "save_period": 1,
+            "val": true,
+            "plots": true,
+            "compile": false
+          },
+          "evaluation": {
+            "ap_conf": 0.001,
+            "operating_conf": 0.25,
+            "nms_iou": 0.7,
+            "match_iou": 0.5,
+            "max_det": 300,
+            "batch": 16,
+            "warmup_images": 3,
+            "max_case_images": 20
+          },
+          "dataset_config": {
+            "raw_root": "data/raw/D-Fire",
+            "prepared_root": "data/processed/dfire-fold1-v2",
+            "image_policy": "strip_jpeg_trailing_bytes_without_recompression",
+            "split_files": {
+              "train": "data/raw/Data splitting/5-fold cross validation/dfire_train1.txt",
+              "val": "data/raw/Data splitting/5-fold cross validation/dfire_valid1.txt",
+              "test": "data/raw/Data splitting/dfire_test.txt"
+            },
+            "names": [
+              "smoke",
+              "fire"
+            ],
+            "annotation_policy": "clip_drop_degenerate",
+            "annotation_policy_authorization": "User approved derived clipping and zero-area removal on 2026-10-31; raw is preserved.",
+            "cross_split_duplicates": "error",
+            "source_group_identity_available": false,
+            "published_split_identity_verified": false
+          },
+          "suite_path": "configs/experiments.json",
+          "config_sha256": "aaf11cea4673215576241253d2067a6ef9f31f44049a76ec3c62758446dfde87"
+        },
+        "E2-A": {
+          "experiment": {
+            "id": "E2-A",
+            "stage": "lr",
+            "reference": "E1",
+            "overrides": {
+              "epochs": 100,
+              "lr0": 0.005
+            }
+          },
+          "training": {
+            "epochs": 100,
+            "imgsz": 640,
+            "batch": 16,
+            "seed": 42,
+            "optimizer": "MuSGD",
+            "lr0": 0.005,
+            "lrf": 0.01,
+            "cos_lr": false,
+            "momentum": 0.937,
+            "weight_decay": 0.0005,
+            "warmup_epochs": 3.0,
+            "warmup_momentum": 0.8,
+            "warmup_bias_lr": 0.1,
+            "hsv_h": 0.015,
+            "hsv_s": 0.7,
+            "hsv_v": 0.4,
+            "degrees": 0.0,
+            "translate": 0.1,
+            "scale": 0.5,
+            "shear": 0.0,
+            "perspective": 0.0,
+            "flipud": 0.0,
+            "fliplr": 0.5,
+            "mosaic": 1.0,
+            "mixup": 0.0,
+            "copy_paste": 0.0,
+            "close_mosaic": 10,
+            "device": "0",
+            "workers": 0,
+            "patience": 0,
+            "deterministic": true,
+            "amp": false,
+            "cache": false,
+            "nbs": 64,
+            "save_period": 1,
+            "val": true,
+            "plots": true,
+            "compile": false
+          },
+          "evaluation": {
+            "ap_conf": 0.001,
+            "operating_conf": 0.25,
+            "nms_iou": 0.7,
+            "match_iou": 0.5,
+            "max_det": 300,
+            "batch": 16,
+            "warmup_images": 3,
+            "max_case_images": 20
+          },
+          "dataset_config": {
+            "raw_root": "data/raw/D-Fire",
+            "prepared_root": "data/processed/dfire-fold1-v2",
+            "image_policy": "strip_jpeg_trailing_bytes_without_recompression",
+            "split_files": {
+              "train": "data/raw/Data splitting/5-fold cross validation/dfire_train1.txt",
+              "val": "data/raw/Data splitting/5-fold cross validation/dfire_valid1.txt",
+              "test": "data/raw/Data splitting/dfire_test.txt"
+            },
+            "names": [
+              "smoke",
+              "fire"
+            ],
+            "annotation_policy": "clip_drop_degenerate",
+            "annotation_policy_authorization": "User approved derived clipping and zero-area removal on 2026-10-31; raw is preserved.",
+            "cross_split_duplicates": "error",
+            "source_group_identity_available": false,
+            "published_split_identity_verified": false
+          },
+          "suite_path": "configs/experiments.json",
+          "config_sha256": "88a5feee9c5e430549e51783ddc1552f9c431a676f099a7662bb66156cf9964e"
+        },
+        "E2-C": {
+          "experiment": {
+            "id": "E2-C",
+            "stage": "lr",
+            "reference": "E1",
+            "overrides": {
+              "epochs": 100,
+              "lr0": 0.02
+            }
+          },
+          "training": {
+            "epochs": 100,
+            "imgsz": 640,
+            "batch": 16,
+            "seed": 42,
+            "optimizer": "MuSGD",
+            "lr0": 0.02,
+            "lrf": 0.01,
+            "cos_lr": false,
+            "momentum": 0.937,
+            "weight_decay": 0.0005,
+            "warmup_epochs": 3.0,
+            "warmup_momentum": 0.8,
+            "warmup_bias_lr": 0.1,
+            "hsv_h": 0.015,
+            "hsv_s": 0.7,
+            "hsv_v": 0.4,
+            "degrees": 0.0,
+            "translate": 0.1,
+            "scale": 0.5,
+            "shear": 0.0,
+            "perspective": 0.0,
+            "flipud": 0.0,
+            "fliplr": 0.5,
+            "mosaic": 1.0,
+            "mixup": 0.0,
+            "copy_paste": 0.0,
+            "close_mosaic": 10,
+            "device": "0",
+            "workers": 0,
+            "patience": 0,
+            "deterministic": true,
+            "amp": false,
+            "cache": false,
+            "nbs": 64,
+            "save_period": 1,
+            "val": true,
+            "plots": true,
+            "compile": false
+          },
+          "evaluation": {
+            "ap_conf": 0.001,
+            "operating_conf": 0.25,
+            "nms_iou": 0.7,
+            "match_iou": 0.5,
+            "max_det": 300,
+            "batch": 16,
+            "warmup_images": 3,
+            "max_case_images": 20
+          },
+          "dataset_config": {
+            "raw_root": "data/raw/D-Fire",
+            "prepared_root": "data/processed/dfire-fold1-v2",
+            "image_policy": "strip_jpeg_trailing_bytes_without_recompression",
+            "split_files": {
+              "train": "data/raw/Data splitting/5-fold cross validation/dfire_train1.txt",
+              "val": "data/raw/Data splitting/5-fold cross validation/dfire_valid1.txt",
+              "test": "data/raw/Data splitting/dfire_test.txt"
+            },
+            "names": [
+              "smoke",
+              "fire"
+            ],
+            "annotation_policy": "clip_drop_degenerate",
+            "annotation_policy_authorization": "User approved derived clipping and zero-area removal on 2026-10-31; raw is preserved.",
+            "cross_split_duplicates": "error",
+            "source_group_identity_available": false,
+            "published_split_identity_verified": false
+          },
+          "suite_path": "configs/experiments.json",
+          "config_sha256": "6cbcdbdfcadc0cb5e0370c80c0a7a2c293287dd6601d2ef8435436e4320554dc"
+        },
+        "E3-HSV": {
+          "experiment": {
+            "id": "E3-HSV",
+            "stage": "augmentation",
+            "reference": "E1",
+            "overrides": {
+              "epochs": 100,
+              "hsv_s": 0.5,
+              "hsv_v": 0.2
+            }
+          },
+          "training": {
+            "epochs": 100,
+            "imgsz": 640,
+            "batch": 16,
+            "seed": 42,
+            "optimizer": "MuSGD",
+            "lr0": 0.01,
+            "lrf": 0.01,
+            "cos_lr": false,
+            "momentum": 0.937,
+            "weight_decay": 0.0005,
+            "warmup_epochs": 3.0,
+            "warmup_momentum": 0.8,
+            "warmup_bias_lr": 0.1,
+            "hsv_h": 0.015,
+            "hsv_s": 0.5,
+            "hsv_v": 0.2,
+            "degrees": 0.0,
+            "translate": 0.1,
+            "scale": 0.5,
+            "shear": 0.0,
+            "perspective": 0.0,
+            "flipud": 0.0,
+            "fliplr": 0.5,
+            "mosaic": 1.0,
+            "mixup": 0.0,
+            "copy_paste": 0.0,
+            "close_mosaic": 10,
+            "device": "0",
+            "workers": 0,
+            "patience": 0,
+            "deterministic": true,
+            "amp": false,
+            "cache": false,
+            "nbs": 64,
+            "save_period": 1,
+            "val": true,
+            "plots": true,
+            "compile": false
+          },
+          "evaluation": {
+            "ap_conf": 0.001,
+            "operating_conf": 0.25,
+            "nms_iou": 0.7,
+            "match_iou": 0.5,
+            "max_det": 300,
+            "batch": 16,
+            "warmup_images": 3,
+            "max_case_images": 20
+          },
+          "dataset_config": {
+            "raw_root": "data/raw/D-Fire",
+            "prepared_root": "data/processed/dfire-fold1-v2",
+            "image_policy": "strip_jpeg_trailing_bytes_without_recompression",
+            "split_files": {
+              "train": "data/raw/Data splitting/5-fold cross validation/dfire_train1.txt",
+              "val": "data/raw/Data splitting/5-fold cross validation/dfire_valid1.txt",
+              "test": "data/raw/Data splitting/dfire_test.txt"
+            },
+            "names": [
+              "smoke",
+              "fire"
+            ],
+            "annotation_policy": "clip_drop_degenerate",
+            "annotation_policy_authorization": "User approved derived clipping and zero-area removal on 2026-10-31; raw is preserved.",
+            "cross_split_duplicates": "error",
+            "source_group_identity_available": false,
+            "published_split_identity_verified": false
+          },
+          "suite_path": "configs/experiments.json",
+          "config_sha256": "37d9b2274430b2975267480a18a0147be78d2564d183cd770a65e4659e63cc92"
+        },
+        "E3-Mosaic": {
+          "experiment": {
+            "id": "E3-Mosaic",
+            "stage": "augmentation",
+            "reference": "E1",
+            "overrides": {
+              "epochs": 100,
+              "mosaic": 0.5
+            }
+          },
+          "training": {
+            "epochs": 100,
+            "imgsz": 640,
+            "batch": 16,
+            "seed": 42,
+            "optimizer": "MuSGD",
+            "lr0": 0.01,
+            "lrf": 0.01,
+            "cos_lr": false,
+            "momentum": 0.937,
+            "weight_decay": 0.0005,
+            "warmup_epochs": 3.0,
+            "warmup_momentum": 0.8,
+            "warmup_bias_lr": 0.1,
+            "hsv_h": 0.015,
+            "hsv_s": 0.7,
+            "hsv_v": 0.4,
+            "degrees": 0.0,
+            "translate": 0.1,
+            "scale": 0.5,
+            "shear": 0.0,
+            "perspective": 0.0,
+            "flipud": 0.0,
+            "fliplr": 0.5,
+            "mosaic": 0.5,
+            "mixup": 0.0,
+            "copy_paste": 0.0,
+            "close_mosaic": 10,
+            "device": "0",
+            "workers": 0,
+            "patience": 0,
+            "deterministic": true,
+            "amp": false,
+            "cache": false,
+            "nbs": 64,
+            "save_period": 1,
+            "val": true,
+            "plots": true,
+            "compile": false
+          },
+          "evaluation": {
+            "ap_conf": 0.001,
+            "operating_conf": 0.25,
+            "nms_iou": 0.7,
+            "match_iou": 0.5,
+            "max_det": 300,
+            "batch": 16,
+            "warmup_images": 3,
+            "max_case_images": 20
+          },
+          "dataset_config": {
+            "raw_root": "data/raw/D-Fire",
+            "prepared_root": "data/processed/dfire-fold1-v2",
+            "image_policy": "strip_jpeg_trailing_bytes_without_recompression",
+            "split_files": {
+              "train": "data/raw/Data splitting/5-fold cross validation/dfire_train1.txt",
+              "val": "data/raw/Data splitting/5-fold cross validation/dfire_valid1.txt",
+              "test": "data/raw/Data splitting/dfire_test.txt"
+            },
+            "names": [
+              "smoke",
+              "fire"
+            ],
+            "annotation_policy": "clip_drop_degenerate",
+            "annotation_policy_authorization": "User approved derived clipping and zero-area removal on 2026-10-31; raw is preserved.",
+            "cross_split_duplicates": "error",
+            "source_group_identity_available": false,
+            "published_split_identity_verified": false
+          },
+          "suite_path": "configs/experiments.json",
+          "config_sha256": "4252ab4c6e31dae2c3c240128854c4dcc2ab783f622272ea8f9396837642bcee"
+        },
+        "E4-800": {
+          "experiment": {
+            "id": "E4-800",
+            "stage": "resolution",
+            "reference": "E1",
+            "overrides": {
+              "epochs": 100,
+              "imgsz": 800
+            }
+          },
+          "training": {
+            "epochs": 100,
+            "imgsz": 800,
+            "batch": 16,
+            "seed": 42,
+            "optimizer": "MuSGD",
+            "lr0": 0.01,
+            "lrf": 0.01,
+            "cos_lr": false,
+            "momentum": 0.937,
+            "weight_decay": 0.0005,
+            "warmup_epochs": 3.0,
+            "warmup_momentum": 0.8,
+            "warmup_bias_lr": 0.1,
+            "hsv_h": 0.015,
+            "hsv_s": 0.7,
+            "hsv_v": 0.4,
+            "degrees": 0.0,
+            "translate": 0.1,
+            "scale": 0.5,
+            "shear": 0.0,
+            "perspective": 0.0,
+            "flipud": 0.0,
+            "fliplr": 0.5,
+            "mosaic": 1.0,
+            "mixup": 0.0,
+            "copy_paste": 0.0,
+            "close_mosaic": 10,
+            "device": "0",
+            "workers": 0,
+            "patience": 0,
+            "deterministic": true,
+            "amp": false,
+            "cache": false,
+            "nbs": 64,
+            "save_period": 1,
+            "val": true,
+            "plots": true,
+            "compile": false
+          },
+          "evaluation": {
+            "ap_conf": 0.001,
+            "operating_conf": 0.25,
+            "nms_iou": 0.7,
+            "match_iou": 0.5,
+            "max_det": 300,
+            "batch": 16,
+            "warmup_images": 3,
+            "max_case_images": 20
+          },
+          "dataset_config": {
+            "raw_root": "data/raw/D-Fire",
+            "prepared_root": "data/processed/dfire-fold1-v2",
+            "image_policy": "strip_jpeg_trailing_bytes_without_recompression",
+            "split_files": {
+              "train": "data/raw/Data splitting/5-fold cross validation/dfire_train1.txt",
+              "val": "data/raw/Data splitting/5-fold cross validation/dfire_valid1.txt",
+              "test": "data/raw/Data splitting/dfire_test.txt"
+            },
+            "names": [
+              "smoke",
+              "fire"
+            ],
+            "annotation_policy": "clip_drop_degenerate",
+            "annotation_policy_authorization": "User approved derived clipping and zero-area removal on 2026-10-31; raw is preserved.",
+            "cross_split_duplicates": "error",
+            "source_group_identity_available": false,
+            "published_split_identity_verified": false
+          },
+          "suite_path": "configs/experiments.json",
+          "config_sha256": "8978f4cea45d6140dabea6862285d5e9d005e6620279c5d5d4dd04eb53217329"
+        }
+      },
+      "dataset_fingerprint": "c3d63dfa73314a36b5522f4651f5fd7d784bd8a054e78916f821160729862e2b",
+      "coco_sha256": "f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36",
+      "baseline_training_run": "/root/drone-fire-detection/experiments/runs/E0_20261103T164735Z_40e89a6c",
+      "baseline_validation_run": "/root/drone-fire-detection/experiments/runs/val-E0_20261103T221126Z_f11e3517",
+      "baseline_training_sha256": "7ed3d17e6f11b1a7cd7006e7feea0075e3d6f8f3107bbae9ed379d4018074bc0",
+      "baseline_validation_sha256": "0b7c4be9cbc078a12342d3295113be60bb35805b3642360d89de09f7be4082f9",
+      "pinned_files": {
+        "configs/experiments.json": "77a7283f67a87ae8efef98a5b6ea8a26835b8bcbbae0e2ffcd8d2b14c0be6d8c",
+        "configs/models.json": "e2bee025110c96b70b4c4c47528154395e5f35646d775ae5d84073feace12dbd",
+        "configs/dataset.json": "52aa2911dbc50d7ad055ddb5b6d75bba8c1e5a2f682840d9c204c6fff5fde2dd",
+        "scripts/training_queue.py": "42efbfbdba3c7247f7f08671a5c0637b4572b0045b2bf87e5079b87fae14aca1",
+        "src/fire_detection/__init__.py": "81666cc82422b66bcd8d1225cac4ee6ddb6958fe96801a32272345533c2684f1",
+        "src/fire_detection/analysis.py": "1842a3b3dd04466e078cf5ac428eb6fe04acd7d34c18fa05e65e13a72950df04",
+        "src/fire_detection/cli.py": "e848d3c7a29622bbe73dd652671e12e102f57f769bbe20f723a30bd7c7cde851",
+        "src/fire_detection/colab.py": "7af7d95eba6ea04f50d69be8c87a4c42189c67b6b700581c6271d3f955d0606c",
+        "src/fire_detection/common.py": "1dde95aa15b3f1cbafc76682966980c03c58b9710ffe5b118795440efd068805",
+        "src/fire_detection/config.py": "5f5943c7c161d19769084cad2430c69bf2b69704c9cae852812e8e677e570a5b",
+        "src/fire_detection/dataset.py": "9ab878401ec88a2f9a995ed01a270e785e595bc00a242a0defb26080d4c62ac8",
+        "src/fire_detection/evaluation.py": "0873d1dc4d4824f2402337b914b7694bae4491a7475ba1fc6c177cec1eab2021",
+        "src/fire_detection/inference.py": "fb0066a45f2641210b2b430d454fea61246899b95a6532a35821664fdeed7378",
+        "src/fire_detection/model.py": "745af2313938d04928ea81da8ce08a01c0738e5341ae97530e08341c13e78f8d",
+        "src/fire_detection/queue.py": "c1ed700fb325920dd195b2db78f0e6a56d5553a8325dd9682fffe931db089cc6",
+        "src/fire_detection/training.py": "c4d200b3e298d395a20a3646f04e20bf7b97e6df5d46184e551bd0b8d58b577f"
+      },
+      "git": {
+        "commit": "6184d2b9e232a8695028a09b8ad5f5bf45c1e48c",
+        "status": "",
+        "dirty": false,
+        "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "after_queue": "awaiting_analysis",
+      "retry_policy": "No automatic retry; explicit --resume only after interruption and checksum verification",
+      "plan_sha256": "5145c3ddcb708feb6f8634306b985076c7d06416de2400c15bb9b78273a2f95f"
+    },
+    "current_experiment": "E1",
+    "next_experiment": "E2-A"
+  },
+  "manager_process": {
+    "pid": 5472,
+    "process_created_at": 1793771426.61,
+    "sid": 5472,
+    "alive": true,
+    "ppid": 1,
+    "stdio": {
+      "0": "/dev/null",
+      "1": "/root/drone-fire-detection/work/server-queue.log",
+      "2": "/root/drone-fire-detection/work/server-queue.log"
+    },
+    "sighup_ignored": true
+  },
+  "worker_process": {
+    "pid": 5517,
+    "process_created_at": 1793771475.69,
+    "stage": "train",
+    "log": "/root/drone-fire-detection/work/server-queue-jobs/E1/train-1.log",
+    "receipt": "/root/drone-fire-detection/work/server-queue-jobs/E1/train-1.json",
+    "started_at_utc": "2026-11-04T05:51:15.717614+00:00",
+    "alive": true,
+    "ppid": 5472,
+    "sid": 5517,
+    "stdio": {
+      "0": "/dev/null",
+      "1": "/root/drone-fire-detection/work/server-queue-jobs/E1/train-1.log",
+      "2": "/root/drone-fire-detection/work/server-queue-jobs/E1/train-1.log"
+    },
+    "sighup_ignored": true
+  },
+  "training_record_at_observation": {
+    "kind": "training",
+    "experiment_id": "E1",
+    "config": {
+      "experiment": {
+        "id": "E1",
+        "stage": "epochs",
+        "reference": "E0",
+        "overrides": {
+          "epochs": 100
+        }
+      },
+      "training": {
+        "epochs": 100,
+        "imgsz": 640,
+        "batch": 16,
+        "seed": 42,
+        "optimizer": "MuSGD",
+        "lr0": 0.01,
+        "lrf": 0.01,
+        "cos_lr": false,
+        "momentum": 0.937,
+        "weight_decay": 0.0005,
+        "warmup_epochs": 3.0,
+        "warmup_momentum": 0.8,
+        "warmup_bias_lr": 0.1,
+        "hsv_h": 0.015,
+        "hsv_s": 0.7,
+        "hsv_v": 0.4,
+        "degrees": 0.0,
+        "translate": 0.1,
+        "scale": 0.5,
+        "shear": 0.0,
+        "perspective": 0.0,
+        "flipud": 0.0,
+        "fliplr": 0.5,
+        "mosaic": 1.0,
+        "mixup": 0.0,
+        "copy_paste": 0.0,
+        "close_mosaic": 10,
+        "device": "0",
+        "workers": 0,
+        "patience": 0,
+        "deterministic": true,
+        "amp": false,
+        "cache": false,
+        "nbs": 64,
+        "save_period": 1,
+        "val": true,
+        "plots": true,
+        "compile": false
+      },
+      "evaluation": {
+        "ap_conf": 0.001,
+        "operating_conf": 0.25,
+        "nms_iou": 0.7,
+        "match_iou": 0.5,
+        "max_det": 300,
+        "batch": 16,
+        "warmup_images": 3,
+        "max_case_images": 20
+      },
+      "dataset_config": {
+        "raw_root": "data/raw/D-Fire",
+        "prepared_root": "data/processed/dfire-fold1-v2",
+        "image_policy": "strip_jpeg_trailing_bytes_without_recompression",
+        "split_files": {
+          "train": "data/raw/Data splitting/5-fold cross validation/dfire_train1.txt",
+          "val": "data/raw/Data splitting/5-fold cross validation/dfire_valid1.txt",
+          "test": "data/raw/Data splitting/dfire_test.txt"
+        },
+        "names": [
+          "smoke",
+          "fire"
+        ],
+        "annotation_policy": "clip_drop_degenerate",
+        "annotation_policy_authorization": "User approved derived clipping and zero-area removal on 2026-10-31; raw is preserved.",
+        "cross_split_duplicates": "error",
+        "source_group_identity_available": false,
+        "published_split_identity_verified": false
+      },
+      "suite_path": "configs/experiments.json",
+      "config_sha256": "aaf11cea4673215576241253d2067a6ef9f31f44049a76ec3c62758446dfde87"
+    },
+    "initial_model": {
+      "id": "coco-yolov8n",
+      "revision": "github-release-asset:340060940",
+      "url": "https://github.com/ultralytics/assets/releases/download/v8.4.0/yolov8n.pt",
+      "sha256": "f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36",
+      "size_bytes": 6549796,
+      "local_path": "models/coco/yolov8n.pt",
+      "source": "https://github.com/ultralytics/assets/releases/tag/v8.4.0"
+    },
+    "attempts": [
+      {
+        "number": 1,
+        "started_at_utc": "2026-11-04T05:52:00.828696+00:00",
+        "environment": {
+          "created_at_utc": "2026-11-04T05:52:00.059944+00:00",
+          "python": "3.10.12",
+          "platform": "Linux-5.15.0-151-generic-x86_64-with-glibc2.35",
+          "packages": {
+            "Jinja2": "3.1.6",
+            "MarkupSafe": "3.0.3",
+            "PyYAML": "6.0.3",
+            "certifi": "2026.10.23",
+            "charset-normalizer": "3.5.2",
+            "contourpy": "1.3.2",
+            "cuda-bindings": "12.9.4",
+            "cuda-pathfinder": "1.6.0",
+            "cycler": "0.12.1",
+            "filelock": "4.1.0",
+            "fonttools": "4.65.0",
+            "fsspec": "2026.9.0",
+            "idna": "3.20",
+            "kiwisolver": "1.5.1",
+            "matplotlib": "3.10.8",
+            "mpmath": "1.3.0",
+            "networkx": "3.4.2",
+            "numpy": "2.2.6",
+            "nvidia-cublas-cu12": "12.8.4.1",
+            "nvidia-cuda-cupti-cu12": "12.8.90",
+            "nvidia-cuda-nvrtc-cu12": "12.8.93",
+            "nvidia-cuda-runtime-cu12": "12.8.90",
+            "nvidia-cudnn-cu12": "9.10.2.21",
+            "nvidia-cufft-cu12": "11.3.3.83",
+            "nvidia-cufile-cu12": "1.13.1.3",
+            "nvidia-curand-cu12": "10.3.9.90",
+            "nvidia-cusolver-cu12": "11.7.3.90",
+            "nvidia-cusparse-cu12": "12.5.8.93",
+            "nvidia-cusparselt-cu12": "0.7.1",
+            "nvidia-nccl-cu12": "2.27.5",
+            "nvidia-nvjitlink-cu12": "12.8.93",
+            "nvidia-nvshmem-cu12": "3.4.5",
+            "nvidia-nvtx-cu12": "12.8.90",
+            "opencv-python": "4.12.0.88",
+            "packaging": "26.3",
+            "pillow": "12.1.0",
+            "pip": "26.3",
+            "polars": "2.0.0",
+            "polars-runtime-32": "2.0.0",
+            "psutil": "7.2.2",
+            "pyparsing": "3.3.3",
+            "python-dateutil": "3.0.0",
+            "requests": "2.34.2",
+            "scipy": "1.15.3",
+            "setuptools": "59.6.0",
+            "six": "1.17.0",
+            "sympy": "1.14.0",
+            "torch": "2.10.0+cu128",
+            "torchvision": "0.25.0+cu128",
+            "triton": "3.6.0",
+            "typing_extensions": "4.16.0",
+            "tzdata": "2026.6",
+            "ultralytics": "8.4.0",
+            "ultralytics-thop": "2.2.3",
+            "urllib3": "2.8.0"
+          },
+          "git": {
+            "commit": "6184d2b9e232a8695028a09b8ad5f5bf45c1e48c",
+            "status": "",
+            "dirty": false,
+            "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "matplotlib_backend_env": "Agg",
+          "torch": "2.10.0+cu128",
+          "cuda_runtime": "12.8",
+          "cudnn": 91002,
+          "cuda_available": true,
+          "gpus": [
+            {
+              "index": 0,
+              "name": "NVIDIA A100 80GB PCIe MIG 1g.10gb",
+              "capability": [
+                8,
+                0
+              ],
+              "memory_bytes": 10200547328
+            }
+          ],
+          "cuda_compute_probe": "passed",
+          "nvidia_smi": "NVIDIA A100 80GB PCIe, 550.144.03, [Insufficient Permissions]"
+        },
+        "pid": 5517,
+        "process_created_at": 1793771475.69,
+        "resume": false,
+        "checkpoint": "/root/drone-fire-detection/models/coco/yolov8n.pt",
+        "checkpoint_sha256": "f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36"
+      }
+    ],
+    "created_at_utc": "2026-11-04T05:51:41.931751+00:00",
+    "dataset_fingerprint": "c3d63dfa73314a36b5522f4651f5fd7d784bd8a054e78916f821160729862e2b",
+    "status": "running"
+  },
+  "effective": {
+    "args": {
+      "task": "detect",
+      "mode": "train",
+      "model": "/root/drone-fire-detection/models/coco/yolov8n.pt",
+      "data": "/root/drone-fire-detection/data/processed/dfire-fold1-v2/data.yaml",
+      "epochs": 100,
+      "time": null,
+      "patience": 0,
+      "batch": 16,
+      "imgsz": 640,
+      "save": true,
+      "save_period": 1,
+      "cache": false,
+      "device": "0",
+      "workers": 0,
+      "project": "/root/drone-fire-detection/experiments/runs/E1_20261104T055200Z_0a27f400",
+      "name": "train",
+      "exist_ok": false,
+      "pretrained": true,
+      "optimizer": "MuSGD",
+      "verbose": true,
+      "seed": 42,
+      "deterministic": true,
+      "single_cls": false,
+      "rect": false,
+      "cos_lr": false,
+      "close_mosaic": 10,
+      "resume": false,
+      "amp": false,
+      "fraction": 1.0,
+      "profile": false,
+      "freeze": null,
+      "multi_scale": 0.0,
+      "compile": false,
+      "overlap_mask": true,
+      "mask_ratio": 4,
+      "dropout": 0.0,
+      "val": true,
+      "split": "val",
+      "save_json": false,
+      "conf": null,
+      "iou": 0.7,
+      "max_det": 300,
+      "half": false,
+      "dnn": false,
+      "plots": true,
+      "source": null,
+      "vid_stride": 1,
+      "stream_buffer": false,
+      "visualize": false,
+      "augment": false,
+      "agnostic_nms": false,
+      "classes": null,
+      "retina_masks": false,
+      "embed": null,
+      "show": false,
+      "save_frames": false,
+      "save_txt": false,
+      "save_conf": false,
+      "save_crop": false,
+      "show_labels": true,
+      "show_conf": true,
+      "show_boxes": true,
+      "line_width": null,
+      "format": "torchscript",
+      "keras": false,
+      "optimize": false,
+      "int8": false,
+      "dynamic": false,
+      "simplify": true,
+      "opset": null,
+      "workspace": null,
+      "nms": false,
+      "lr0": 0.01,
+      "lrf": 0.01,
+      "momentum": 0.937,
+      "weight_decay": 0.0005,
+      "warmup_epochs": 3.0,
+      "warmup_momentum": 0.8,
+      "warmup_bias_lr": 0.1,
+      "box": 7.5,
+      "cls": 0.5,
+      "dfl": 1.5,
+      "pose": 12.0,
+      "kobj": 1.0,
+      "rle": 1.0,
+      "angle": 1.0,
+      "nbs": 64,
+      "hsv_h": 0.015,
+      "hsv_s": 0.7,
+      "hsv_v": 0.4,
+      "degrees": 0.0,
+      "translate": 0.1,
+      "scale": 0.5,
+      "shear": 0.0,
+      "perspective": 0.0,
+      "flipud": 0.0,
+      "fliplr": 0.5,
+      "bgr": 0.0,
+      "mosaic": 1.0,
+      "mixup": 0.0,
+      "cutmix": 0.0,
+      "copy_paste": 0.0,
+      "copy_paste_mode": "flip",
+      "auto_augment": "randaugment",
+      "erasing": 0.4,
+      "cfg": null,
+      "tracker": "botsort.yaml",
+      "save_dir": "/root/drone-fire-detection/experiments/runs/E1_20261104T055200Z_0a27f400/train"
+    },
+    "optimizer_class": "MuSGD",
+    "parameter_groups": [
+      {
+        "lr": 0.03,
+        "initial_lr": 0.03,
+        "weight_decay": 0.0005,
+        "parameter_count": 0,
+        "use_muon": false
+      },
+      {
+        "lr": 0.01,
+        "initial_lr": 0.01,
+        "weight_decay": 0.0005,
+        "parameter_count": 0,
+        "use_muon": false
+      },
+      {
+        "lr": 0.03,
+        "initial_lr": 0.03,
+        "weight_decay": 0.0,
+        "parameter_count": 0,
+        "use_muon": false
+      },
+      {
+        "lr": 0.01,
+        "initial_lr": 0.01,
+        "weight_decay": 0.0,
+        "parameter_count": 5200,
+        "use_muon": false
+      },
+      {
+        "lr": 0.03,
+        "initial_lr": 0.03,
+        "weight_decay": 0.0,
+        "parameter_count": 0,
+        "use_muon": false
+      },
+      {
+        "lr": 0.01,
+        "initial_lr": 0.01,
+        "weight_decay": 0.0,
+        "parameter_count": 5398,
+        "use_muon": false
+      },
+      {
+        "lr": 0.03,
+        "initial_lr": 0.03,
+        "weight_decay": 0.0005,
+        "parameter_count": 0,
+        "use_muon": true
+      },
+      {
+        "lr": 0.01,
+        "initial_lr": 0.01,
+        "weight_decay": 0.0005,
+        "parameter_count": 3000640,
+        "use_muon": true
+      }
+    ],
+    "accumulate": 4,
+    "scheduler": "LambdaLR",
+    "warmup_note": "First batch is logged separately; warmup changes actual group learning rates."
+  },
+  "checkpoint_observation": {
+    "last": {
+      "path": "/root/drone-fire-detection/experiments/runs/E1_20261104T055200Z_0a27f400/train/weights/last.pt",
+      "sha256": "a2930162fed35e6a63db4b368ace84541c9eea4947eaeab7fd347288939c970a",
+      "epoch": 1
+    },
+    "best": {
+      "path": "/root/drone-fire-detection/experiments/runs/E1_20261104T055200Z_0a27f400/train/weights/best.pt",
+      "sha256": "a2930162fed35e6a63db4b368ace84541c9eea4947eaeab7fd347288939c970a",
+      "epoch": 1
+    }
+  },
+  "internal_training_csv_rows": [
+    {
+      "epoch": "1",
+      "time": "425.967",
+      "train/box_loss": "1.61785",
+      "train/cls_loss": "2.73482",
+      "train/dfl_loss": "1.51026",
+      "metrics/precision(B)": "0.51075",
+      "metrics/recall(B)": "0.4204",
+      "metrics/mAP50(B)": "0.42126",
+      "metrics/mAP50-95(B)": "0.19859",
+      "val/box_loss": "1.46528",
+      "val/cls_loss": "17.8853",
+      "val/dfl_loss": "1.27022",
+      "lr/pg0": "0.0766938",
+      "lr/pg1": "0.00332946",
+      "lr/pg2": "0.00998839",
+      "lr/pg3": "0.00332946",
+      "lr/pg4": "0.00998839",
+      "lr/pg5": "0.00332946",
+      "lr/pg6": "0.00998839",
+      "lr/pg7": "0.00332946"
+    }
+  ],
+  "common_validation_available": false,
+  "test_evaluated": false,
+  "baseline_reverification": {
+    "verified_at_utc": "2026-11-04T05:42:36.854618+00:00",
+    "training_run": "/root/drone-fire-detection/experiments/runs/E0_20261103T164735Z_40e89a6c",
+    "validation_run": "/root/drone-fire-detection/experiments/runs/val-E0_20261103T221126Z_f11e3517",
+    "training_record_sha256": "7ed3d17e6f11b1a7cd7006e7feea0075e3d6f8f3107bbae9ed379d4018074bc0",
+    "validation_record_sha256": "0b7c4be9cbc078a12342d3295113be60bb35805b3642360d89de09f7be4082f9",
+    "best_sha256": "793526814adbd0c2a9d31054c1c37563c3c77fdef6cded429f062b964a4ee85d",
+    "checkpoints": {
+      "last": {
+        "path": "/root/drone-fire-detection/experiments/runs/E0_20261103T164735Z_40e89a6c/train/weights/last.pt",
+        "sha256": "e39b3ccb09d9cdef6888a40ada172b68408f65f69808ca033dc2108dd9e99765",
+        "epoch": 50
+      },
+      "best": {
+        "path": "/root/drone-fire-detection/experiments/runs/E0_20261103T164735Z_40e89a6c/train/weights/best.pt",
+        "sha256": "793526814adbd0c2a9d31054c1c37563c3c77fdef6cded429f062b964a4ee85d",
+        "epoch": 50
+      }
+    },
+    "dataset_fingerprint": "c3d63dfa73314a36b5522f4651f5fd7d784bd8a054e78916f821160729862e2b",
+    "metrics": {
+      "precision": 0.778235646772232,
+      "recall": 0.6973619934738131,
+      "map50": 0.7669176505654496,
+      "map50_95": 0.4445945004116395,
+      "f1_macro": 0.7354925109477397,
+      "classes": {
+        "smoke": {
+          "precision": 0.8419432529612695,
+          "recall": 0.7698400500859736,
+          "ap50": 0.8351553403820481,
+          "ap50_95": 0.5233038012155353,
+          "f1": 0.8042788814151811
+        },
+        "fire": {
+          "precision": 0.7145280405831945,
+          "recall": 0.6248839368616528,
+          "ap50": 0.6986799607488512,
+          "ap50_95": 0.3658851996077438,
+          "f1": 0.6667061404802984
+        }
+      },
+      "point_note": "Ultralytics P/R/F1 use the best mean-F1 confidence on this split; AP integrates confidence.",
+      "speed_ms_per_image": {
+        "preprocess": 0.29577302593732435,
+        "inference": 3.474459797549447,
+        "loss": 0.0004872463438092191,
+        "postprocess": 0.38934382576230475
+      }
+    },
+    "operating": {
+      "settings": {
+        "ap_conf": 0.001,
+        "operating_conf": 0.25,
+        "nms_iou": 0.7,
+        "match_iou": 0.5,
+        "max_det": 300,
+        "batch": 16,
+        "warmup_images": 3,
+        "max_case_images": 20
+      },
+      "matching": "class-aware greedy descending IoU, one-to-one",
+      "classes": {
+        "smoke": {
+          "tp": 1527,
+          "fp": 459,
+          "fn": 362,
+          "precision": 0.7688821752265861,
+          "recall": 0.8083642138697724,
+          "f1": 0.7881290322580645
+        },
+        "fire": {
+          "tp": 1497,
+          "fp": 912,
+          "fn": 657,
+          "precision": 0.6214196762141968,
+          "recall": 0.6949860724233984,
+          "f1": 0.656147271531887
+        }
+      },
+      "images": 3445,
+      "negative_images": 1610,
+      "negative_fp_detections": 30,
+      "negative_images_with_fp": 27,
+      "inference_ms_per_image": 5.2084070324886955,
+      "inference_fps": 191.9972831927802,
+      "pipeline_ms_per_image": 7.054062173208451,
+      "pipeline_fps": 141.76228894012746,
+      "analysis_wall_seconds_including_io_and_case_export": 33.93497572466731,
+      "timing_note": "Batch=1, FP32; warmed before measurement. Inference FPS excludes I/O, preprocessing and NMS."
+    },
+    "training_summary": {
+      "epochs_completed": 50,
+      "training_wall_seconds": 19414.31393059902
+    }
+  },
+  "push": {
+    "status": "unavailable",
+    "reason": "GitHub HTTPS authentication unavailable; no credentials copied",
+    "branch": "server/core-experiments-20261104"
+  }
+}
