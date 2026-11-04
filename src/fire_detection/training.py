@@ -14,7 +14,7 @@ from .dataset import verify_dataset, verify_unchanged_dataset
 from .model import spec_for, verify_model
 
 
-def train(suite_path=None, experiment_id=None, resume_run=None):
+def train(suite_path=None, experiment_id=None, resume_run=None, on_run_created=None):
     YOLO = yolo_class()
     import torch
     from ultralytics.optim import MuSGD  # Fail visibly if the pinned optimizer is unavailable.
@@ -68,6 +68,8 @@ def train(suite_path=None, experiment_id=None, resume_run=None):
     record["attempts"].append(attempt)
     record["status"] = "running"
     write_json(run / "training.json", record)
+    if on_run_created:
+        on_run_created(run)
     effective_path = run / f"attempt-{attempt_id}-effective.json"
     learning_rates = run / f"attempt-{attempt_id}-learning-rates.jsonl"
     torch.cuda.reset_peak_memory_stats(0)

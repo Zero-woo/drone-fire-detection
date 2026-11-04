@@ -1,0 +1,9 @@
+"""Linux detached server queue. Always invoke with the repository .venv/bin/python."""
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+
+if __name__ == "__main__":
+    from fire_detection.queue import main
+    raise SystemExit(main())
