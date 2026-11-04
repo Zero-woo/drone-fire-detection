@@ -4,9 +4,10 @@
    공식 분할 고정, COCO 및 공개 체크포인트 SHA256 검증.
 2. E0: COCO YOLOv8n, 50 epochs, 640, batch 16, seed 42, MuSGD, lr0 0.01.
 3. E1: E0와 동일하며 100 epochs. Early stopping을 끄고 validation으로 비교한다.
-4. E2: E1 기준 lr0 0.005 / 0.02. lr0 0.01은 E1 결과를 재사용한다.
-5. E3: E1 기준 HSV(s=0.5,v=0.2), mosaic=0.5를 각각 독립 비교한다.
-6. E4: E1 기준 imgsz 800. OOM이면 자동 조건 변경 없이 실패를 기록하고
+4. E2: lr0 0.005 / 0.02를 최대 60 epochs, patience=15로 탐색한다.
+   lr0 0.01인 E1은 100 epochs이므로 동일 학습 예산의 통제 기준으로 재사용하지 않는다.
+5. E3: HSV(s=0.5,v=0.2), mosaic=0.5를 각각 최대 60 epochs, patience=15로 탐색한다.
+6. E4: imgsz 800, 최대 60 epochs, patience=15. OOM이면 자동 조건 변경 없이 실패를 기록하고
    별도 ID와 변경 batch로 다시 정의한다.
 7. E5(선택): E1 기준 batch 8 / 32. batch 16은 E1 결과를 재사용한다.
 8. E6: validation으로 선정한 조건을 조합하여 COCO에서 새로 학습한다.
@@ -20,3 +21,10 @@ E4-800의 유한 큐를 독립 작업자로 실행할 수 있다. 각 학습의 
 Validation·비교 기록이 통과한 뒤에만 다음 조건을 시작한다. 기존 서버 E0를 재사용한다.
 핵심 큐 종료 후 E5 필요성 및 E6 조합은 실제 결과를 분석해 결정하며 Test는 동결 후 수행한다.
 주 선택 기준은 validation mAP50-95이며 fire recall과 negative FP도 검토한다.
+
+2026-11-05 학습 시간 단축 요청: 진행 중인 E1은 100 epochs, patience=0을 유지한다.
+E2-A부터 E4-800까지 위 60 epochs/15 patience 정책을 적용하고, 정상 조기 종료 후에도
+best.pt 공통 Validation·보고서를 거쳐 다음 실험으로 자동 진행한다. 중단이나 오류는
+정상 조기 종료로 처리하지 않는다. LR 일정과 Mosaic 종료 시점도 최대 epoch에 따라
+달라지므로 100 epochs E1 대비 수치는 후보 탐색 관측이다. 유망한 후보의 확정 비교는
+같은 100 epochs 조건에서 별도 실험으로 수행한다. E5/E6는 아직 자동 큐에 포함하지 않는다.

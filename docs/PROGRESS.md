@@ -141,3 +141,13 @@
 - 아직 100 epochs/공통 Validation 완료 결과가 아니다. 큐가 승인된 다음 조건을 순차 처리한다.
 - [실행 관측 보고서](../reports/011_server_queue_launch.md), 상태 `work/server-queue.json`.
 - GitHub 인증 부재로 push는 실패했다. 로컬 커밋과 실험을 유지한다.
+
+
+## 2026-11-05: 남은 서버 실험 예산 변경 구현
+
+- E1의 기존 100 epochs/patience=0 설정과 실행 작업자를 보존한다.
+- 미시작 E2~E4는 최대 60 epochs/patience=15로 변경한다.
+- 정상 조기 종료 근거 기록·검증, best.pt 평가, 실제 epoch/종료 사유 보고를 구현한다.
+- 기존 E1 작업자 종료 후 동일 run의 Validation부터 이어지는 독립 관리자 인계를 추가한다.
+- 구현과 합성 테스트를 실험 완료로 취급하지 않는다. 실제 인계 상태는 별도 보고한다.
+- 준비 근거: [변경 준비](../reports/012_shorter_queue_preparation.md).

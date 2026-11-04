@@ -376,3 +376,27 @@ OOM/무결성/일반 오류는 `--resume`으로 우회할 수 없다. 근본 원
 `outputs/comparison_*/`의 표·loss/AP·비교 그래프가 생성된다. 보고서는 한국어다.
 핵심 큐 종료 상태는 `awaiting_analysis`다. Validation 근거로 E5의 필요성과 E6 override를
 검토한 뒤 COCO에서 E6를 학습하고, 최종 선택/threshold를 freeze한 후에만 Test를 평가한다.
+
+
+## 2026-11-05 서버 실험 예산 변경
+
+E1은 100 epochs, patience=0을 유지한다. E2-A/E2-C/E3-HSV/E3-Mosaic/E4-800은
+최대 60 epochs, patience=15다. 검증 mAP50-95 최고값이 15 epochs 연속 개선되지
+않으면 정상 조기 종료하며 best.pt로 공통 Validation·보고 후 다음 실험을 진행한다.
+실제 학습량과 종료 사유는 training.json의 epochs_completed/completion과 비교 표에 남는다.
+중단, OOM, 무결성 오류는 조기 종료가 아니며 다음 실험을 시작하지 않는다.
+
+기존 E1 작업자 PID를 보존한 관리자 교체 중 상태는 handoff_waiting이다.
+새 독립 관리자가 같은 PID와 생성 시각의 E1 작업자 종료를 기다린 뒤 완료 run을
+검증하고 Validation부터 계속한다. 이 상태에서 start를 중복 실행하지 않는다.
+일반 상태 명령은 동일하다.
+
+```bash
+.venv/bin/python scripts/training_queue.py status
+```
+
+변경 전 상태와 계획은 work/queue-shortening-20261105/에 보존하고 새 계획에는
+이전 계획 SHA256 및 사용자 변경 이유를 연결한다. 활성 계획의 소스나 설정을
+임의 편집하지 않는다. 추가 변경은 별도 검증·계획 이관이 필요하다.
+60 epochs 탐색과 E1의 100 epochs 결과는 동일 학습 예산의 통제 비교가 아니다.
+후보 확정은 같은 100 epochs 조건에서 수행하고 E5/E6/Test는 자동 실행하지 않는다.

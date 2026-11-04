@@ -13,6 +13,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 if sys.platform == "linux":
     from fire_detection import queue
 from fire_detection.common import ROOT, file_sha256, read_json, write_json
+from fire_detection.training import completion_summary
+from types import SimpleNamespace
 
 
 @unittest.skipUnless(sys.platform == "linux", "Detached queue uses Linux flock, signals and /proc")
@@ -107,6 +109,23 @@ class QueueTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "integrity mismatch"):
                 queue.validate_training(run, {"training": {"epochs": 50}}, "fixture")
 
+    def test_early_stop_runs_pass_the_same_hash_gate_and_are_not_resumed(self):
+        run, record = self.training_fixture()
+        settings = {"epochs": 60, "patience": 15}
+        record["config"]["training"] = settings
+        record["epochs_completed"] = 45
+        record["completion"] = completion_summary(SimpleNamespace(epoch=44, stop=True,
+            stopper=SimpleNamespace(best_epoch=30, best_fitness=.4, patience=15)), settings)
+        write_json(run / "training.json", record)
+        task = {"id": "E2-A", "training_run": str(run)}
+        plan = {"configs": {"E2-A": record["config"]}, "dataset_fingerprint": "fixture"}
+        with patch.object(queue, "runs_root", return_value=self.root):
+            queue.validate_training(run, record["config"], "fixture")
+            self.assertEqual(queue.recover_task(task, plan), "val")
+            (run / "train/weights/best.pt").write_bytes(b"corrupt")
+            with self.assertRaisesRegex(ValueError, "checksum mismatch"):
+                queue.validate_training(run, record["config"], "fixture")
+
     def test_validation_must_belong_to_exact_training_run(self):
         run, record = self.training_fixture()
         config = record["config"]
@@ -195,6 +214,71 @@ class QueueTests(unittest.TestCase):
         write_json(state_path, state)
         with patch.object(queue, "ROOT", self.root), self.assertRaisesRegex(RuntimeError, "worker is still active"):
             queue.run_queue(state_path, resume=True)
+
+    def test_handoff_waits_for_exact_worker_then_continues_without_train_restart(self):
+        state_path, state = self.state_fixture()
+        run, record = self.training_fixture()
+        receipt = self.root / "e1-receipt.json"
+        write_json(receipt, {"status": "completed", "run": str(run), "pid": 1234,
+                             "process_created_at": 1, "stage": "train", "experiment_id": "E1"})
+        state.update(status="handoff_waiting", current_experiment="E1", handoff={"reason": "fixture"})
+        state["tasks"][0].update(status="training", worker={"pid": 1234, "process_created_at": 1},
+                                  train_receipt=str(receipt), training_run=str(run))
+        plan = read_json(state["plan_path"])
+        plan["configs"]["E1"] = record["config"]
+        write_json(state["plan_path"], plan)
+        write_json(state_path, state)
+        with patch.object(queue, "alive", side_effect=[False, True, False]), \
+             patch.object(queue, "verify_plan"), patch.object(queue.time, "sleep"), \
+             patch.object(queue, "runs_root", return_value=self.root), patch.object(queue, "run_queue") as continuation:
+            queue.adopt_active_queue(state_path)
+        continuation.assert_called_once_with(state_path, resume=True)
+        self.assertEqual(read_json(state_path)["tasks"][0]["training_run"], str(run))
+        self.assertIsNone(read_json(state_path)["manager"])
+
+    def test_handoff_failed_worker_stops_without_starting_another_experiment(self):
+        state_path, state = self.state_fixture()
+        receipt = self.root / "failed-receipt.json"
+        write_json(receipt, {"status": "failed", "error": "CUDA out of memory", "run": str(self.root / "failed"),
+                             "pid": 1234, "process_created_at": 1, "stage": "train", "experiment_id": "E1"})
+        state.update(status="handoff_waiting", current_experiment="E1", handoff={"reason": "fixture"})
+        state["tasks"][0].update(status="training", worker={"pid": 1234, "process_created_at": 1},
+                                  train_receipt=str(receipt), training_run=str(self.root / "failed"))
+        write_json(state_path, state)
+        with patch.object(queue, "alive", return_value=False), patch.object(queue, "verify_plan"), \
+             patch.object(queue, "runs_root", return_value=self.root), patch.object(queue, "run_queue") as continuation:
+            with self.assertRaisesRegex(RuntimeError, "out of memory"):
+                queue.adopt_active_queue(state_path)
+        continuation.assert_not_called()
+        self.assertEqual(read_json(state_path)["failure_kind"], "oom")
+
+    def test_handoff_rejects_duplicate_manager(self):
+        state_path, state = self.state_fixture()
+        state["manager"] = queue.identity()
+        write_json(state_path, state)
+        with self.assertRaisesRegex(RuntimeError, "still active"):
+            queue.adopt_active_queue(state_path)
+
+    def test_adopted_completed_e1_skips_retraining_before_pending_experiments(self):
+        state_path, state = self.state_fixture()
+        state["status"] = "handoff_waiting"
+        state["tasks"][0].update(status="training", training_run=str(self.root / "e1"))
+        write_json(state_path, state)
+        calls = []
+
+        def stage(path, state, task, name, fd):
+            calls.append((task["id"], name))
+            task["training_run" if name == "train" else "validation_run"] = str(self.root / (task["id"] + name))
+
+        with patch.object(queue, "ROOT", self.root), patch.object(queue, "assert_no_active_training"), \
+             patch.object(queue, "verify_plan"), patch.object(queue, "existing_runs", return_value=[]), \
+             patch.object(queue, "validate_training", return_value={"status": "completed"}), \
+             patch.object(queue, "validate_evaluation"), patch.object(queue, "report_completed"), \
+             patch.object(queue, "execute_stage", side_effect=stage):
+            queue.run_queue(state_path, resume=True)
+        self.assertEqual(calls[0], ("E1", "val"))
+        self.assertNotIn(("E1", "train"), calls)
+        self.assertEqual(calls[1:], [(key, stage) for key in queue.CORE_IDS[1:] for stage in ("train", "val")])
 
     def test_plan_mutation_is_rejected_before_loading_inputs(self):
         plan = {"ids": list(queue.CORE_IDS), "plan_sha256": "not-a-valid-digest"}

@@ -21,11 +21,11 @@
   "experiments": [
     {"id": "E0", "stage": "baseline", "reference": null, "overrides": {}},
     {"id": "E1", "stage": "epochs", "reference": "E0", "overrides": {"epochs": 100}},
-    {"id": "E2-A", "stage": "lr", "reference": "E1", "overrides": {"epochs": 100, "lr0": 0.005}},
-    {"id": "E2-C", "stage": "lr", "reference": "E1", "overrides": {"epochs": 100, "lr0": 0.02}},
-    {"id": "E3-HSV", "stage": "augmentation", "reference": "E1", "overrides": {"epochs": 100, "hsv_s": 0.5, "hsv_v": 0.2}},
-    {"id": "E3-Mosaic", "stage": "augmentation", "reference": "E1", "overrides": {"epochs": 100, "mosaic": 0.5}},
-    {"id": "E4-800", "stage": "resolution", "reference": "E1", "overrides": {"epochs": 100, "imgsz": 800}},
+    {"id": "E2-A", "stage": "lr", "reference": "E1", "overrides": {"epochs": 60, "patience": 15, "lr0": 0.005}},
+    {"id": "E2-C", "stage": "lr", "reference": "E1", "overrides": {"epochs": 60, "patience": 15, "lr0": 0.02}},
+    {"id": "E3-HSV", "stage": "augmentation", "reference": "E1", "overrides": {"epochs": 60, "patience": 15, "hsv_s": 0.5, "hsv_v": 0.2}},
+    {"id": "E3-Mosaic", "stage": "augmentation", "reference": "E1", "overrides": {"epochs": 60, "patience": 15, "mosaic": 0.5}},
+    {"id": "E4-800", "stage": "resolution", "reference": "E1", "overrides": {"epochs": 60, "patience": 15, "imgsz": 800}},
     {"id": "E5-8", "stage": "batch", "reference": "E1", "overrides": {"epochs": 100, "batch": 8}},
     {"id": "E5-32", "stage": "batch", "reference": "E1", "overrides": {"epochs": 100, "batch": 32}},
     {"id": "E6", "stage": "combined", "reference": "E1", "enabled": false, "overrides": {"epochs": 100}, "selection_evidence": []}

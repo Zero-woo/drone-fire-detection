@@ -23,6 +23,7 @@ from .common import (ROOT, configure_plotting, file_sha256, git_state, inside,
 from .config import experiment_config
 from .dataset import verify_dataset
 from .model import spec_for, verify_model
+from .training import validate_completion
 
 CORE_IDS = ("E1", "E2-A", "E2-C", "E3-HSV", "E3-Mosaic", "E4-800")
 SCRIPT = ROOT / "scripts/training_queue.py"
@@ -99,9 +100,8 @@ def validate_training(run, config, fingerprint, require_completed=True):
             or record["initial_model"]["sha256"] != EXPECTED_COCO
             or record["attempts"][0]["checkpoint_sha256"] != EXPECTED_COCO):
         raise ValueError("Training configuration/model/dataset integrity mismatch")
-    if require_completed and (record["status"] != "completed"
-                              or record["epochs_completed"] != config["training"]["epochs"]):
-        raise ValueError("Training did not complete its requested epochs")
+    if require_completed:
+        validate_completion(record, config["training"])
     entries = read_json(run / "checkpoints.json")
     for name in ("last", "best"):
         checkpoint = run / "train/weights" / f"{name}.pt"
@@ -274,16 +274,23 @@ def report_completed(state, task):
     reference_path = Path(plan["baseline_validation_run"] if reference_id == "E0" else
                           next(item["validation_run"] for item in state["tasks"] if item["id"] == "E1"))
     reference = read_json(reference_path / "evaluation.json")
+    budget_matches = all(training["config"]["training"][key] == reference["config"]["training"][key]
+                         for key in ("epochs", "patience"))
     delta = 100 * (evaluation["metrics"]["map50_95"] - reference["metrics"]["map50_95"])
     op = evaluation["operating"]
     summary = {"experiment_id": task["id"], "training_run": str(run), "validation_run": task["validation_run"],
                "training_record_sha256": file_sha256(run / "training.json"),
                "validation_record_sha256": file_sha256(Path(task["validation_run"]) / "evaluation.json"),
                "reference_id": reference_id, "map50_95_delta_percentage_points": delta,
+               "training_budget_matches_reference": budget_matches,
+               "comparison_interpretation": "descriptive comparison; training budget differs" if not budget_matches
+                                            else "single-seed descriptive comparison",
                "comparison_output": str(output), "training": training, "validation": evaluation}
     report = ROOT / "reports" / f"010_server_{task['id'].lower()}"
     write_json(report.with_suffix(".json"), summary)
     lines = [f"# 서버 {task['id']} 학습 및 공통 Validation", "", f"실제 {training['epochs_completed']} epochs 학습과 공통 Validation을 완료했다.", "",
+             f"- 최대 epoch: {training['config']['training']['epochs']}; patience: {training['config']['training']['patience']}; "
+             f"종료 사유: {training.get('completion', {}).get('reason', 'epoch_limit')}.",
              f"- 학습: `{run}`", f"- 평가: `{task['validation_run']}`",
              f"- 모델 SHA256: `{training['best_sha256']}`", f"- 데이터 fingerprint: `{training['dataset_fingerprint']}`",
              f"- 기준 {reference_id} 대비 mAP50-95 변화: {delta:+.3f}%p (단일 seed 관측).",
@@ -299,6 +306,9 @@ def report_completed(state, task):
              "동명 JSON과 run 원본에 보존한다. 하드웨어/버전별 속도 차이와 단일 seed 한계가 있다. "
              "출처별 video/session ID가 없어 근접 프레임 누수를 보장하지 못하며 공개 모델 split과 다르다. "
              "Test는 평가하지 않았다.", ""]
+    if not budget_matches:
+        lines += ["학습 예산이 기준과 다르므로 위 변화는 설정 하나의 단독 효과가 아니다. "
+                  "짧은 실험은 후보 탐색으로 해석하고 유망한 후보를 동일한 100 epoch 조건에서 별도 검증한다.", ""]
     report.with_suffix(".md").write_text("\n".join(lines), encoding="utf-8")
     task["report"] = str(report.with_suffix(".md"))
     with (ROOT / "docs/PROGRESS.md").open("a", encoding="utf-8") as handle:
@@ -329,6 +339,60 @@ def recover_task(task, plan):
         raise RuntimeError("Non-transient training failure; refusing automatic resume")
     # Checkpoint's resumable optimizer/epoch is also checked by the existing train API.
     return "resume"
+
+
+def adopt_active_queue(state_path):
+    """Wait for the exact orphaned worker, then adopt its completed run without retraining."""
+    signal.signal(signal.SIGHUP, signal.SIG_IGN)
+    with exclusive(state_path.with_name(state_path.stem + "-handoff.lock")):
+        state = read_json(state_path)
+        if alive(state.get("manager")):
+            raise RuntimeError("Queue manager is still active; refusing concurrent handoff")
+        if state["status"] != "handoff_waiting" or not state.get("handoff"):
+            raise RuntimeError("An explicitly recorded handoff is required")
+        task = next(t for t in state["tasks"] if t["id"] == state["current_experiment"])
+        if task["id"] != "E1" or task["status"] != "training" or not task.get("worker"):
+            raise RuntimeError("Only the recorded running E1 can be adopted")
+        if any(t["status"] != "pending" for t in state["tasks"] if t is not task):
+            raise RuntimeError("Later experiments already started; inspect before changing budgets")
+        state["manager"] = {**identity(), "sid": os.getsid(0)}
+        state["handoff"]["supervisor"] = state["manager"]
+        save_state(state_path, state)
+        try:
+            plan = read_json(state["plan_path"])
+            if plan["plan_sha256"] != state["plan_sha256"]:
+                raise ValueError("State/plan checksum mismatch")
+            verify_plan(plan)
+            print(f"Waiting for recorded E1 worker {task['worker']['pid']}; training is unchanged", flush=True)
+            while alive(task["worker"]):
+                progress(task)
+                save_state(state_path, state)
+                time.sleep(5)
+            receipt = read_json(task["train_receipt"])
+            if (Path(receipt.get("run") or "").resolve() != Path(task["training_run"]).resolve()
+                    or receipt.get("pid") != task["worker"]["pid"]
+                    or receipt.get("process_created_at") != task["worker"]["process_created_at"]
+                    or receipt.get("stage") != "train" or receipt.get("experiment_id") != "E1"):
+                raise ValueError("Handoff worker/run receipt integrity mismatch")
+            receipt = receipt_run(task, "train")
+            if receipt["status"] != "completed":
+                raise RuntimeError(receipt.get("error", "E1 worker exited without successful completion"))
+            validate_training(task["training_run"], plan["configs"]["E1"], plan["dataset_fingerprint"])
+            state["handoff"]["worker_completed_at_utc"] = utc_now()
+            state["manager"] = None
+            save_state(state_path, state)
+            print("E1 completed and verified; continuing with common Validation and revised queue", flush=True)
+            run_queue(state_path, resume=True)
+        except BaseException as exc:
+            # run_queue already records its own failure; retain those details if present.
+            latest = read_json(state_path)
+            if latest["status"] != "failed":
+                reason = f"{type(exc).__name__}: {exc}"
+                latest.update(status="failed", error=reason, failure_kind=classify(reason),
+                              traceback=traceback.format_exc(), finished_at_utc=utc_now(),
+                              next_action="Inspect handoff failure; no automatic retry or setting changes")
+                save_state(state_path, latest)
+            raise
 
 
 def run_queue(state_path, resume=False):
@@ -442,7 +506,7 @@ def main(argv=None):
     sub = parser.add_subparsers(dest="command", required=True)
     prepare = sub.add_parser("prepare")
     prepare.add_argument("--state", type=Path, default=DEFAULT_STATE)
-    for name in ("start", "run", "status"):
+    for name in ("start", "run", "status", "adopt-active"):
         command = sub.add_parser(name)
         command.add_argument("--state", type=Path, default=DEFAULT_STATE)
         if name != "status":
@@ -489,6 +553,8 @@ def main(argv=None):
         print(f"Detached queue PID {process.pid}; state {args.state}; log {log}")
     elif args.command == "run":
         run_queue(args.state, args.resume)
+    elif args.command == "adopt-active":
+        adopt_active_queue(args.state)
     elif args.command == "status":
         state = read_json(args.state)
         print(f"status={state['status']} manager_alive={alive(state.get('manager'))} manager={state.get('manager')}")

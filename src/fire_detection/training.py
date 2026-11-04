@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import math
 import os
 import time
 import traceback
@@ -12,6 +13,52 @@ from .common import (ROOT, environment, file_sha256, inside, new_run, read_json,
 from .config import experiment_config
 from .dataset import verify_dataset, verify_unchanged_dataset
 from .model import spec_for, verify_model
+
+
+def validate_completion(record, settings):
+    """Accept the epoch limit or an evidenced validation-based early stop only."""
+    count, budget = record.get("epochs_completed"), settings["epochs"]
+    if record.get("status") != "completed" or type(count) is not int or not 0 < count <= budget:
+        raise ValueError("Training did not complete successfully within its epoch budget")
+    outcome = record.get("completion")
+    if count == budget and outcome is None:
+        return  # Historical full-budget records remain valid, including the running E1.
+    if not isinstance(outcome, dict) or any(outcome.get(key) != value for key, value in (
+            ("epochs_completed", count), ("requested_epochs", budget),
+            ("patience", settings.get("patience", 0)))):
+        raise ValueError("Training completion evidence mismatch")
+    if count == budget:
+        if outcome.get("reason") != "epoch_limit":
+            raise ValueError("Training completion reason mismatch")
+        return
+    patience = settings.get("patience", 0)
+    best_epoch = outcome.get("best_epoch")
+    fitness = outcome.get("best_fitness")
+    if (outcome.get("reason") != "early_stopping" or patience <= 0
+            or type(best_epoch) is not int or not 0 < best_epoch <= count
+            or count - best_epoch < patience
+            or outcome.get("epochs_without_improvement") != count - best_epoch
+            or outcome.get("stopper_patience") != patience or outcome.get("trainer_stop") is not True
+            or outcome.get("metric") != "validation mAP50-95"
+            or not isinstance(fitness, (int, float)) or not math.isfinite(fitness)):
+        raise ValueError("Short training lacks confirmed early stopping evidence")
+
+
+def completion_summary(trainer, settings):
+    count = int(trainer.epoch + 1)
+    stopper = getattr(trainer, "stopper", None)
+    best_epoch = int(stopper.best_epoch) if stopper is not None else None
+    patience = getattr(stopper, "patience", None)
+    outcome = {"reason": "epoch_limit" if count == settings["epochs"] else "early_stopping",
+               "requested_epochs": settings["epochs"], "epochs_completed": count,
+               "patience": settings["patience"], "metric": "validation mAP50-95",
+               "best_epoch": best_epoch,
+               "best_fitness": float(stopper.best_fitness) if stopper is not None else None,
+               "epochs_without_improvement": count - best_epoch if best_epoch is not None else None,
+               "stopper_patience": int(patience) if patience is not None and math.isfinite(patience) else None,
+               "trainer_stop": bool(getattr(trainer, "stop", False))}
+    validate_completion({"status": "completed", "epochs_completed": count, "completion": outcome}, settings)
+    return outcome
 
 
 def train(suite_path=None, experiment_id=None, resume_run=None, on_run_created=None):
@@ -127,6 +174,7 @@ def train(suite_path=None, experiment_id=None, resume_run=None, on_run_created=N
         # Ultralytics strips optimizer at completion, changing checkpoint hashes.
         verify_unchanged_dataset(dataset_path, record["dataset_fingerprint"])
         saved(model.trainer)
+        record["completion"] = completion_summary(model.trainer, config["training"])
         record["best_path"] = str(model.trainer.best)
         record["best_sha256"] = file_sha256(model.trainer.best)
         record["status"] = "completed"

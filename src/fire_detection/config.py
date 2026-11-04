@@ -34,8 +34,6 @@ def experiment_config(path, experiment_id):
     for key in ("workers", "seed", "patience"):
         if type(training[key]) is not int or training[key] < 0:
             raise ValueError(f"Invalid {key}")
-    if training["patience"] and training["patience"] <= training["epochs"]:
-        raise ValueError("Disable early stopping or set patience above the epoch budget.")
     if not training["val"] or not training["plots"]:
         raise ValueError("Validation and plots are required")
     if training["device"] != "0":
