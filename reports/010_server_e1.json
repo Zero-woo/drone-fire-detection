@@ -1,0 +1,531 @@
+{
+  "experiment_id": "E1",
+  "training_run": "/root/drone-fire-detection/experiments/runs/E1_20261104T055200Z_0a27f400",
+  "validation_run": "/root/drone-fire-detection/experiments/runs/val-E1_20261104T163213Z_a8b24f7c",
+  "training_record_sha256": "a286bb55c77462b3f0039d9f2ca2b5fd0eae5b979ad71c1105137b87690c8131",
+  "validation_record_sha256": "ce5787a4cdd5bc8bc06be71c65195205188edab02673949fde66e9b2b38b3815",
+  "reference_id": "E0",
+  "map50_95_delta_percentage_points": 0.7002833639945139,
+  "training_budget_matches_reference": false,
+  "comparison_interpretation": "descriptive comparison; training budget differs",
+  "comparison_output": "/root/drone-fire-detection/outputs/comparison_20261104T164716Z_02b9eb3a",
+  "training": {
+    "kind": "training",
+    "experiment_id": "E1",
+    "config": {
+      "experiment": {
+        "id": "E1",
+        "stage": "epochs",
+        "reference": "E0",
+        "overrides": {
+          "epochs": 100
+        }
+      },
+      "training": {
+        "epochs": 100,
+        "imgsz": 640,
+        "batch": 16,
+        "seed": 42,
+        "optimizer": "MuSGD",
+        "lr0": 0.01,
+        "lrf": 0.01,
+        "cos_lr": false,
+        "momentum": 0.937,
+        "weight_decay": 0.0005,
+        "warmup_epochs": 3.0,
+        "warmup_momentum": 0.8,
+        "warmup_bias_lr": 0.1,
+        "hsv_h": 0.015,
+        "hsv_s": 0.7,
+        "hsv_v": 0.4,
+        "degrees": 0.0,
+        "translate": 0.1,
+        "scale": 0.5,
+        "shear": 0.0,
+        "perspective": 0.0,
+        "flipud": 0.0,
+        "fliplr": 0.5,
+        "mosaic": 1.0,
+        "mixup": 0.0,
+        "copy_paste": 0.0,
+        "close_mosaic": 10,
+        "device": "0",
+        "workers": 0,
+        "patience": 0,
+        "deterministic": true,
+        "amp": false,
+        "cache": false,
+        "nbs": 64,
+        "save_period": 1,
+        "val": true,
+        "plots": true,
+        "compile": false
+      },
+      "evaluation": {
+        "ap_conf": 0.001,
+        "operating_conf": 0.25,
+        "nms_iou": 0.7,
+        "match_iou": 0.5,
+        "max_det": 300,
+        "batch": 16,
+        "warmup_images": 3,
+        "max_case_images": 20
+      },
+      "dataset_config": {
+        "raw_root": "data/raw/D-Fire",
+        "prepared_root": "data/processed/dfire-fold1-v2",
+        "image_policy": "strip_jpeg_trailing_bytes_without_recompression",
+        "split_files": {
+          "train": "data/raw/Data splitting/5-fold cross validation/dfire_train1.txt",
+          "val": "data/raw/Data splitting/5-fold cross validation/dfire_valid1.txt",
+          "test": "data/raw/Data splitting/dfire_test.txt"
+        },
+        "names": [
+          "smoke",
+          "fire"
+        ],
+        "annotation_policy": "clip_drop_degenerate",
+        "annotation_policy_authorization": "User approved derived clipping and zero-area removal on 2026-10-31; raw is preserved.",
+        "cross_split_duplicates": "error",
+        "source_group_identity_available": false,
+        "published_split_identity_verified": false
+      },
+      "suite_path": "configs/experiments.json",
+      "config_sha256": "aaf11cea4673215576241253d2067a6ef9f31f44049a76ec3c62758446dfde87"
+    },
+    "initial_model": {
+      "id": "coco-yolov8n",
+      "revision": "github-release-asset:340060940",
+      "url": "https://github.com/ultralytics/assets/releases/download/v8.4.0/yolov8n.pt",
+      "sha256": "f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36",
+      "size_bytes": 6549796,
+      "local_path": "models/coco/yolov8n.pt",
+      "source": "https://github.com/ultralytics/assets/releases/tag/v8.4.0"
+    },
+    "attempts": [
+      {
+        "number": 1,
+        "started_at_utc": "2026-11-04T05:52:00.828696+00:00",
+        "environment": {
+          "created_at_utc": "2026-11-04T05:52:00.059944+00:00",
+          "python": "3.10.12",
+          "platform": "Linux-5.15.0-151-generic-x86_64-with-glibc2.35",
+          "packages": {
+            "Jinja2": "3.1.6",
+            "MarkupSafe": "3.0.3",
+            "PyYAML": "6.0.3",
+            "certifi": "2026.10.23",
+            "charset-normalizer": "3.5.2",
+            "contourpy": "1.3.2",
+            "cuda-bindings": "12.9.4",
+            "cuda-pathfinder": "1.6.0",
+            "cycler": "0.12.1",
+            "filelock": "4.1.0",
+            "fonttools": "4.65.0",
+            "fsspec": "2026.9.0",
+            "idna": "3.20",
+            "kiwisolver": "1.5.1",
+            "matplotlib": "3.10.8",
+            "mpmath": "1.3.0",
+            "networkx": "3.4.2",
+            "numpy": "2.2.6",
+            "nvidia-cublas-cu12": "12.8.4.1",
+            "nvidia-cuda-cupti-cu12": "12.8.90",
+            "nvidia-cuda-nvrtc-cu12": "12.8.93",
+            "nvidia-cuda-runtime-cu12": "12.8.90",
+            "nvidia-cudnn-cu12": "9.10.2.21",
+            "nvidia-cufft-cu12": "11.3.3.83",
+            "nvidia-cufile-cu12": "1.13.1.3",
+            "nvidia-curand-cu12": "10.3.9.90",
+            "nvidia-cusolver-cu12": "11.7.3.90",
+            "nvidia-cusparse-cu12": "12.5.8.93",
+            "nvidia-cusparselt-cu12": "0.7.1",
+            "nvidia-nccl-cu12": "2.27.5",
+            "nvidia-nvjitlink-cu12": "12.8.93",
+            "nvidia-nvshmem-cu12": "3.4.5",
+            "nvidia-nvtx-cu12": "12.8.90",
+            "opencv-python": "4.12.0.88",
+            "packaging": "26.3",
+            "pillow": "12.1.0",
+            "pip": "26.3",
+            "polars": "2.0.0",
+            "polars-runtime-32": "2.0.0",
+            "psutil": "7.2.2",
+            "pyparsing": "3.3.3",
+            "python-dateutil": "3.0.0",
+            "requests": "2.34.2",
+            "scipy": "1.15.3",
+            "setuptools": "59.6.0",
+            "six": "1.17.0",
+            "sympy": "1.14.0",
+            "torch": "2.10.0+cu128",
+            "torchvision": "0.25.0+cu128",
+            "triton": "3.6.0",
+            "typing_extensions": "4.16.0",
+            "tzdata": "2026.6",
+            "ultralytics": "8.4.0",
+            "ultralytics-thop": "2.2.3",
+            "urllib3": "2.8.0"
+          },
+          "git": {
+            "commit": "6184d2b9e232a8695028a09b8ad5f5bf45c1e48c",
+            "status": "",
+            "dirty": false,
+            "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "matplotlib_backend_env": "Agg",
+          "torch": "2.10.0+cu128",
+          "cuda_runtime": "12.8",
+          "cudnn": 91002,
+          "cuda_available": true,
+          "gpus": [
+            {
+              "index": 0,
+              "name": "NVIDIA A100 80GB PCIe MIG 1g.10gb",
+              "capability": [
+                8,
+                0
+              ],
+              "memory_bytes": 10200547328
+            }
+          ],
+          "cuda_compute_probe": "passed",
+          "nvidia_smi": "NVIDIA A100 80GB PCIe, 550.144.03, [Insufficient Permissions]"
+        },
+        "pid": 5517,
+        "process_created_at": 1793771475.69,
+        "resume": false,
+        "checkpoint": "/root/drone-fire-detection/models/coco/yolov8n.pt",
+        "checkpoint_sha256": "f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36",
+        "wall_seconds": 38288.11189937219,
+        "finished_at_utc": "2026-11-04T16:30:08.948438+00:00",
+        "peak_allocated_bytes": 3518562816,
+        "peak_reserved_bytes": 5962203136
+      }
+    ],
+    "created_at_utc": "2026-11-04T05:51:41.931751+00:00",
+    "dataset_fingerprint": "c3d63dfa73314a36b5522f4651f5fd7d784bd8a054e78916f821160729862e2b",
+    "status": "completed",
+    "best_path": "/root/drone-fire-detection/experiments/runs/E1_20261104T055200Z_0a27f400/train/weights/best.pt",
+    "best_sha256": "0ec8895995297b781bf112215af073721b9775cbbbd27e7ac36b248f0b242e1d",
+    "epochs_completed": 100,
+    "training_wall_seconds": 38288.11189937219
+  },
+  "validation": {
+    "kind": "evaluation",
+    "split": "val",
+    "status": "completed",
+    "created_at_utc": "2026-11-04T16:32:13.622516+00:00",
+    "experiment_id": "E1",
+    "model_role": "trained",
+    "training_run": "/root/drone-fire-detection/experiments/runs/E1_20261104T055200Z_0a27f400",
+    "config": {
+      "experiment": {
+        "id": "E1",
+        "stage": "epochs",
+        "reference": "E0",
+        "overrides": {
+          "epochs": 100
+        }
+      },
+      "training": {
+        "epochs": 100,
+        "imgsz": 640,
+        "batch": 16,
+        "seed": 42,
+        "optimizer": "MuSGD",
+        "lr0": 0.01,
+        "lrf": 0.01,
+        "cos_lr": false,
+        "momentum": 0.937,
+        "weight_decay": 0.0005,
+        "warmup_epochs": 3.0,
+        "warmup_momentum": 0.8,
+        "warmup_bias_lr": 0.1,
+        "hsv_h": 0.015,
+        "hsv_s": 0.7,
+        "hsv_v": 0.4,
+        "degrees": 0.0,
+        "translate": 0.1,
+        "scale": 0.5,
+        "shear": 0.0,
+        "perspective": 0.0,
+        "flipud": 0.0,
+        "fliplr": 0.5,
+        "mosaic": 1.0,
+        "mixup": 0.0,
+        "copy_paste": 0.0,
+        "close_mosaic": 10,
+        "device": "0",
+        "workers": 0,
+        "patience": 0,
+        "deterministic": true,
+        "amp": false,
+        "cache": false,
+        "nbs": 64,
+        "save_period": 1,
+        "val": true,
+        "plots": true,
+        "compile": false
+      },
+      "evaluation": {
+        "ap_conf": 0.001,
+        "operating_conf": 0.25,
+        "nms_iou": 0.7,
+        "match_iou": 0.5,
+        "max_det": 300,
+        "batch": 16,
+        "warmup_images": 3,
+        "max_case_images": 20
+      },
+      "dataset_config": {
+        "raw_root": "data/raw/D-Fire",
+        "prepared_root": "data/processed/dfire-fold1-v2",
+        "image_policy": "strip_jpeg_trailing_bytes_without_recompression",
+        "split_files": {
+          "train": "data/raw/Data splitting/5-fold cross validation/dfire_train1.txt",
+          "val": "data/raw/Data splitting/5-fold cross validation/dfire_valid1.txt",
+          "test": "data/raw/Data splitting/dfire_test.txt"
+        },
+        "names": [
+          "smoke",
+          "fire"
+        ],
+        "annotation_policy": "clip_drop_degenerate",
+        "annotation_policy_authorization": "User approved derived clipping and zero-area removal on 2026-10-31; raw is preserved.",
+        "cross_split_duplicates": "error",
+        "source_group_identity_available": false,
+        "published_split_identity_verified": false
+      },
+      "suite_path": "configs/experiments.json",
+      "config_sha256": "aaf11cea4673215576241253d2067a6ef9f31f44049a76ec3c62758446dfde87"
+    },
+    "checkpoint": "/root/drone-fire-detection/experiments/runs/E1_20261104T055200Z_0a27f400/train/weights/best.pt",
+    "checkpoint_sha256": "0ec8895995297b781bf112215af073721b9775cbbbd27e7ac36b248f0b242e1d",
+    "dataset_fingerprint": "c3d63dfa73314a36b5522f4651f5fd7d784bd8a054e78916f821160729862e2b",
+    "dataset_summary": {
+      "train": {
+        "images": 13776,
+        "valid_images": 13776,
+        "negative_images": 6223,
+        "objects": {
+          "smoke": 7654,
+          "fire": 9653
+        },
+        "images_with_class": {
+          "smoke": 6778,
+          "fire": 3819
+        }
+      },
+      "val": {
+        "images": 3445,
+        "valid_images": 3445,
+        "negative_images": 1610,
+        "objects": {
+          "smoke": 1889,
+          "fire": 2154
+        },
+        "images_with_class": {
+          "smoke": 1666,
+          "fire": 888
+        }
+      },
+      "test": {
+        "images": 4306,
+        "valid_images": 4306,
+        "negative_images": 2005,
+        "objects": {
+          "smoke": 2311,
+          "fire": 2878
+        },
+        "images_with_class": {
+          "smoke": 2081,
+          "fire": 1115
+        }
+      }
+    },
+    "environment": {
+      "created_at_utc": "2026-11-04T16:32:12.918012+00:00",
+      "python": "3.10.12",
+      "platform": "Linux-5.15.0-151-generic-x86_64-with-glibc2.35",
+      "packages": {
+        "Jinja2": "3.1.6",
+        "MarkupSafe": "3.0.3",
+        "PyYAML": "6.0.3",
+        "certifi": "2026.10.23",
+        "charset-normalizer": "3.5.2",
+        "contourpy": "1.3.2",
+        "cuda-bindings": "12.9.4",
+        "cuda-pathfinder": "1.6.0",
+        "cycler": "0.12.1",
+        "filelock": "4.1.0",
+        "fonttools": "4.65.0",
+        "fsspec": "2026.9.0",
+        "idna": "3.20",
+        "kiwisolver": "1.5.1",
+        "matplotlib": "3.10.8",
+        "mpmath": "1.3.0",
+        "networkx": "3.4.2",
+        "numpy": "2.2.6",
+        "nvidia-cublas-cu12": "12.8.4.1",
+        "nvidia-cuda-cupti-cu12": "12.8.90",
+        "nvidia-cuda-nvrtc-cu12": "12.8.93",
+        "nvidia-cuda-runtime-cu12": "12.8.90",
+        "nvidia-cudnn-cu12": "9.10.2.21",
+        "nvidia-cufft-cu12": "11.3.3.83",
+        "nvidia-cufile-cu12": "1.13.1.3",
+        "nvidia-curand-cu12": "10.3.9.90",
+        "nvidia-cusolver-cu12": "11.7.3.90",
+        "nvidia-cusparse-cu12": "12.5.8.93",
+        "nvidia-cusparselt-cu12": "0.7.1",
+        "nvidia-nccl-cu12": "2.27.5",
+        "nvidia-nvjitlink-cu12": "12.8.93",
+        "nvidia-nvshmem-cu12": "3.4.5",
+        "nvidia-nvtx-cu12": "12.8.90",
+        "opencv-python": "4.12.0.88",
+        "packaging": "26.3",
+        "pillow": "12.1.0",
+        "pip": "26.3",
+        "polars": "2.0.0",
+        "polars-runtime-32": "2.0.0",
+        "psutil": "7.2.2",
+        "pyparsing": "3.3.3",
+        "python-dateutil": "3.0.0",
+        "requests": "2.34.2",
+        "scipy": "1.15.3",
+        "setuptools": "59.6.0",
+        "six": "1.17.0",
+        "sympy": "1.14.0",
+        "torch": "2.10.0+cu128",
+        "torchvision": "0.25.0+cu128",
+        "triton": "3.6.0",
+        "typing_extensions": "4.16.0",
+        "tzdata": "2026.6",
+        "ultralytics": "8.4.0",
+        "ultralytics-thop": "2.2.3",
+        "urllib3": "2.8.0"
+      },
+      "git": {
+        "commit": "8f7f6e608f63021e2ec4c858066d63ebc30b2c7e",
+        "status": "",
+        "dirty": false,
+        "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "matplotlib_backend_env": "Agg",
+      "torch": "2.10.0+cu128",
+      "cuda_runtime": "12.8",
+      "cudnn": 91002,
+      "cuda_available": true,
+      "gpus": [
+        {
+          "index": 0,
+          "name": "NVIDIA A100 80GB PCIe MIG 1g.10gb",
+          "capability": [
+            8,
+            0
+          ],
+          "memory_bytes": 10200547328
+        }
+      ],
+      "cuda_compute_probe": "passed",
+      "nvidia_smi": "NVIDIA A100 80GB PCIe, 550.144.03, [Insufficient Permissions]"
+    },
+    "selection": null,
+    "published_split_identity_verified": false,
+    "metrics": {
+      "precision": 0.782483271793609,
+      "recall": 0.715455948109885,
+      "map50": 0.7765106046782708,
+      "map50_95": 0.45159733405158464,
+      "f1_macro": 0.7473961416676884,
+      "classes": {
+        "smoke": {
+          "precision": 0.8436881617687298,
+          "recall": 0.7856008470089995,
+          "ap50": 0.8403736318768867,
+          "ap50_95": 0.525553060549725,
+          "f1": 0.8136090416447419
+        },
+        "fire": {
+          "precision": 0.721278381818488,
+          "recall": 0.6453110492107706,
+          "ap50": 0.7126475774796549,
+          "ap50_95": 0.3776416075534442,
+          "f1": 0.6811832416906348
+        }
+      },
+      "point_note": "Ultralytics P/R/F1 use the best mean-F1 confidence on this split; AP integrates confidence.",
+      "speed_ms_per_image": {
+        "preprocess": 14.249554209286787,
+        "inference": 21.939764023962578,
+        "loss": 0.0007921943362634656,
+        "postprocess": 2.227099531928972
+      }
+    },
+    "confusion_matrix": {
+      "matrix": [
+        [
+          1582.0,
+          13.0,
+          394.0
+        ],
+        [
+          6.0,
+          1596.0,
+          867.0
+        ],
+        [
+          301.0,
+          545.0,
+          0.0
+        ]
+      ],
+      "axes": "rows=predicted, columns=true; smoke,fire,background",
+      "note": "Ultralytics AP-validation confusion matrix; fixed operating metrics are separate."
+    },
+    "operating": {
+      "settings": {
+        "ap_conf": 0.001,
+        "operating_conf": 0.25,
+        "nms_iou": 0.7,
+        "match_iou": 0.5,
+        "max_det": 300,
+        "batch": 16,
+        "warmup_images": 3,
+        "max_case_images": 20
+      },
+      "matching": "class-aware greedy descending IoU, one-to-one",
+      "classes": {
+        "smoke": {
+          "tp": 1559,
+          "fp": 429,
+          "fn": 330,
+          "precision": 0.78420523138833,
+          "recall": 0.8253043938591847,
+          "f1": 0.8042300748001032
+        },
+        "fire": {
+          "tp": 1554,
+          "fp": 914,
+          "fn": 600,
+          "precision": 0.6296596434359806,
+          "recall": 0.7214484679665738,
+          "f1": 0.672436174816097
+        }
+      },
+      "images": 3445,
+      "negative_images": 1610,
+      "negative_fp_detections": 27,
+      "negative_images_with_fp": 26,
+      "inference_ms_per_image": 5.157609481407743,
+      "inference_fps": 193.88827393869596,
+      "pipeline_ms_per_image": 6.981037399651826,
+      "pipeline_fps": 143.24518588739753,
+      "analysis_wall_seconds_including_io_and_case_export": 33.78122933395207,
+      "timing_note": "Batch=1, FP32; warmed before measurement. Inference FPS excludes I/O, preprocessing and NMS."
+    },
+    "wall_seconds": 878.3474439750426,
+    "peak_allocated_bytes": 406465536,
+    "peak_reserved_bytes": 486539264
+  }
+}
