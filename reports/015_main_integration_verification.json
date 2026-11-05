@@ -1,0 +1,276 @@
+{
+  "kind": "pre_main_merge_regression_and_server_preservation_verification_not_model_experiment",
+  "verified_at_utc": "2026-11-05T07:55:28.903807+00:00",
+  "base_main_commit": "dfe6ce0168d2653c6085014558ee7414b9324629",
+  "local_measured_results_commit": "bd3315810b4c3711936e319b05acdf8d1b2c573b",
+  "tested_source_commit": "f1f802dd05903ec1265c550e67f19fa735ea720c",
+  "regression": {
+    "kind": "unit_regression_verification_not_model_experiment",
+    "started_at_utc": "2026-11-05T07:53:47.956655+00:00",
+    "command": [
+      "/root/drone-fire-detection/.venv/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "git_before": {
+      "commit": "f1f802dd05903ec1265c550e67f19fa735ea720c",
+      "status": "M docs/PROGRESS.md\n?? reports/010_server_e2-a.json\n?? reports/010_server_e2-a.md\n?? reports/010_server_e2-c.json\n?? reports/010_server_e2-c.md",
+      "dirty": true,
+      "tracked_diff_sha256": "15dfa494cad7f02a1c83cb83433234c439a1c542c624871999570e36e21fdd39"
+    },
+    "test_source_sha256": {
+      "tests/test_colab.py": "4c1891bdd55b3466324744db62f5cc7bf6b34c8e3e98a1118a037c9ec97979ba",
+      "tests/test_dataset.py": "1b2829ea881a117313b49755082704f1bc7f5313bc500647ac3e40ecb4bce84d",
+      "tests/test_protocol.py": "66588c98728110c01a96490fb9ca76b5cdea3967ef7118861bc4cc9ce1580196",
+      "tests/test_queue.py": "1942c8393a01113f84f5d4e26edfc2ca6c8d3d43c383532974c204f50edd96b4",
+      "tests/test_training_completion.py": "80dadf9f2aef7ecab9160e19c9dc5089f3ffe6de19de11696a6935ee7828c44d"
+    },
+    "cpu_only": true,
+    "finished_at_utc": "2026-11-05T07:53:56.564750+00:00",
+    "exit_code": 0,
+    "tests_run": 63,
+    "elapsed_seconds": 7.753,
+    "log_sha256": "9ded311c6451cdcb8e90757d8a2b4f7ac3000b1a35dbfb956ed76a43534e3636",
+    "git_after": {
+      "commit": "f1f802dd05903ec1265c550e67f19fa735ea720c",
+      "status": "M docs/PROGRESS.md\n?? reports/010_server_e2-a.json\n?? reports/010_server_e2-a.md\n?? reports/010_server_e2-c.json\n?? reports/010_server_e2-c.md",
+      "dirty": true,
+      "tracked_diff_sha256": "15dfa494cad7f02a1c83cb83433234c439a1c542c624871999570e36e21fdd39"
+    }
+  },
+  "server_after_tests": {
+    "kind": "main_integration_read_only_server_verification_not_model_experiment",
+    "observed_at_utc": "2026-11-05T07:55:28.903807+00:00",
+    "git": {
+      "commit": "f1f802dd05903ec1265c550e67f19fa735ea720c",
+      "status": "M docs/PROGRESS.md\n?? reports/010_server_e2-a.json\n?? reports/010_server_e2-a.md\n?? reports/010_server_e2-c.json\n?? reports/010_server_e2-c.md",
+      "dirty": true,
+      "tracked_diff_sha256": "15dfa494cad7f02a1c83cb83433234c439a1c542c624871999570e36e21fdd39"
+    },
+    "branch": "codex/shorter-server-experiments",
+    "plan_sha256": "9e5b9a18b8ce808d58f222eaf99471af7683e965fd33e0e6dbd6586033e3396d",
+    "pinned_source_sha256": {
+      "configs/experiments.json": "60953cd53b62322656fa537946ccd8dc7d700260392b0194217df70d5441148f",
+      "configs/models.json": "e2bee025110c96b70b4c4c47528154395e5f35646d775ae5d84073feace12dbd",
+      "configs/dataset.json": "52aa2911dbc50d7ad055ddb5b6d75bba8c1e5a2f682840d9c204c6fff5fde2dd",
+      "scripts/training_queue.py": "42efbfbdba3c7247f7f08671a5c0637b4572b0045b2bf87e5079b87fae14aca1",
+      "src/fire_detection/__init__.py": "81666cc82422b66bcd8d1225cac4ee6ddb6958fe96801a32272345533c2684f1",
+      "src/fire_detection/analysis.py": "945a37ed1377ab3a0f4325a07174131bc91f67bd70fc06228e76740be64c0e04",
+      "src/fire_detection/cli.py": "e848d3c7a29622bbe73dd652671e12e102f57f769bbe20f723a30bd7c7cde851",
+      "src/fire_detection/colab.py": "7af7d95eba6ea04f50d69be8c87a4c42189c67b6b700581c6271d3f955d0606c",
+      "src/fire_detection/common.py": "1dde95aa15b3f1cbafc76682966980c03c58b9710ffe5b118795440efd068805",
+      "src/fire_detection/config.py": "c747cbd1330ccedf91e4582a55a56683f3f2eeabb997720a11c40f531b1abb38",
+      "src/fire_detection/dataset.py": "9ab878401ec88a2f9a995ed01a270e785e595bc00a242a0defb26080d4c62ac8",
+      "src/fire_detection/evaluation.py": "0873d1dc4d4824f2402337b914b7694bae4491a7475ba1fc6c177cec1eab2021",
+      "src/fire_detection/inference.py": "fb0066a45f2641210b2b430d454fea61246899b95a6532a35821664fdeed7378",
+      "src/fire_detection/model.py": "745af2313938d04928ea81da8ce08a01c0738e5341ae97530e08341c13e78f8d",
+      "src/fire_detection/queue.py": "eebf444d9e85ec56f205746a1bb09cd3020ba326f7061af48e0a462c8e9d7985",
+      "src/fire_detection/training.py": "f0533ba6747c98c86829e5fcffe9500ca5e9e890679349ecc1da4a982e921e6f"
+    },
+    "pinned_source_and_settings_integrity": "passed",
+    "queue_status": "training",
+    "queue_updated_at_utc": "2026-11-05T07:55:23.928451+00:00",
+    "current_experiment": "E3-HSV",
+    "next_action": "verify training then common Validation",
+    "manager": {
+      "pid": 10187,
+      "process_created_at": 1793807768.03,
+      "sid": 10187,
+      "alive": true,
+      "actual_process_created_at": 1793807768.03,
+      "parent_pid": 1,
+      "session_id": 10187,
+      "stdin": "/dev/null",
+      "stdout": "/root/drone-fire-detection/work/server-queue.log",
+      "sighup_ignored": true
+    },
+    "tasks": [
+      {
+        "id": "E1",
+        "status": "completed",
+        "last_completed_epoch": 100,
+        "training_run": "/root/drone-fire-detection/experiments/runs/E1_20261104T055200Z_0a27f400",
+        "validation_run": "/root/drone-fire-detection/experiments/runs/val-E1_20261104T163213Z_a8b24f7c",
+        "worker": {
+          "pid": 10645,
+          "process_created_at": 1793809884.78,
+          "stage": "val",
+          "log": "/root/drone-fire-detection/work/server-queue-jobs/E1/val-2.log",
+          "receipt": "/root/drone-fire-detection/work/server-queue-jobs/E1/val-2.json",
+          "started_at_utc": "2026-11-04T16:31:24.809497+00:00",
+          "exit_code": 0,
+          "finished_at_utc": "2026-11-04T16:46:57.906307+00:00",
+          "alive": false
+        }
+      },
+      {
+        "id": "E2-A",
+        "status": "completed",
+        "last_completed_epoch": 60,
+        "training_run": "/root/drone-fire-detection/experiments/runs/E2-A_20261104T164814Z_296fcf56",
+        "validation_run": "/root/drone-fire-detection/experiments/runs/val-E2-A_20261104T231840Z_bb931608",
+        "worker": {
+          "pid": 13441,
+          "process_created_at": 1793834268.77,
+          "stage": "val",
+          "log": "/root/drone-fire-detection/work/server-queue-jobs/E2-A/val-2.log",
+          "receipt": "/root/drone-fire-detection/work/server-queue-jobs/E2-A/val-2.json",
+          "started_at_utc": "2026-11-04T23:17:48.799995+00:00",
+          "exit_code": 0,
+          "finished_at_utc": "2026-11-04T23:36:07.432698+00:00",
+          "alive": false
+        }
+      },
+      {
+        "id": "E2-C",
+        "status": "completed",
+        "last_completed_epoch": 60,
+        "training_run": "/root/drone-fire-detection/experiments/runs/E2-C_20261104T233752Z_955d89d3",
+        "validation_run": "/root/drone-fire-detection/experiments/runs/val-E2-C_20261105T060701Z_caee1f35",
+        "worker": {
+          "pid": 16161,
+          "process_created_at": 1793858778.88,
+          "stage": "val",
+          "log": "/root/drone-fire-detection/work/server-queue-jobs/E2-C/val-2.log",
+          "receipt": "/root/drone-fire-detection/work/server-queue-jobs/E2-C/val-2.json",
+          "started_at_utc": "2026-11-05T06:06:18.905883+00:00",
+          "exit_code": 0,
+          "finished_at_utc": "2026-11-05T06:26:52.618565+00:00",
+          "alive": false
+        }
+      },
+      {
+        "id": "E3-HSV",
+        "status": "training",
+        "last_completed_epoch": 13,
+        "training_run": "/root/drone-fire-detection/experiments/runs/E3-HSV_20261105T062831Z_ac2d2122",
+        "validation_run": null,
+        "worker": {
+          "pid": 16596,
+          "process_created_at": 1793860060.96,
+          "stage": "train",
+          "log": "/root/drone-fire-detection/work/server-queue-jobs/E3-HSV/train-1.log",
+          "receipt": "/root/drone-fire-detection/work/server-queue-jobs/E3-HSV/train-1.json",
+          "started_at_utc": "2026-11-05T06:27:40.982150+00:00",
+          "alive": true,
+          "actual_process_created_at": 1793860060.96,
+          "parent_pid": 10187,
+          "session_id": 16596,
+          "stdin": "/dev/null",
+          "stdout": "/root/drone-fire-detection/work/server-queue-jobs/E3-HSV/train-1.log",
+          "sighup_ignored": true
+        }
+      },
+      {
+        "id": "E3-Mosaic",
+        "status": "pending",
+        "last_completed_epoch": 0,
+        "training_run": null,
+        "validation_run": null,
+        "worker": null
+      },
+      {
+        "id": "E4-800",
+        "status": "pending",
+        "last_completed_epoch": 0,
+        "training_run": null,
+        "validation_run": null,
+        "worker": null
+      }
+    ],
+    "test_evaluation_records": [],
+    "software": {
+      "python": "3.10.12",
+      "packages": {
+        "torch": "2.10.0+cu128",
+        "torchvision": "0.25.0+cu128",
+        "ultralytics": "8.4.0",
+        "numpy": "2.2.6",
+        "opencv-python": "4.12.0.88",
+        "psutil": "7.2.2"
+      }
+    },
+    "server_checkout_sources_and_settings_changed_by_merge_session": false
+  },
+  "completed_model_result_verification": [
+    {
+      "id": "E1",
+      "report": "/root/drone-fire-detection/reports/010_server_e1.md",
+      "report_json": "/root/drone-fire-detection/reports/010_server_e1.json",
+      "report_sha256": "2f5412f1c0cf484f5216287428d97d32eed55f451b82f8e280488eeb54523799",
+      "report_json_sha256": "fb338c18d5cc6dcf454a5afc7e691c4375dff1d50b1c1ebc3055db4f16b30fab",
+      "training_record_sha256": "a286bb55c77462b3f0039d9f2ca2b5fd0eae5b979ad71c1105137b87690c8131",
+      "validation_record_sha256": "ce5787a4cdd5bc8bc06be71c65195205188edab02673949fde66e9b2b38b3815",
+      "best_sha256": "0ec8895995297b781bf112215af073721b9775cbbbd27e7ac36b248f0b242e1d",
+      "epochs": 100,
+      "completion": null,
+      "map50_95": 0.45159733405158464,
+      "fire_recall": 0.7214484679665738,
+      "negative_fp_images": 26
+    },
+    {
+      "id": "E2-A",
+      "report": "/root/drone-fire-detection/reports/010_server_e2-a.md",
+      "report_json": "/root/drone-fire-detection/reports/010_server_e2-a.json",
+      "report_sha256": "09413cf1a17557ddb7389435c1a4c13fabe48a23a1ea0cb3192cc45c538694a6",
+      "report_json_sha256": "28f86e2fced925e062503db02731d22ee5162553293a3cbdbf3d395255750b85",
+      "training_record_sha256": "70493e50dcd1095e1ef890165a563acfff05691a22993111b48bb7b95293105d",
+      "validation_record_sha256": "22c5ef80e6fb30f556d871555e49723b72cf009982b59fc37723228dff2be32a",
+      "best_sha256": "741b332d9c7608fdc283ed115a0dff30181e17cff782b18ce7617e11c3fd8741",
+      "epochs": 60,
+      "completion": {
+        "reason": "epoch_limit",
+        "requested_epochs": 60,
+        "epochs_completed": 60,
+        "patience": 15,
+        "metric": "validation mAP50-95",
+        "best_epoch": 47,
+        "best_fitness": 0.45964,
+        "epochs_without_improvement": 13,
+        "stopper_patience": 15,
+        "trainer_stop": true
+      },
+      "map50_95": 0.45098646805055964,
+      "fire_recall": 0.7000928505106778,
+      "negative_fp_images": 37
+    },
+    {
+      "id": "E2-C",
+      "report": "/root/drone-fire-detection/reports/010_server_e2-c.md",
+      "report_json": "/root/drone-fire-detection/reports/010_server_e2-c.json",
+      "report_sha256": "b107ef56045a88d6350f78ba0e412e01c1478fd7b3fb3d025dd0c2ed32b7341e",
+      "report_json_sha256": "9066e140cc3ead1cc04e01a743f076f82437d61c0ce7ea193642e5cdf10e941b",
+      "training_record_sha256": "a92465988c7e556a18cd43e9c3c9f33061afad01547c97bf0723ed176433b4f9",
+      "validation_record_sha256": "b775ce4a94e4edd78821dc537595e6c2cd3ccc19fe4e8ea15b292ce1d7130ee9",
+      "best_sha256": "84089ee71cbca18629da018403ccd694ae5870562113e295082f7ee12718595e",
+      "epochs": 60,
+      "completion": {
+        "reason": "epoch_limit",
+        "requested_epochs": 60,
+        "epochs_completed": 60,
+        "patience": 15,
+        "metric": "validation mAP50-95",
+        "best_epoch": 56,
+        "best_fitness": 0.45462,
+        "epochs_without_improvement": 4,
+        "stopper_patience": 15,
+        "trainer_stop": true
+      },
+      "map50_95": 0.44755551827302453,
+      "fire_recall": 0.6894150417827298,
+      "negative_fp_images": 32
+    }
+  ],
+  "model_and_input": {
+    "coco_sha256": "f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36",
+    "dataset_fingerprint": "c3d63dfa73314a36b5522f4651f5fd7d784bd8a054e78916f821160729862e2b"
+  },
+  "merge_policy": "Preserve preparation, implementation and measured-result commits; do not squash them into one commit.",
+  "server_checkout_policy": "Keep the active server on its current branch and commit. No pull, checkout, restart, source edit or setting edit.",
+  "pending_work": "E3-HSV, E3-Mosaic and E4-800 remain in the existing queue. E5/E6 require subsequent analysis; final Test requires freezing.",
+  "raw_media_weights_full_runs_or_credentials_added": false
+}
