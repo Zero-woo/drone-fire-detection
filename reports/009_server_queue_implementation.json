@@ -1,0 +1,32 @@
+{
+  "verified_at_utc": "2026-11-04T05:49:52.190696+00:00",
+  "unit_tests": {
+    "command": ".venv/bin/python -m unittest discover -s tests -v",
+    "passed": 50,
+    "log": "work/server-queue-unit-tests.log",
+    "log_sha256": "b907562f3b88d74287784648119aced808fa9516ae9f4cedfa55312a51059cc7",
+    "note": "Synthetic fixtures and process probe; not real model experiments"
+  },
+  "detachment_probe": {
+    "status": "completed",
+    "pid": 4868,
+    "process_created_at": 1793771316.61,
+    "sid": 4868,
+    "ppid": 1,
+    "stdin": "/dev/null",
+    "stdout": "/root/drone-fire-detection/work/server-detach-probe.log",
+    "sighup_ignored": true,
+    "finished_at_utc": "2026-11-04T05:48:44.977750+00:00",
+    "note": "Non-training detachment probe; no model result"
+  },
+  "baseline_config_matches": true,
+  "dependency_check": "No broken requirements found.",
+  "portability_followup": {
+    "passed_linux_tests": 50,
+    "log": "work/server-queue-unit-tests-portability.log",
+    "log_sha256": "70c68223537c407488760d2af414f3c5055a1ec885b2f8af7262e18c473eed8d",
+    "platform_guard_simulation": "passed",
+    "native_windows_tested": false,
+    "production_sources_changed_during_training": false
+  }
+}

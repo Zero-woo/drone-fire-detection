@@ -30,7 +30,11 @@ class ProtocolTests(unittest.TestCase):
                 ("E3-HSV", {"hsv_s", "hsv_v"}), ("E3-Mosaic", {"mosaic"}),
                 ("E4-800", {"imgsz"}), ("E5-8", {"batch"}), ("E5-32", {"batch"})):
             changed = experiment_config(path, experiment_id)["training"]
+            if experiment_id.startswith(("E2-", "E3-", "E4-")):
+                expected |= {"epochs", "patience"}
+                self.assertEqual((changed["epochs"], changed["patience"]), (60, 15))
             self.assertEqual({k for k in changed if changed[k] != reference[k]}, expected)
+        self.assertEqual((reference["epochs"], reference["patience"]), (100, 0))
 
     def test_combined_experiment_needs_validation_evidence(self):
         with self.assertRaisesRegex(ValueError, "disabled"):
@@ -38,7 +42,7 @@ class ProtocolTests(unittest.TestCase):
 
     def test_auto_optimizer_and_weight_overrides_are_rejected(self):
         source = read_json(ROOT / "configs/experiments.json")
-        for override in ({"optimizer": "auto"}, {"model": "best.pt"}, {"batch": -1}, {"patience": 5}, {"amp": True}):
+        for override in ({"optimizer": "auto"}, {"model": "best.pt"}, {"batch": -1}, {"patience": -1}, {"patience": 1.5}, {"amp": True}):
             suite = copy.deepcopy(source)
             suite["experiments"][0]["overrides"] = override
             path = self.root / "suite.json"

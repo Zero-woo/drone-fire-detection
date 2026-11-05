@@ -1,5 +1,14 @@
 # GPU 서버 Codex 실험 인계 프롬프트
 
+**2026-11-05 사용자 변경 지시가 아래 원래 계획보다 우선한다.** E1은 기존 100 epochs,
+patience=0으로 끝까지 유지한다. 아직 시작하지 않은 E2-A/E2-C/E3-HSV/E3-Mosaic/E4-800은
+최대 60 epochs, patience=15의 후보 탐색으로 변경했다. 현재 상태와 새 plan SHA256을
+`work/server-queue.json`에서 읽고 기존 100 epoch 계획으로 덮어쓰지 않는다. 정상 조기 종료도
+근거를 검증한 뒤 best.pt 공통 Validation과 보고를 거쳐 다음 실험으로 진행한다.
+E1과 예산이 달라 하이퍼파라미터 단독 효과를 주장하지 말고, 유망한 후보는 추후 같은
+100 epoch 조건으로 별도 검증한다. 상세 내용은 reports/012_shorter_queue_preparation.md 및
+experiments/ROADMAP.md를 따른다. 활성 큐를 중복 실행하거나 E1을 재학습하지 않는다.
+
 아래 지시를 새 서버 Codex 대화의 작업 지시로 사용한다. 상태와 결과는 먼저 실제 파일로
 재확인하며, 이 문서의 준비 상태를 새 실험의 완료 결과로 간주하지 않는다.
 

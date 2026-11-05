@@ -43,6 +43,9 @@ def compare_runs(run_paths):
                **{k: config["training"][k] if record["model_role"] == "trained" else None
                   for k in ("epochs", "lr0", "optimizer", "batch", "seed", "hsv_s", "hsv_v", "mosaic")},
                "imgsz": config["training"]["imgsz"],
+               "patience": config["training"].get("patience"),
+               "epochs_completed": training.get("epochs_completed"),
+               "completion_reason": training.get("completion", {}).get("reason", "epoch_limit" if training else None),
                **{k: metrics[k] for k in ("precision", "recall", "map50", "map50_95", "f1_macro")},
                "smoke_ap50_95": metrics["classes"]["smoke"]["ap50_95"],
                "fire_ap50_95": metrics["classes"]["fire"]["ap50_95"],
@@ -134,12 +137,13 @@ def compare_runs(run_paths):
         fig.savefig(output / f"curves-{folder.name}.png", dpi=160)
         plt.close(fig)
     lines = ["# 실험 결과 비교", "", "실제 실행된 평가만 수록한다. 주 선택 기준은 validation mAP50-95이다.", "",
-             "| 실험 | 역할 | mAP50-95 | Fire recall (고정) | Negative FP | 추론 ms |", "|---|---|---:|---:|---:|---:|"]
+             "| 실험 | 역할 | 실제/최대 epoch | patience | mAP50-95 | Fire recall (고정) | Negative FP | 추론 ms |", "|---|---|---:|---:|---:|---:|---:|---:|"]
     for row in rows:
-        lines.append(f"| {row['experiment_id']} | {row['role']} | {row['map50_95']:.4f} | {row['fire_recall_fixed']:.4f} | {row['negative_fp_detections']} | {row['inference_ms']:.3f} |")
+        lines.append(f"| {row['experiment_id']} | {row['role']} | {row['epochs_completed']}/{row['epochs']} | {row['patience']} | {row['map50_95']:.4f} | {row['fire_recall_fixed']:.4f} | {row['negative_fp_detections']} | {row['inference_ms']:.3f} |")
     lines += ["", "## 해석 및 제한", "", "- 측정 사실: 표는 동일 fingerprint와 동일 confidence/NMS 설정의 결과이다.",
               "- 학습곡선의 loss 및 AP 추이를 확인하고 과적합 여부와 설정별 차이를 해석해야 한다.",
               "- 변화의 원인은 통제 실험과 반복 seed 결과가 확보되기 전까지 추정으로 취급한다.",
+              "- 최대 epoch 또는 patience가 다르면 학습 예산도 다른 탐색 결과다. E1과의 차이를 하이퍼파라미터 단독 효과로 해석하지 않는다.",
               "- 공개 모델의 게시 수치(mAP50-95 0.430)는 로컬 측정과 분리한다. 학습/검증 split 동일성은 미확인이다.",
               "- 로컬 라벨 보정, 출처별 session 정보 부재, 실제 화재 환경과의 도메인 차이가 비교의 한계다.",
               "- 모델 선택은 validation에서 수행한다. test 결과는 선택 근거에 사용하지 않는다.",

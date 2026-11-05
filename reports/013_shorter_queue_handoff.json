@@ -1,0 +1,88 @@
+{
+  "kind": "operational_handoff_verification_not_completed_model_experiment",
+  "observed_at_utc": "2026-11-04T15:58:57.200843+00:00",
+  "ssh_logout_and_reconnect_verified": true,
+  "source_git": {
+    "commit": "de589839eb5a6a8c14cb06e31a43796173c8d9c5",
+    "status": "",
+    "dirty": false,
+    "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "queue_status": "handoff_waiting",
+  "manager": {
+    "pid": 10187,
+    "process_created_at": 1793807768.03,
+    "sid": 10187,
+    "alive": true,
+    "parent_pid": 1,
+    "session_id": 10187,
+    "stdin": "/dev/null",
+    "stdout": "/root/drone-fire-detection/work/server-queue.log",
+    "sighup_ignored": true,
+    "cpu_seconds": 29.25
+  },
+  "e1_worker": {
+    "pid": 5517,
+    "process_created_at": 1793771475.69,
+    "stage": "train",
+    "log": "/root/drone-fire-detection/work/server-queue-jobs/E1/train-1.log",
+    "receipt": "/root/drone-fire-detection/work/server-queue-jobs/E1/train-1.json",
+    "started_at_utc": "2026-11-04T05:51:15.717614+00:00",
+    "alive": true,
+    "parent_pid": 1,
+    "session_id": 5517,
+    "stdin": "/dev/null",
+    "stdout": "/root/drone-fire-detection/work/server-queue-jobs/E1/train-1.log",
+    "sighup_ignored": true,
+    "cpu_seconds": 36488.909999999996
+  },
+  "e1_run": "/root/drone-fire-detection/experiments/runs/E1_20261104T055200Z_0a27f400",
+  "e1_epochs_completed_at_observation": 95,
+  "e1_requested_epochs": 100,
+  "e1_patience": 0,
+  "previous_plan_sha256": "5145c3ddcb708feb6f8634306b985076c7d06416de2400c15bb9b78273a2f95f",
+  "revised_plan_sha256": "9e5b9a18b8ce808d58f222eaf99471af7683e965fd33e0e6dbd6586033e3396d",
+  "dataset_fingerprint": "c3d63dfa73314a36b5522f4651f5fd7d784bd8a054e78916f821160729862e2b",
+  "coco_sha256": "f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36",
+  "budgets": {
+    "E1": {
+      "epochs": 100,
+      "patience": 0
+    },
+    "E2-A": {
+      "epochs": 60,
+      "patience": 15
+    },
+    "E2-C": {
+      "epochs": 60,
+      "patience": 15
+    },
+    "E3-HSV": {
+      "epochs": 60,
+      "patience": 15
+    },
+    "E3-Mosaic": {
+      "epochs": 60,
+      "patience": 15
+    },
+    "E4-800": {
+      "epochs": 60,
+      "patience": 15
+    }
+  },
+  "pending_ids": [
+    "E2-A",
+    "E2-C",
+    "E3-HSV",
+    "E3-Mosaic",
+    "E4-800"
+  ],
+  "unit_tests": {
+    "command": ".venv/bin/python -m unittest discover -s tests -v",
+    "passed": 63,
+    "log_sha256": "df858686355cbff54af4e8df0c8e98c1086f4bc8b7edd6b795174d554b75fa9f"
+  },
+  "scope": "E1 training remains active. Future early stops and E1-to-E2 transitions have not occurred at this observation.",
+  "comparison_limit": "60-epoch screening differs from E1 training budget; confirm finalists at the same 100-epoch budget.",
+  "test_evaluated": false
+}

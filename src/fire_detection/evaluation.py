@@ -113,7 +113,7 @@ def operating_analysis(model, dataset_path, manifest, split, config, settings, o
             "timing_note": "Batch=1, FP32; warmed before measurement. Inference FPS excludes I/O, preprocessing and NMS."}
 
 
-def evaluate_checkpoint(checkpoint, config, dataset_fingerprint, split="val", selection=None, model_role="trained", training_run=None):
+def evaluate_checkpoint(checkpoint, config, dataset_fingerprint, split="val", selection=None, model_role="trained", training_run=None, on_run_created=None):
     if split == "test" and selection is None:
         raise ValueError("Test evaluation requires a frozen final selection")
     if split not in ("val", "test"):
@@ -137,6 +137,8 @@ def evaluate_checkpoint(checkpoint, config, dataset_fingerprint, split="val", se
               "environment": env, "selection": selection,
               "published_split_identity_verified": config["dataset_config"]["published_split_identity_verified"]}
     write_json(run / "evaluation.json", record)
+    if on_run_created:
+        on_run_created(run)
     torch.cuda.reset_peak_memory_stats(0)
     start = time.perf_counter()
     try:
@@ -187,7 +189,7 @@ def evaluate_checkpoint(checkpoint, config, dataset_fingerprint, split="val", se
     return run
 
 
-def evaluate_validation(training_run=None, published=False, suite_path=None, operating_conf=None):
+def evaluate_validation(training_run=None, published=False, suite_path=None, operating_conf=None, on_run_created=None):
     if published:
         config = experiment_config(suite_path or ROOT / "configs/experiments.json", "E0")
         spec = spec_for("published")
@@ -210,7 +212,7 @@ def evaluate_validation(training_run=None, published=False, suite_path=None, ope
             raise ValueError("operating_conf must be in (0,1]")
         config["evaluation"]["operating_conf"] = operating_conf
     return evaluate_checkpoint(checkpoint, config, dataset_fingerprint, model_role="published" if published else "trained",
-                               training_run=training_run)
+                               training_run=training_run, on_run_created=on_run_created)
 
 
 def freeze_selection(evaluation_dir, rationale):

@@ -316,3 +316,87 @@ bash work/start-server-codex.sh resume --last
 tmux는 세션을 유지한다. Codex의 사용량 제한·인증 만료·서버 재시작으로 인한 중단까지
 해결하지는 않는다. 학습 큐는 Codex와 별개의 서버 작업자로 실행하고, 상태 JSON·로그와
 checkpoint로 진행 상태와 재개 방법을 남기도록 인계 프롬프트에 명시했다.
+
+## 서버 핵심 실험 독립 큐
+
+2026-11-04 인계 승인 범위는 E1 → E2-A → E2-C → E3-HSV → E3-Mosaic → E4-800이다.
+완료된 서버 E0를 재사용하며 각 학습·입력/모델 검증·공통 Validation·비교 보고를 완료한
+다음에만 다음 조건을 시작한다. E5/E6/Test는 이 큐에 들어 있지 않다.
+
+```bash
+.venv/bin/python scripts/training_queue.py prepare
+.venv/bin/python scripts/training_queue.py start
+.venv/bin/python scripts/training_queue.py status
+tail -f work/server-queue.log
+tail -f work/server-queue-jobs/E1/train-1.log
+```
+
+`prepare`는 전체 입력·고정 COCO·서버 E0·설정과 기존 run/활성 작업자를 검사하고,
+`work/server-queue-plan.json`에 유한 큐, 확장 설정 및 코드/설정 SHA256을 고정한다.
+이미 있는 상태 파일은 덮어쓰지 않는다. `start`는 `setsid`에 해당하는 독립 세션을
+생성하고 stdin을 `/dev/null`, stdout/stderr를 `work/server-queue.log`로 연결한 뒤 반환한다.
+작업자도 독립 세션과 별도 로그를 사용한다. SIGHUP을 무시하며 Codex/SSH 수명에 의존하지 않는다.
+서버/컨테이너 자체가 종료되면 프로세스는 종료되므로 보존 저장소는 별도로 유지해야 한다.
+
+`work/server-queue.json`은 원자적으로 갱신되며 관리자/작업자 PID·생성 시각, 현재/다음 단계,
+각 run의 정확한 경로, 마지막 저장 epoch, 시작/종료 시각과 오류를 기록한다.
+`work/server-queue-jobs/<ID>/train-N.json`, `val-N.json`은 작업자가 직접 기록한 run receipt다.
+최신 폴더 추측 대신 이 경로를 연결한다. `train/results.csv`는 epoch loss/AP,
+`attempt-*-effective.json`과 `attempt-*-learning-rates.jsonl`은 적용 설정/optimizer/LR이다.
+
+관리자 OS 잠금은 작업자에도 상속되므로 관리자가 비정상 종료돼도 살아 있는 작업자와
+중복 실행하지 않는다. 별도 GPU 작업자 잠금도 사용한다. `status`의 `manager_alive`,
+`worker_alive`는 PID 재사용을 생성 시각으로 구분한다. 활성 큐에는 `start`를 반복하지 않는다.
+실험 중 코드나 고정 설정을 바꾸면 다음 단계 검증에서 큐가 중단된다.
+
+작은 분리 동작 검증은 아래 단위 테스트에 포함된다. 별도 launcher 종료 후 probe가 PID 1
+아래에서 SIGHUP을 무시하고 `/dev/null` 입력과 파일 출력으로 완료되는지 검사한다.
+모의 큐의 순차 실행·검증 실패/OOM 중단·잠금·재개 테스트는 모델 실험 결과가 아니다.
+
+```bash
+.venv/bin/python -m unittest discover -s tests -v
+```
+
+오류는 무한 재시도하지 않는다. OOM/체크섬/설정 불일치는 전체 큐를 중단하고
+조건과 run을 보존한다. batch·AMP·장치를 자동 변경하지 않는다. 모든 작업자가 종료된
+일시 중단은 상태와 로그를 검토하고 다음 명령으로 같은 run의 `last.pt`에서 재개한다.
+checkpoint와 `checkpoints.json`, 원래 설정 및 데이터 해시가 모두 일치해야 한다.
+완료 학습은 재학습하지 않고 정확히 연결된 Validation/보고 단계부터 계속한다.
+
+```bash
+.venv/bin/python scripts/training_queue.py status
+.venv/bin/python scripts/training_queue.py start --resume
+```
+
+OOM/무결성/일반 오류는 `--resume`으로 우회할 수 없다. 근본 원인을 검토하고 필요하면
+별도 실험 ID/계획을 만든다. 실패 상태/원본 run은 삭제하지 않는다. epoch 저장 전 중단으로
+정상 checkpoint가 없으면 자동 재개하지 않는다.
+
+각 단계 완료 시 `reports/010_server_<id>.md/.json`, `docs/PROGRESS.md`와
+`outputs/comparison_*/`의 표·loss/AP·비교 그래프가 생성된다. 보고서는 한국어다.
+핵심 큐 종료 상태는 `awaiting_analysis`다. Validation 근거로 E5의 필요성과 E6 override를
+검토한 뒤 COCO에서 E6를 학습하고, 최종 선택/threshold를 freeze한 후에만 Test를 평가한다.
+
+
+## 2026-11-05 서버 실험 예산 변경
+
+E1은 100 epochs, patience=0을 유지한다. E2-A/E2-C/E3-HSV/E3-Mosaic/E4-800은
+최대 60 epochs, patience=15다. 검증 mAP50-95 최고값이 15 epochs 연속 개선되지
+않으면 정상 조기 종료하며 best.pt로 공통 Validation·보고 후 다음 실험을 진행한다.
+실제 학습량과 종료 사유는 training.json의 epochs_completed/completion과 비교 표에 남는다.
+중단, OOM, 무결성 오류는 조기 종료가 아니며 다음 실험을 시작하지 않는다.
+
+기존 E1 작업자 PID를 보존한 관리자 교체 중 상태는 handoff_waiting이다.
+새 독립 관리자가 같은 PID와 생성 시각의 E1 작업자 종료를 기다린 뒤 완료 run을
+검증하고 Validation부터 계속한다. 이 상태에서 start를 중복 실행하지 않는다.
+일반 상태 명령은 동일하다.
+
+```bash
+.venv/bin/python scripts/training_queue.py status
+```
+
+변경 전 상태와 계획은 work/queue-shortening-20261105/에 보존하고 새 계획에는
+이전 계획 SHA256 및 사용자 변경 이유를 연결한다. 활성 계획의 소스나 설정을
+임의 편집하지 않는다. 추가 변경은 별도 검증·계획 이관이 필요하다.
+60 epochs 탐색과 E1의 100 epochs 결과는 동일 학습 예산의 통제 비교가 아니다.
+후보 확정은 같은 100 epochs 조건에서 수행하고 E5/E6/Test는 자동 실행하지 않는다.
