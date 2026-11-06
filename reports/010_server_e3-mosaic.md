@@ -1,0 +1,21 @@
+# 서버 E3-Mosaic 학습 및 공통 Validation
+
+실제 60 epochs 학습과 공통 Validation을 완료했다.
+
+- 최대 epoch: 60; patience: 15; 종료 사유: epoch_limit.
+- 학습: `/root/drone-fire-detection/experiments/runs/E3-Mosaic_20261105T131902Z_3acebed8`
+- 평가: `/root/drone-fire-detection/experiments/runs/val-E3-Mosaic_20261105T194501Z_21744411`
+- 모델 SHA256: `46735a65f9b902e215ecd2cd5479acbc3d772f4064231841db07adbb9b9c696a`
+- 데이터 fingerprint: `c3d63dfa73314a36b5522f4651f5fd7d784bd8a054e78916f821160729862e2b`
+- 기준 E1 대비 mAP50-95 변화: -0.775%p (단일 seed 관측).
+- 공통 mAP50: 0.76493; mAP50-95: 0.44385.
+- confidence 0.25 Fire Recall: 0.68942; TP/FP/FN: 1485/884/669.
+- Negative 오탐 이미지: 33/1610; 검출 36개.
+- 학습 시간: 23100.5초; 배치 1 FP32 추론 5.197ms/장.
+- 비교 CSV·JSON·loss/AP 곡선·그래프: `/root/drone-fire-detection/outputs/comparison_20261105T200207Z_eb7d22ac`.
+
+AP의 P/R은 최대 평균 F1 지점이며 confidence 0.25 운영 P/R과 구분한다. 학습 내부 Validation의 padding/batch 차이 때문에 후보 비교에는 공통 Validation만 사용한다.
+
+세부 effective 인자·optimizer/LR·버전·Git 상태·GPU 메모리·클래스별 AP 및 운영 지표는 동명 JSON과 run 원본에 보존한다. 하드웨어/버전별 속도 차이와 단일 seed 한계가 있다. 출처별 video/session ID가 없어 근접 프레임 누수를 보장하지 못하며 공개 모델 split과 다르다. Test는 평가하지 않았다.
+
+학습 예산이 기준과 다르므로 위 변화는 설정 하나의 단독 효과가 아니다. 짧은 실험은 후보 탐색으로 해석하고 유망한 후보를 동일한 100 epoch 조건에서 별도 검증한다.

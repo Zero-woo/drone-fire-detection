@@ -191,3 +191,10 @@
 - 기존 준비·구현·실측 커밋을 보존하는 main 통합을 검증했다. [검증 기록](../reports/015_main_integration_verification.md).
 - 2026-11-05T16:55:28.903807+09:00 관측 기준 E3-HSV는 13 epoch를 저장하고 학습 중이다. 서버의 기존 branch·checkout·관리자·작업자·소스·설정을 유지한다.
 - E3-Mosaic·E4-800은 대기 중이다. E5/E6와 동결 후 Test는 후속 단계이며 아직 완료되지 않았다.
+
+## 2026-11-06: E3·E4 완료 및 핵심 큐 정상 종료
+
+- E3-HSV는 60 epoch와 공통 Validation·보고를 완료했다. mAP50-95 0.45035, Fire Recall 0.70613. [실측 보고서](../reports/010_server_e3-hsv.md).
+- E3-Mosaic는 60 epoch와 공통 Validation·보고를 완료했다. mAP50-95 0.44385, Fire Recall 0.68942. [실측 보고서](../reports/010_server_e3-mosaic.md).
+- E4-800는 60 epoch와 공통 Validation·보고를 완료했다. mAP50-95 0.45234, Fire Recall 0.71216. [실측 보고서](../reports/010_server_e4-800.md).
+- 핵심 큐는 오류 없이 awaiting_analysis로 종료했다. 완료 실험을 재학습하지 않으며 Test는 미평가다.
