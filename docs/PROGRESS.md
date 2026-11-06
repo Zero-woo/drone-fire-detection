@@ -204,3 +204,9 @@
 - 사용자 승인에 따라 E4-800 해상도를 100 epoch/patience 0으로 재검증하는 E6를 선정했다. E1을 기준과 대안으로 유지한다.
 - 기존 완료 큐·계획·소스·보고서를 보존했다. [설정 및 이관 준비](../reports/016_e6_queue_preparation.md).
 - 이 항목은 준비 기록이며 E6 실행·완료 결과가 아니다. E5와 Test는 자동 실행하지 않는다.
+
+## 2026-11-06: 보존본 검증 기반 E6 큐 이관 구현
+
+- 완료된 핵심 task를 그대로 두고 E6 하나만 추가하는 extend-e6를 구현했다. 기존 source/config·상태 보존본과 선택 Validation의 SHA256을 검증한다.
+- E6는 100 epochs/patience 0/imgsz 800이며 COCO에서 독립 학습한다. 완료 조건·중복 잠금·기존 E6 run 거부·실패 중단을 유지한다.
+- 학습·공통 Validation·보고 후 awaiting_final_selection에서 멈추며 E5/freeze/Test를 자동 실행하지 않는다. 실제 실행 관측은 별도로 기록한다.

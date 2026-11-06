@@ -1,5 +1,15 @@
 # GPU 서버 Codex 실험 인계 프롬프트
 
+**2026-11-06 최신 승인:** 핵심 큐의 완료 기록을 보존한 채 E6를 자동 큐에 추가한다.
+E6는 고정 COCO에서 100 epochs / patience 0 / imgsz 800 / batch 16 / lr0 0.01 /
+seed 42 / MuSGD / FP32 / 기본 HSV / mosaic 1.0으로 새로 학습한다.
+E1과 E4-800의 공통 Validation을 선택 근거로 고정했으며 E1은 비교 기준과 대안이다.
+기존 계획을 덮어쓰거나 완료된 실험을 다시 학습하지 않는다. 보존본 digest를 검증하는
+`training_queue.py extend-e6`로 새 계획을 이관하고 상태가 prepared일 때 한 번만 start한다.
+실제 현재 상태는 서버 파일/PID 생성 시각으로 확인한다. E6의 학습·검증·공통 Validation·보고
+후 awaiting_final_selection에서 멈추며 E5, freeze, Test를 자동 수행하지 않는다.
+상세 근거는 reports/016_e6_queue_preparation.md와 docs/USAGE.md의 E6 항목을 따른다.
+
 **2026-11-05 사용자 변경 지시가 아래 원래 계획보다 우선한다.** E1은 기존 100 epochs,
 patience=0으로 끝까지 유지한다. 아직 시작하지 않은 E2-A/E2-C/E3-HSV/E3-Mosaic/E4-800은
 최대 60 epochs, patience=15의 후보 탐색으로 변경했다. 현재 상태와 새 plan SHA256을

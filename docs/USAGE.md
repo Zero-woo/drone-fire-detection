@@ -400,3 +400,39 @@ E1은 100 epochs, patience=0을 유지한다. E2-A/E2-C/E3-HSV/E3-Mosaic/E4-800�
 임의 편집하지 않는다. 추가 변경은 별도 검증·계획 이관이 필요하다.
 60 epochs 탐색과 E1의 100 epochs 결과는 동일 학습 예산의 통제 비교가 아니다.
 후보 확정은 같은 100 epochs 조건에서 수행하고 E5/E6/Test는 자동 실행하지 않는다.
+
+## 2026-11-06 선택된 E6의 자동 큐 이관
+
+사용자 승인으로 E6 한 작업을 추가했다. 선택 조건은 100 epochs, patience 0, imgsz 800,
+batch 16, lr0 0.01, seed 42, 명시적 MuSGD, FP32, 기본 HSV, mosaic 1.0이다.
+기존 E1과 E4-800의 Validation 기록/모델 SHA256을 설정의 selection_evidence에 고정한다.
+AP 차이는 작은 단일 seed 관측이며 E1을 비교 기준과 대안으로 보존한다.
+
+이관은 기존 큐가 awaiting_analysis로 정상 종료했고 모든 관리자/작업자가 종료된 경우에만
+가능하다. 코드/설정 변경 전 검증한 상태·계획·고정 소스·완료 보고서를 보존하고,
+archive.json SHA256을 확인한다. 기존 실제 보존본과 digest는 다음 준비 기록에 있다.
+
+- [E6 설정 및 보존 근거](../reports/016_e6_queue_preparation.md)
+- `work/e6-migration_20261106T060752Z_927ed3dc/`
+
+다음은 이관 시 한 번만 실행하는 명령이다. 이미 prepared/training/validating 또는
+awaiting_final_selection 상태이면 반복하지 않고 status와 기록된 receipt부터 확인한다.
+
+```bash
+.venv/bin/python scripts/training_queue.py extend-e6 --archive work/e6-migration_20261106T060752Z_927ed3dc --archive-sha256 4baea677d40301dcf50c336fb5bc632a3b10cba8fc660cf912b03c3761c06755
+.venv/bin/python scripts/training_queue.py start
+.venv/bin/python scripts/training_queue.py status
+tail -f work/server-queue.log
+```
+
+이관 명령은 기존 상태의 원본 SHA256, 보존한 소스와 모든 완료 모델/평가 연결을 검증한다.
+기존 완료 task를 그대로 두고 E6 pending 하나만 추가하며 새 계획은
+`work/server-queue-e6-plan.json`에 저장한다. 원래 계획 파일과 보존본은 유지한다.
+기존 E6 run이나 살아 있는 GPU 작업자가 있으면 중복 실행하지 않는다.
+
+E6는 고정 COCO에서 새로 학습하고 best.pt 공통 Validation과 비교 보고서까지 자동 처리한다.
+완료 보고서는 `reports/010_server_e6.md/.json`이며 마지막 상태는
+`awaiting_final_selection`이다. 모델·threshold 동결과 실제 Test는 자동 실행하지 않는다.
+실패/OOM/체크섬 불일치는 상태와 run을 보존하고 자동 재시도나 설정 변경을 하지 않는다.
+일시 중단의 재개는 기존과 같이 정확한 run의 last.pt/설정/입력 해시를 검증한
+`start --resume`으로만 수행한다. 준비/회귀 fixture와 실제 E6 완료 결과를 구분한다.

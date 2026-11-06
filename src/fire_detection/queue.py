@@ -1,7 +1,7 @@
 """Finite Linux queue with detached workers, immutable inputs and explicit run receipts.
 
-The queue stops for failures and after the authorized core experiments. E6 and Test
-require analysis; this module never selects their settings or launches them.
+The core queue stops for analysis. A separately authorized, archived continuation
+can run a Validation-selected E6; final model freezing and Test remain manual.
 """
 from __future__ import annotations
 
@@ -177,11 +177,15 @@ def make_plan():
 
 def verify_plan(plan):
     payload = {k: v for k, v in plan.items() if k != "plan_sha256"}
-    if object_sha256(payload) != plan["plan_sha256"] or plan["ids"] != list(CORE_IDS):
+    if (object_sha256(payload) != plan["plan_sha256"]
+            or plan["ids"] not in (list(CORE_IDS), [*CORE_IDS, "E6"])):
         raise ValueError("Queue plan checksum/authorized IDs mismatch")
     for path, digest in plan["pinned_files"].items():
         if file_sha256(resolve(path)) != digest:
             raise ValueError(f"Pinned source/config checksum mismatch: {path}")
+    if "E6" in plan["ids"]:
+        from .continuation import verify_e6_extension
+        verify_e6_extension(plan)
     spec = spec_for("coco")
     if spec["sha256"] != plan["coco_sha256"]:
         raise ValueError("COCO model specification checksum mismatch")
@@ -406,8 +410,8 @@ def run_queue(state_path, resume=False):
                 raise RuntimeError("Recorded worker is still active; do not start a duplicate manager")
         if state["status"] != "prepared" and not resume:
             raise RuntimeError("Existing queue requires explicit --resume after inspection")
-        if state["status"] == "awaiting_analysis":
-            raise RuntimeError("Core queue already completed; E6 requires analysis")
+        if state["status"] in ("awaiting_analysis", "awaiting_final_selection"):
+            raise RuntimeError("Queue already completed; explicit analysis/selection is required")
         if resume and state.get("failure_kind") in ("integrity", "oom", "failure"):
             raise RuntimeError("Non-transient queue failure requires investigation; no automatic retry")
         state.setdefault("started_at_utc", utc_now())
@@ -425,13 +429,17 @@ def run_queue(state_path, resume=False):
                 raise ValueError("State/plan checksum mismatch")
             state["plan"] = plan
             verify_plan(plan)
+            ids = plan.get("ids", list(CORE_IDS))
+            if [task["id"] for task in state["tasks"]] != ids:
+                raise ValueError("Queue task/plan ID integrity mismatch")
             for index, task in enumerate(state["tasks"]):
                 if task["status"] == "completed":
                     training = validate_training(task["training_run"], plan["configs"][task["id"]], plan["dataset_fingerprint"])
                     validate_evaluation(task["validation_run"], task["training_run"], training)
                     continue
                 state["current_experiment"] = task["id"]
-                state["next_experiment"] = CORE_IDS[index + 1] if index + 1 < len(CORE_IDS) else "E6 analysis"
+                state["next_experiment"] = ids[index + 1] if index + 1 < len(ids) else (
+                    "final selection review" if "E6" in ids else "E6 analysis")
                 verify_plan(plan)
                 action = "new" if task["status"] == "pending" else recover_task(task, plan)
                 task.setdefault("started_at_utc", utc_now())
@@ -452,8 +460,11 @@ def run_queue(state_path, resume=False):
                 report_completed(state, task)
                 task.update(status="completed", finished_at_utc=utc_now())
                 save_state(state_path, state)
-            state.update(status="awaiting_analysis", finished_at_utc=utc_now(),
-                         current_experiment=None, next_action="Analyze core Validation, decide E5 need and E6 overrides; do not evaluate Test before freeze")
+            state.update(status=plan.get("after_queue", "awaiting_analysis"), finished_at_utc=utc_now(),
+                         current_experiment=None, next_action=(
+                             "Review E6 Validation vs E1/E4 and freeze model/thresholds before Test; no automatic E5 or Test"
+                             if "E6" in ids else
+                             "Analyze core Validation, decide E5 need and E6 overrides; do not evaluate Test before freeze"))
             save_state(state_path, state)
         except BaseException as exc:
             reason = f"{type(exc).__name__}: {exc}"
@@ -483,6 +494,8 @@ def worker(args):
             assert_no_active_training()
             plan = read_json(args.plan)
             verify_plan(plan)
+            if args.id not in plan["ids"]:
+                raise ValueError("Worker experiment is not authorized by its plan")
             if args.stage == "train":
                 from .training import train
                 run = train(ROOT / "configs/experiments.json", args.id,
@@ -506,6 +519,10 @@ def main(argv=None):
     sub = parser.add_subparsers(dest="command", required=True)
     prepare = sub.add_parser("prepare")
     prepare.add_argument("--state", type=Path, default=DEFAULT_STATE)
+    extension = sub.add_parser("extend-e6")
+    extension.add_argument("--state", type=Path, default=DEFAULT_STATE)
+    extension.add_argument("--archive", type=Path, required=True)
+    extension.add_argument("--archive-sha256", required=True)
     for name in ("start", "run", "status", "adopt-active"):
         command = sub.add_parser(name)
         command.add_argument("--state", type=Path, default=DEFAULT_STATE)
@@ -513,7 +530,7 @@ def main(argv=None):
             command.add_argument("--resume", action="store_true")
     child = sub.add_parser("worker")
     child.add_argument("--stage", choices=("train", "val"), required=True)
-    child.add_argument("--id", choices=CORE_IDS, required=True)
+    child.add_argument("--id", choices=(*CORE_IDS, "E6"), required=True)
     child.add_argument("--plan", type=Path, required=True)
     child.add_argument("--receipt", type=Path, required=True)
     child.add_argument("--training-run", type=Path)
@@ -539,6 +556,10 @@ def main(argv=None):
                                               "validation_run": None, "last_completed_epoch": 0} for key in CORE_IDS],
                                    "next_action": "Start verified detached queue", "manager": None})
         print(args.state)
+    elif args.command == "extend-e6":
+        from .continuation import prepare_e6_extension
+        state = prepare_e6_extension(args.state, args.archive, args.archive_sha256)
+        print(f"Prepared selected E6 continuation; state {args.state}; plan {state['plan_sha256']}")
     elif args.command == "start":
         state = read_json(args.state)
         if alive(state.get("manager")) or any(alive(worker) for task in state["tasks"] for worker in task.get("workers", [])):

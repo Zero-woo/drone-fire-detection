@@ -28,6 +28,32 @@
     {"id": "E4-800", "stage": "resolution", "reference": "E1", "overrides": {"epochs": 60, "patience": 15, "imgsz": 800}},
     {"id": "E5-8", "stage": "batch", "reference": "E1", "overrides": {"epochs": 100, "batch": 8}},
     {"id": "E5-32", "stage": "batch", "reference": "E1", "overrides": {"epochs": 100, "batch": 32}},
-    {"id": "E6", "stage": "combined", "reference": "E1", "enabled": false, "overrides": {"epochs": 100}, "selection_evidence": []}
+    {
+      "id": "E6",
+      "stage": "combined",
+      "reference": "E1",
+      "enabled": true,
+      "overrides": {
+        "epochs": 100,
+        "imgsz": 800
+      },
+      "selection_evidence": [
+        {
+          "experiment_id": "E1",
+          "validation_run": "experiments/runs/val-E1_20261104T163213Z_a8b24f7c",
+          "validation_record_sha256": "ce5787a4cdd5bc8bc06be71c65195205188edab02673949fde66e9b2b38b3815",
+          "training_record_sha256": "a286bb55c77462b3f0039d9f2ca2b5fd0eae5b979ad71c1105137b87690c8131",
+          "checkpoint_sha256": "0ec8895995297b781bf112215af073721b9775cbbbd27e7ac36b248f0b242e1d"
+        },
+        {
+          "experiment_id": "E4-800",
+          "validation_run": "experiments/runs/val-E4-800_20261106T052421Z_e3007fd6",
+          "validation_record_sha256": "1564bde2e475593c168bc0ffa53c53a98fed88492ca7c3ab6354b7bfbeb9923c",
+          "training_record_sha256": "e5652798fa685aa6903bca14f2277fbe13337f59cc087c56ecee4a27ae24fff6",
+          "checkpoint_sha256": "e00b60d6d6fc8e1094b3eafc75ef5934f16b223b52e325a9ecd9ce0c95643e21"
+        }
+      ],
+      "selection_rationale": "공통 Validation mAP50-95가 가장 높았던 E4-800의 해상도 800을 100 epoch로 재검증한다. AP 차이는 작고 E1보다 Fire Recall/정상 오탐이 불리하므로 개선을 가정하지 않고 E1을 기준 및 대안으로 보존한다. 학습률 0.01, 기본 HSV, mosaic 1.0, batch 16을 유지한다. E5는 이번 자동 실행 범위에서 제외한다."
+    }
   ]
 }

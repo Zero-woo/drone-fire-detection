@@ -1,5 +1,10 @@
 # 실험 로드맵
 
+**2026-11-06 E6 자동 실행 승인:** 완료된 핵심 큐를 보존하고 E6 한 작업만 추가한다.
+선택 조건은 100 epochs / patience 0 / imgsz 800 / batch 16 / lr0 0.01 / seed 42 /
+MuSGD / FP32 / 기본 HSV / mosaic 1.0이다. E1과 E4-800의 Validation SHA256을
+선택 근거로 고정하며 E1을 비교 기준과 대안으로 유지한다. E5와 Test는 자동 실행하지 않는다.
+
 1. 환경 및 데이터: CUDA 실제 연산, RTX 5070, D-Fire 파일·좌표·중복 검사,
    공식 분할 고정, COCO 및 공개 체크포인트 SHA256 검증.
 2. E0: COCO YOLOv8n, 50 epochs, 640, batch 16, seed 42, MuSGD, lr0 0.01.
@@ -28,3 +33,10 @@ best.pt 공통 Validation·보고서를 거쳐 다음 실험으로 자동 진행
 정상 조기 종료로 처리하지 않는다. LR 일정과 Mosaic 종료 시점도 최대 epoch에 따라
 달라지므로 100 epochs E1 대비 수치는 후보 탐색 관측이다. 유망한 후보의 확정 비교는
 같은 100 epochs 조건에서 별도 실험으로 수행한다. E5/E6는 아직 자동 큐에 포함하지 않는다.
+
+2026-11-06 변경 지시: 위 문장의 E6 자동 실행 제외는 이번 명시적 승인으로 대체한다.
+E4-800은 AP가 조금 높지만 Fire Recall과 정상 오탐은 E1보다 불리하므로,
+800 해상도를 E1과 같은 100 epoch 예산으로 검증한다. 근거가 약한 학습률·증강 변경은
+추가하지 않는다. 기존 COCO에서 독립 학습하며 완료된 E1~E4를 재학습하지 않는다.
+E6 학습·무결성 검증·best.pt 공통 Validation·보고 후 `awaiting_final_selection`에서 멈춘다.
+모델/threshold 동결, 반복 seed, E5와 실제 Test는 별도 후속 단계다.

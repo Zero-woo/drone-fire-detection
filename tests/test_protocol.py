@@ -37,8 +37,27 @@ class ProtocolTests(unittest.TestCase):
         self.assertEqual((reference["epochs"], reference["patience"]), (100, 0))
 
     def test_combined_experiment_needs_validation_evidence(self):
+        suite = read_json(ROOT / "configs/experiments.json")
+        selected = next(entry for entry in suite["experiments"] if entry["id"] == "E6")
+        selected["enabled"] = False
+        path = self.root / "disabled-e6.json"
+        write_json(path, suite)
         with self.assertRaisesRegex(ValueError, "disabled"):
-            experiment_config(ROOT / "configs/experiments.json", "E6")
+            experiment_config(path, "E6")
+        selected.update(enabled=True, selection_evidence=[])
+        write_json(path, suite)
+        with self.assertRaisesRegex(ValueError, "selection_evidence"):
+            experiment_config(path, "E6")
+
+    def test_selected_e6_preserves_baseline_and_extends_resolution_to_100_epochs(self):
+        reference = experiment_config(ROOT / "configs/experiments.json", "E1")
+        selected = experiment_config(ROOT / "configs/experiments.json", "E6")
+        self.assertEqual({k for k in reference["training"]
+                          if reference["training"][k] != selected["training"][k]}, {"imgsz"})
+        self.assertEqual((selected["training"]["epochs"], selected["training"]["patience"],
+                          selected["training"]["imgsz"]), (100, 0, 800))
+        self.assertEqual({entry["experiment_id"] for entry in selected["experiment"]["selection_evidence"]},
+                         {"E1", "E4-800"})
 
     def test_auto_optimizer_and_weight_overrides_are_rejected(self):
         source = read_json(ROOT / "configs/experiments.json")
