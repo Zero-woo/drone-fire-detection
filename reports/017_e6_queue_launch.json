@@ -1,0 +1,747 @@
+{
+  "kind": "authorized_E6_queue_launch_observation_not_completed_model_result",
+  "ssh_disconnect_reconnect_verified": {
+    "result": "same manager and worker PID/create-time remained alive with continuing GPU batches",
+    "manager_pid": 27051,
+    "worker_pid": 27081,
+    "verified_at_utc": "2026-11-06T06:44:03.962547+00:00"
+  },
+  "observation": {
+    "kind": "live_operational_observation_not_completed_model_result",
+    "observed_at_utc": "2026-11-06T06:44:03.962547+00:00",
+    "git": {
+      "commit": "faafb7cb14b3624868ec23c92f3bb8327c7cae88",
+      "status": "",
+      "dirty": false,
+      "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "state_status": "training",
+    "manager": {
+      "recorded": {
+        "pid": 27051,
+        "process_created_at": 1793947285.41,
+        "sid": 27051
+      },
+      "alive_with_matching_creation_time": true,
+      "pid": 27051,
+      "created_at_utc": "2026-11-06T06:41:25.410000+00:00",
+      "ppid": 1,
+      "sid": 27051,
+      "command": [
+        "/root/drone-fire-detection/.venv/bin/python",
+        "-u",
+        "/root/drone-fire-detection/scripts/training_queue.py",
+        "run",
+        "--state",
+        "/root/drone-fire-detection/work/server-queue.json"
+      ],
+      "status": "sleeping",
+      "stdin": "/dev/null",
+      "stdout": "/root/drone-fire-detection/work/server-queue.log",
+      "stderr": "/root/drone-fire-detection/work/server-queue.log",
+      "sighup_ignored": true
+    },
+    "plan_path": "/root/drone-fire-detection/work/server-queue-e6-plan.json",
+    "plan_sha256": "f5886430b41043924cb73d8c705265f3f487d85b9915bae87d7b741487492446",
+    "plan_file_sha256": "c8153d28c15b12ccccda21bdd584ed79163090ee42a1b27594c1741b9d74828b",
+    "extension": {
+      "authorized_at_utc": "2026-11-06T06:40:41.206009+00:00",
+      "archive": "/root/drone-fire-detection/work/e6-migration_20261106T060752Z_927ed3dc",
+      "archive_manifest_sha256": "4baea677d40301dcf50c336fb5bc632a3b10cba8fc660cf912b03c3761c06755",
+      "previous_plan_sha256": "9e5b9a18b8ce808d58f222eaf99471af7683e965fd33e0e6dbd6586033e3396d",
+      "previous_state_sha256": "dba6376bc6cdb8b6a1ec037bcabf7545cd82aa7b937df732432ceef1f7306bf3"
+    },
+    "archive_manifest_sha256": "4baea677d40301dcf50c336fb5bc632a3b10cba8fc660cf912b03c3761c06755",
+    "old_plan_file_preserved": true,
+    "completed_core_tasks_unchanged": true,
+    "pinned_source_checksums_match": true,
+    "tasks": [
+      {
+        "id": "E1",
+        "status": "completed",
+        "training_run": "/root/drone-fire-detection/experiments/runs/E1_20261104T055200Z_0a27f400",
+        "validation_run": "/root/drone-fire-detection/experiments/runs/val-E1_20261104T163213Z_a8b24f7c",
+        "last_completed_epoch": 100,
+        "error": null
+      },
+      {
+        "id": "E2-A",
+        "status": "completed",
+        "training_run": "/root/drone-fire-detection/experiments/runs/E2-A_20261104T164814Z_296fcf56",
+        "validation_run": "/root/drone-fire-detection/experiments/runs/val-E2-A_20261104T231840Z_bb931608",
+        "last_completed_epoch": 60,
+        "error": null
+      },
+      {
+        "id": "E2-C",
+        "status": "completed",
+        "training_run": "/root/drone-fire-detection/experiments/runs/E2-C_20261104T233752Z_955d89d3",
+        "validation_run": "/root/drone-fire-detection/experiments/runs/val-E2-C_20261105T060701Z_caee1f35",
+        "last_completed_epoch": 60,
+        "error": null
+      },
+      {
+        "id": "E3-HSV",
+        "status": "completed",
+        "training_run": "/root/drone-fire-detection/experiments/runs/E3-HSV_20261105T062831Z_ac2d2122",
+        "validation_run": "/root/drone-fire-detection/experiments/runs/val-E3-HSV_20261105T125747Z_58213238",
+        "last_completed_epoch": 60,
+        "error": null
+      },
+      {
+        "id": "E3-Mosaic",
+        "status": "completed",
+        "training_run": "/root/drone-fire-detection/experiments/runs/E3-Mosaic_20261105T131902Z_3acebed8",
+        "validation_run": "/root/drone-fire-detection/experiments/runs/val-E3-Mosaic_20261105T194501Z_21744411",
+        "last_completed_epoch": 60,
+        "error": null
+      },
+      {
+        "id": "E4-800",
+        "status": "completed",
+        "training_run": "/root/drone-fire-detection/experiments/runs/E4-800_20261105T200326Z_96a4ad87",
+        "validation_run": "/root/drone-fire-detection/experiments/runs/val-E4-800_20261106T052421Z_e3007fd6",
+        "last_completed_epoch": 60,
+        "error": null
+      },
+      {
+        "id": "E6",
+        "status": "training",
+        "training_run": "/root/drone-fire-detection/experiments/runs/E6_20261106T064302Z_a85a037e",
+        "validation_run": null,
+        "last_completed_epoch": 0,
+        "error": null,
+        "worker": {
+          "recorded": {
+            "pid": 27081,
+            "process_created_at": 1793947332.53,
+            "stage": "train",
+            "log": "/root/drone-fire-detection/work/server-queue-jobs/E6/train-1.log",
+            "receipt": "/root/drone-fire-detection/work/server-queue-jobs/E6/train-1.json",
+            "started_at_utc": "2026-11-06T06:42:12.557400+00:00"
+          },
+          "alive_with_matching_creation_time": true,
+          "pid": 27081,
+          "created_at_utc": "2026-11-06T06:42:12.530000+00:00",
+          "ppid": 27051,
+          "sid": 27081,
+          "command": [
+            "/root/drone-fire-detection/.venv/bin/python",
+            "-u",
+            "/root/drone-fire-detection/scripts/training_queue.py",
+            "worker",
+            "--stage",
+            "train",
+            "--id",
+            "E6",
+            "--plan",
+            "/root/drone-fire-detection/work/server-queue-e6-plan.json",
+            "--receipt",
+            "/root/drone-fire-detection/work/server-queue-jobs/E6/train-1.json"
+          ],
+          "status": "running",
+          "stdin": "/dev/null",
+          "stdout": "/root/drone-fire-detection/work/server-queue-jobs/E6/train-1.log",
+          "stderr": "/root/drone-fire-detection/work/server-queue-jobs/E6/train-1.log",
+          "sighup_ignored": true
+        },
+        "train_receipt": {
+          "pid": 27081,
+          "process_created_at": 1793947332.53,
+          "status": "running",
+          "stage": "train",
+          "experiment_id": "E6",
+          "started_at_utc": "2026-11-06T06:42:12.647315+00:00",
+          "run": "/root/drone-fire-detection/experiments/runs/E6_20261106T064302Z_a85a037e"
+        },
+        "training.json": {
+          "kind": "training",
+          "experiment_id": "E6",
+          "config": {
+            "experiment": {
+              "id": "E6",
+              "stage": "combined",
+              "reference": "E1",
+              "enabled": true,
+              "overrides": {
+                "epochs": 100,
+                "imgsz": 800
+              },
+              "selection_evidence": [
+                {
+                  "experiment_id": "E1",
+                  "validation_run": "experiments/runs/val-E1_20261104T163213Z_a8b24f7c",
+                  "validation_record_sha256": "ce5787a4cdd5bc8bc06be71c65195205188edab02673949fde66e9b2b38b3815",
+                  "training_record_sha256": "a286bb55c77462b3f0039d9f2ca2b5fd0eae5b979ad71c1105137b87690c8131",
+                  "checkpoint_sha256": "0ec8895995297b781bf112215af073721b9775cbbbd27e7ac36b248f0b242e1d"
+                },
+                {
+                  "experiment_id": "E4-800",
+                  "validation_run": "experiments/runs/val-E4-800_20261106T052421Z_e3007fd6",
+                  "validation_record_sha256": "1564bde2e475593c168bc0ffa53c53a98fed88492ca7c3ab6354b7bfbeb9923c",
+                  "training_record_sha256": "e5652798fa685aa6903bca14f2277fbe13337f59cc087c56ecee4a27ae24fff6",
+                  "checkpoint_sha256": "e00b60d6d6fc8e1094b3eafc75ef5934f16b223b52e325a9ecd9ce0c95643e21"
+                }
+              ],
+              "selection_rationale": "공통 Validation mAP50-95가 가장 높았던 E4-800의 해상도 800을 100 epoch로 재검증한다. AP 차이는 작고 E1보다 Fire Recall/정상 오탐이 불리하므로 개선을 가정하지 않고 E1을 기준 및 대안으로 보존한다. 학습률 0.01, 기본 HSV, mosaic 1.0, batch 16을 유지한다. E5는 이번 자동 실행 범위에서 제외한다."
+            },
+            "training": {
+              "epochs": 100,
+              "imgsz": 800,
+              "batch": 16,
+              "seed": 42,
+              "optimizer": "MuSGD",
+              "lr0": 0.01,
+              "lrf": 0.01,
+              "cos_lr": false,
+              "momentum": 0.937,
+              "weight_decay": 0.0005,
+              "warmup_epochs": 3.0,
+              "warmup_momentum": 0.8,
+              "warmup_bias_lr": 0.1,
+              "hsv_h": 0.015,
+              "hsv_s": 0.7,
+              "hsv_v": 0.4,
+              "degrees": 0.0,
+              "translate": 0.1,
+              "scale": 0.5,
+              "shear": 0.0,
+              "perspective": 0.0,
+              "flipud": 0.0,
+              "fliplr": 0.5,
+              "mosaic": 1.0,
+              "mixup": 0.0,
+              "copy_paste": 0.0,
+              "close_mosaic": 10,
+              "device": "0",
+              "workers": 0,
+              "patience": 0,
+              "deterministic": true,
+              "amp": false,
+              "cache": false,
+              "nbs": 64,
+              "save_period": 1,
+              "val": true,
+              "plots": true,
+              "compile": false
+            },
+            "evaluation": {
+              "ap_conf": 0.001,
+              "operating_conf": 0.25,
+              "nms_iou": 0.7,
+              "match_iou": 0.5,
+              "max_det": 300,
+              "batch": 16,
+              "warmup_images": 3,
+              "max_case_images": 20
+            },
+            "dataset_config": {
+              "raw_root": "data/raw/D-Fire",
+              "prepared_root": "data/processed/dfire-fold1-v2",
+              "image_policy": "strip_jpeg_trailing_bytes_without_recompression",
+              "split_files": {
+                "train": "data/raw/Data splitting/5-fold cross validation/dfire_train1.txt",
+                "val": "data/raw/Data splitting/5-fold cross validation/dfire_valid1.txt",
+                "test": "data/raw/Data splitting/dfire_test.txt"
+              },
+              "names": [
+                "smoke",
+                "fire"
+              ],
+              "annotation_policy": "clip_drop_degenerate",
+              "annotation_policy_authorization": "User approved derived clipping and zero-area removal on 2026-10-31; raw is preserved.",
+              "cross_split_duplicates": "error",
+              "source_group_identity_available": false,
+              "published_split_identity_verified": false
+            },
+            "suite_path": "configs/experiments.json",
+            "config_sha256": "771a01f2648351ad23d4051f35a035022a29941a98a67580061b5e4e52983d4e"
+          },
+          "initial_model": {
+            "id": "coco-yolov8n",
+            "revision": "github-release-asset:340060940",
+            "url": "https://github.com/ultralytics/assets/releases/download/v8.4.0/yolov8n.pt",
+            "sha256": "f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36",
+            "size_bytes": 6549796,
+            "local_path": "models/coco/yolov8n.pt",
+            "source": "https://github.com/ultralytics/assets/releases/tag/v8.4.0"
+          },
+          "attempts": [
+            {
+              "number": 1,
+              "started_at_utc": "2026-11-06T06:43:02.495252+00:00",
+              "environment": {
+                "created_at_utc": "2026-11-06T06:43:01.713177+00:00",
+                "python": "3.10.12",
+                "platform": "Linux-5.15.0-151-generic-x86_64-with-glibc2.35",
+                "packages": {
+                  "Jinja2": "3.1.6",
+                  "MarkupSafe": "3.0.3",
+                  "PyYAML": "6.0.3",
+                  "certifi": "2026.10.23",
+                  "charset-normalizer": "3.5.2",
+                  "contourpy": "1.3.2",
+                  "cuda-bindings": "12.9.4",
+                  "cuda-pathfinder": "1.6.0",
+                  "cycler": "0.12.1",
+                  "filelock": "4.1.0",
+                  "fonttools": "4.65.0",
+                  "fsspec": "2026.9.0",
+                  "idna": "3.20",
+                  "kiwisolver": "1.5.1",
+                  "matplotlib": "3.10.8",
+                  "mpmath": "1.3.0",
+                  "networkx": "3.4.2",
+                  "numpy": "2.2.6",
+                  "nvidia-cublas-cu12": "12.8.4.1",
+                  "nvidia-cuda-cupti-cu12": "12.8.90",
+                  "nvidia-cuda-nvrtc-cu12": "12.8.93",
+                  "nvidia-cuda-runtime-cu12": "12.8.90",
+                  "nvidia-cudnn-cu12": "9.10.2.21",
+                  "nvidia-cufft-cu12": "11.3.3.83",
+                  "nvidia-cufile-cu12": "1.13.1.3",
+                  "nvidia-curand-cu12": "10.3.9.90",
+                  "nvidia-cusolver-cu12": "11.7.3.90",
+                  "nvidia-cusparse-cu12": "12.5.8.93",
+                  "nvidia-cusparselt-cu12": "0.7.1",
+                  "nvidia-nccl-cu12": "2.27.5",
+                  "nvidia-nvjitlink-cu12": "12.8.93",
+                  "nvidia-nvshmem-cu12": "3.4.5",
+                  "nvidia-nvtx-cu12": "12.8.90",
+                  "opencv-python": "4.12.0.88",
+                  "packaging": "26.3",
+                  "pillow": "12.1.0",
+                  "pip": "26.3",
+                  "polars": "2.0.0",
+                  "polars-runtime-32": "2.0.0",
+                  "psutil": "7.2.2",
+                  "pyparsing": "3.3.3",
+                  "python-dateutil": "3.0.0",
+                  "requests": "2.34.2",
+                  "scipy": "1.15.3",
+                  "setuptools": "59.6.0",
+                  "six": "1.17.0",
+                  "sympy": "1.14.0",
+                  "torch": "2.10.0+cu128",
+                  "torchvision": "0.25.0+cu128",
+                  "triton": "3.6.0",
+                  "typing_extensions": "4.16.0",
+                  "tzdata": "2026.6",
+                  "ultralytics": "8.4.0",
+                  "ultralytics-thop": "2.2.3",
+                  "urllib3": "2.8.0"
+                },
+                "git": {
+                  "commit": "faafb7cb14b3624868ec23c92f3bb8327c7cae88",
+                  "status": "",
+                  "dirty": false,
+                  "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                },
+                "matplotlib_backend_env": "Agg",
+                "torch": "2.10.0+cu128",
+                "cuda_runtime": "12.8",
+                "cudnn": 91002,
+                "cuda_available": true,
+                "gpus": [
+                  {
+                    "index": 0,
+                    "name": "NVIDIA A100 80GB PCIe MIG 1g.10gb",
+                    "capability": [
+                      8,
+                      0
+                    ],
+                    "memory_bytes": 10200547328
+                  }
+                ],
+                "cuda_compute_probe": "passed",
+                "nvidia_smi": "NVIDIA A100 80GB PCIe, 550.144.03, [Insufficient Permissions]"
+              },
+              "pid": 27081,
+              "process_created_at": 1793947332.53,
+              "resume": false,
+              "checkpoint": "/root/drone-fire-detection/models/coco/yolov8n.pt",
+              "checkpoint_sha256": "f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36"
+            }
+          ],
+          "created_at_utc": "2026-11-06T06:42:39.036449+00:00",
+          "dataset_fingerprint": "c3d63dfa73314a36b5522f4651f5fd7d784bd8a054e78916f821160729862e2b",
+          "status": "running"
+        },
+        "attempt-1-effective.json": {
+          "args": {
+            "task": "detect",
+            "mode": "train",
+            "model": "/root/drone-fire-detection/models/coco/yolov8n.pt",
+            "data": "/root/drone-fire-detection/data/processed/dfire-fold1-v2/data.yaml",
+            "epochs": 100,
+            "time": null,
+            "patience": 0,
+            "batch": 16,
+            "imgsz": 800,
+            "save": true,
+            "save_period": 1,
+            "cache": false,
+            "device": "0",
+            "workers": 0,
+            "project": "/root/drone-fire-detection/experiments/runs/E6_20261106T064302Z_a85a037e",
+            "name": "train",
+            "exist_ok": false,
+            "pretrained": true,
+            "optimizer": "MuSGD",
+            "verbose": true,
+            "seed": 42,
+            "deterministic": true,
+            "single_cls": false,
+            "rect": false,
+            "cos_lr": false,
+            "close_mosaic": 10,
+            "resume": false,
+            "amp": false,
+            "fraction": 1.0,
+            "profile": false,
+            "freeze": null,
+            "multi_scale": 0.0,
+            "compile": false,
+            "overlap_mask": true,
+            "mask_ratio": 4,
+            "dropout": 0.0,
+            "val": true,
+            "split": "val",
+            "save_json": false,
+            "conf": null,
+            "iou": 0.7,
+            "max_det": 300,
+            "half": false,
+            "dnn": false,
+            "plots": true,
+            "source": null,
+            "vid_stride": 1,
+            "stream_buffer": false,
+            "visualize": false,
+            "augment": false,
+            "agnostic_nms": false,
+            "classes": null,
+            "retina_masks": false,
+            "embed": null,
+            "show": false,
+            "save_frames": false,
+            "save_txt": false,
+            "save_conf": false,
+            "save_crop": false,
+            "show_labels": true,
+            "show_conf": true,
+            "show_boxes": true,
+            "line_width": null,
+            "format": "torchscript",
+            "keras": false,
+            "optimize": false,
+            "int8": false,
+            "dynamic": false,
+            "simplify": true,
+            "opset": null,
+            "workspace": null,
+            "nms": false,
+            "lr0": 0.01,
+            "lrf": 0.01,
+            "momentum": 0.937,
+            "weight_decay": 0.0005,
+            "warmup_epochs": 3.0,
+            "warmup_momentum": 0.8,
+            "warmup_bias_lr": 0.1,
+            "box": 7.5,
+            "cls": 0.5,
+            "dfl": 1.5,
+            "pose": 12.0,
+            "kobj": 1.0,
+            "rle": 1.0,
+            "angle": 1.0,
+            "nbs": 64,
+            "hsv_h": 0.015,
+            "hsv_s": 0.7,
+            "hsv_v": 0.4,
+            "degrees": 0.0,
+            "translate": 0.1,
+            "scale": 0.5,
+            "shear": 0.0,
+            "perspective": 0.0,
+            "flipud": 0.0,
+            "fliplr": 0.5,
+            "bgr": 0.0,
+            "mosaic": 1.0,
+            "mixup": 0.0,
+            "cutmix": 0.0,
+            "copy_paste": 0.0,
+            "copy_paste_mode": "flip",
+            "auto_augment": "randaugment",
+            "erasing": 0.4,
+            "cfg": null,
+            "tracker": "botsort.yaml",
+            "save_dir": "/root/drone-fire-detection/experiments/runs/E6_20261106T064302Z_a85a037e/train"
+          },
+          "optimizer_class": "MuSGD",
+          "parameter_groups": [
+            {
+              "lr": 0.03,
+              "initial_lr": 0.03,
+              "weight_decay": 0.0005,
+              "parameter_count": 0,
+              "use_muon": false
+            },
+            {
+              "lr": 0.01,
+              "initial_lr": 0.01,
+              "weight_decay": 0.0005,
+              "parameter_count": 0,
+              "use_muon": false
+            },
+            {
+              "lr": 0.03,
+              "initial_lr": 0.03,
+              "weight_decay": 0.0,
+              "parameter_count": 0,
+              "use_muon": false
+            },
+            {
+              "lr": 0.01,
+              "initial_lr": 0.01,
+              "weight_decay": 0.0,
+              "parameter_count": 5200,
+              "use_muon": false
+            },
+            {
+              "lr": 0.03,
+              "initial_lr": 0.03,
+              "weight_decay": 0.0,
+              "parameter_count": 0,
+              "use_muon": false
+            },
+            {
+              "lr": 0.01,
+              "initial_lr": 0.01,
+              "weight_decay": 0.0,
+              "parameter_count": 5398,
+              "use_muon": false
+            },
+            {
+              "lr": 0.03,
+              "initial_lr": 0.03,
+              "weight_decay": 0.0005,
+              "parameter_count": 0,
+              "use_muon": true
+            },
+            {
+              "lr": 0.01,
+              "initial_lr": 0.01,
+              "weight_decay": 0.0005,
+              "parameter_count": 3000640,
+              "use_muon": true
+            }
+          ],
+          "accumulate": 4,
+          "scheduler": "LambdaLR",
+          "warmup_note": "First batch is logged separately; warmup changes actual group learning rates."
+        },
+        "observed_first_batch_learning_rates": [
+          {
+            "epoch": 1,
+            "sample": "first_batch_after_warmup_update",
+            "lr": [
+              0.1,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "accumulate": 1
+          }
+        ],
+        "train_log_tail": "\u001b[K      1/100      6.15G       1.86      4.611       1.84         35        800: 5% ╸─────────── 43/861 1.5it/s 30.6s<9:05\n\u001b[K      1/100      6.15G      1.852      4.607      1.837         34        800: 5% ╸─────────── 44/861 1.5it/s 31.3s<9:08\n\u001b[K      1/100      6.15G      1.846      4.598      1.833         44        800: 5% ╸─────────── 45/861 1.5it/s 31.9s<9:06\n\u001b[K      1/100      6.15G      1.839      4.601      1.827         23        800: 5% ╸─────────── 46/861 1.5it/s 32.6s<9:08\n\u001b[K      1/100      6.15G      1.838      4.594      1.826         44        800: 5% ╸─────────── 47/861 1.5it/s 33.3s<9:05\n\u001b[K      1/100      6.15G      1.829      4.586      1.822         32        800: 6% ╸─────────── 48/861 1.5it/s 34.0s<9:03\n\u001b[K      1/100      6.15G      1.828       4.58      1.824         45        800: 6% ╸─────────── 49/861 1.5it/s 34.6s<9:01\n\u001b[K      1/100      6.15G       1.83      4.578      1.823         39        800: 6% ╸─────────── 50/861 1.5it/s 35.3s<9:05",
+        "train_log_sha256_at_observation": "b5d985d8919c1e7cdd309c0a756d0a5f8a2db52797c3e66b1b4dab0aa4ed86c9"
+      }
+    ],
+    "new_e6_training_records": [
+      "/root/drone-fire-detection/experiments/runs/E6_20261106T064302Z_a85a037e/training.json"
+    ],
+    "new_test_records": [],
+    "gpu": {
+      "exit_code": 0,
+      "stdout": "NVIDIA A100 80GB PCIe, [Insufficient Permissions], [Insufficient Permissions], [N/A]",
+      "stderr": ""
+    }
+  },
+  "deployment": {
+    "created_at_utc": "2026-11-06T06:38:08.472323+00:00",
+    "previous_git": "f1f802dd05903ec1265c550e67f19fa735ea720c",
+    "previous_branch": "codex/shorter-server-experiments",
+    "preserved_metadata_stash": "65097fa0d314d81f6c23ca7ad83a57bcc7845993",
+    "bundle_sha256": "9472ddb54449610ab66ae4677c52f2e818ced7336ad4ee7f301cc9c6a8353cf5",
+    "archive_manifest_sha256": "4baea677d40301dcf50c336fb5bc632a3b10cba8fc660cf912b03c3761c06755",
+    "new_git": "faafb7cb14b3624868ec23c92f3bb8327c7cae88",
+    "new_branch": "codex/e6-server-queue",
+    "core_state_unchanged": true
+  },
+  "regression_tests": {
+    "isolated_staging": {
+      "kind": "staged_regression_not_model_experiment",
+      "started_at_utc": "2026-11-06T06:16:32.111372+00:00",
+      "source_archive_sha256": "7f85774c9ab09e4be5fa0ffcd4deee8eedfb4b4f4454d38b925f6dd7301ab14f",
+      "stage": "/root/drone-fire-detection/work/e6-code-test_20261106T061632Z_7dea8dd4",
+      "command": [
+        "/root/drone-fire-detection/work/e6-code-test_20261106T061632Z_7dea8dd4/.venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "finished_at_utc": "2026-11-06T06:16:41.077331+00:00",
+      "exit_code": 0,
+      "tests_run": 72,
+      "elapsed_seconds": 8.265,
+      "log_sha256": "cb1fac6379659d3aa956a14426f4a00dc1e632fd1d4599a506b786dfba1d9c29"
+    },
+    "deployed_repository": {
+      "started_at_utc": "2026-11-06T06:40:01.099405+00:00",
+      "finished_at_utc": "2026-11-06T06:40:10.132593+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 9.033162745647132,
+      "python": "/root/drone-fire-detection/.venv/bin/python",
+      "command": "python -m unittest discover -s tests -v",
+      "git": {
+        "commit": "faafb7cb14b3624868ec23c92f3bb8327c7cae88",
+        "status": "",
+        "dirty": false,
+        "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "log": "/root/drone-fire-detection/work/e6-deployed-tests.log",
+      "log_sha256": "27d20dd8548e690e64956f4b5e68d82fa8db8d663547f59948afbada454726fe",
+      "gpu_disabled_for_regression_tests": true
+    },
+    "deployed_test_count": 74,
+    "deployed_skips": 0,
+    "note": "CPU-only regression fixtures; not measured model experiments"
+  },
+  "selected_config": {
+    "experiment": {
+      "id": "E6",
+      "stage": "combined",
+      "reference": "E1",
+      "enabled": true,
+      "overrides": {
+        "epochs": 100,
+        "imgsz": 800
+      },
+      "selection_evidence": [
+        {
+          "experiment_id": "E1",
+          "validation_run": "experiments/runs/val-E1_20261104T163213Z_a8b24f7c",
+          "validation_record_sha256": "ce5787a4cdd5bc8bc06be71c65195205188edab02673949fde66e9b2b38b3815",
+          "training_record_sha256": "a286bb55c77462b3f0039d9f2ca2b5fd0eae5b979ad71c1105137b87690c8131",
+          "checkpoint_sha256": "0ec8895995297b781bf112215af073721b9775cbbbd27e7ac36b248f0b242e1d"
+        },
+        {
+          "experiment_id": "E4-800",
+          "validation_run": "experiments/runs/val-E4-800_20261106T052421Z_e3007fd6",
+          "validation_record_sha256": "1564bde2e475593c168bc0ffa53c53a98fed88492ca7c3ab6354b7bfbeb9923c",
+          "training_record_sha256": "e5652798fa685aa6903bca14f2277fbe13337f59cc087c56ecee4a27ae24fff6",
+          "checkpoint_sha256": "e00b60d6d6fc8e1094b3eafc75ef5934f16b223b52e325a9ecd9ce0c95643e21"
+        }
+      ],
+      "selection_rationale": "공통 Validation mAP50-95가 가장 높았던 E4-800의 해상도 800을 100 epoch로 재검증한다. AP 차이는 작고 E1보다 Fire Recall/정상 오탐이 불리하므로 개선을 가정하지 않고 E1을 기준 및 대안으로 보존한다. 학습률 0.01, 기본 HSV, mosaic 1.0, batch 16을 유지한다. E5는 이번 자동 실행 범위에서 제외한다."
+    },
+    "training": {
+      "epochs": 100,
+      "imgsz": 800,
+      "batch": 16,
+      "seed": 42,
+      "optimizer": "MuSGD",
+      "lr0": 0.01,
+      "lrf": 0.01,
+      "cos_lr": false,
+      "momentum": 0.937,
+      "weight_decay": 0.0005,
+      "warmup_epochs": 3.0,
+      "warmup_momentum": 0.8,
+      "warmup_bias_lr": 0.1,
+      "hsv_h": 0.015,
+      "hsv_s": 0.7,
+      "hsv_v": 0.4,
+      "degrees": 0.0,
+      "translate": 0.1,
+      "scale": 0.5,
+      "shear": 0.0,
+      "perspective": 0.0,
+      "flipud": 0.0,
+      "fliplr": 0.5,
+      "mosaic": 1.0,
+      "mixup": 0.0,
+      "copy_paste": 0.0,
+      "close_mosaic": 10,
+      "device": "0",
+      "workers": 0,
+      "patience": 0,
+      "deterministic": true,
+      "amp": false,
+      "cache": false,
+      "nbs": 64,
+      "save_period": 1,
+      "val": true,
+      "plots": true,
+      "compile": false
+    },
+    "evaluation": {
+      "ap_conf": 0.001,
+      "operating_conf": 0.25,
+      "nms_iou": 0.7,
+      "match_iou": 0.5,
+      "max_det": 300,
+      "batch": 16,
+      "warmup_images": 3,
+      "max_case_images": 20
+    },
+    "dataset_config": {
+      "raw_root": "data/raw/D-Fire",
+      "prepared_root": "data/processed/dfire-fold1-v2",
+      "image_policy": "strip_jpeg_trailing_bytes_without_recompression",
+      "split_files": {
+        "train": "data/raw/Data splitting/5-fold cross validation/dfire_train1.txt",
+        "val": "data/raw/Data splitting/5-fold cross validation/dfire_valid1.txt",
+        "test": "data/raw/Data splitting/dfire_test.txt"
+      },
+      "names": [
+        "smoke",
+        "fire"
+      ],
+      "annotation_policy": "clip_drop_degenerate",
+      "annotation_policy_authorization": "User approved derived clipping and zero-area removal on 2026-10-31; raw is preserved.",
+      "cross_split_duplicates": "error",
+      "source_group_identity_available": false,
+      "published_split_identity_verified": false
+    },
+    "suite_path": "configs/experiments.json",
+    "config_sha256": "771a01f2648351ad23d4051f35a035022a29941a98a67580061b5e4e52983d4e"
+  },
+  "model_and_input": {
+    "initial_coco_sha256": "f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36",
+    "dataset_fingerprint": "c3d63dfa73314a36b5522f4651f5fd7d784bd8a054e78916f821160729862e2b"
+  },
+  "comparison_policy": "E1 and E4-800 common Validation; no automatic freeze, E5 or Test",
+  "automatic_terminal_state": "awaiting_final_selection",
+  "future_result_paths": [
+    "reports/010_server_e6.md",
+    "reports/010_server_e6.json"
+  ],
+  "estimated_total_wall_hours_from_E4": 16,
+  "estimate_note": "E4-800 training 33591.90447 s / 60 * 100 plus common Validation; not an E6 measurement",
+  "source_metadata_sha256": {
+    "e6-launch-observation.json": "a06367d4229c8587726f1d4a732abaec82cce55282d7700e77302e3add6400bb",
+    "e6-deployment.json": "c370cfc00726d126fe04c88f1cf2375ecabd252c06f9fe2b00d044e514753bfd",
+    "server-queue-e6-plan.json": "c8153d28c15b12ccccda21bdd584ed79163090ee42a1b27594c1741b9d74828b",
+    "e6-stage-test-verification.json": "192eeaf1e8fed9f0f7a6d93d67d5d48f58ef815cb46f26b28b06aa6d67212c7a",
+    "e6-deployed-test-verification.json": "4949afa3c03d7dab9f94e87719f16a2d3e9dcd3754d8667ab10d6f5040b815d1"
+  }
+}

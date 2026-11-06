@@ -210,3 +210,10 @@
 - 완료된 핵심 task를 그대로 두고 E6 하나만 추가하는 extend-e6를 구현했다. 기존 source/config·상태 보존본과 선택 Validation의 SHA256을 검증한다.
 - E6는 100 epochs/patience 0/imgsz 800이며 COCO에서 독립 학습한다. 완료 조건·중복 잠금·기존 E6 run 거부·실패 중단을 유지한다.
 - 학습·공통 Validation·보고 후 awaiting_final_selection에서 멈추며 E5/freeze/Test를 자동 실행하지 않는다. 실제 실행 관측은 별도로 기록한다.
+
+## 2026-11-06: E6 자동 큐 학습 시작
+
+- 2026-11-06T15:44:03.962547+09:00 관측: E6를 COCO에서 독립 시작했고 실제 GPU batch 진행과 effective args를 확인했다. 100 epochs/patience 0/imgsz 800이며 관리자·작업자 PID 생성 시각과 분리 세션을 검증했다.
+- 기존 6개 완료 task와 원래 계획을 보존하고 E6 하나만 추가했다. 새 계획 `f5886430b41043924cb73d8c705265f3f487d85b9915bae87d7b741487492446`의 고정 소스/모델/입력 검증을 통과했다.
+- 서버 배포 경로의 회귀 테스트 74개가 모두 통과했다. 회귀 fixture는 모델 실험 결과와 구분한다.
+- E6 완료 성능은 아직 없으며 학습→공통 Validation→비교 보고 후 최종 선택 대기로 자동 전환한다. E5/freeze/Test는 자동 실행하지 않는다. [운영 기록](../reports/017_e6_queue_launch.md).
