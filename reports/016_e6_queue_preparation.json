@@ -1,0 +1,196 @@
+{
+  "kind": "preparation_for_authorized_E6_extension_not_model_result",
+  "authorization_date_kst": "2026-11-06",
+  "archive": "/root/drone-fire-detection/work/e6-migration_20261106T060752Z_927ed3dc",
+  "archive_manifest_sha256": "4baea677d40301dcf50c336fb5bc632a3b10cba8fc660cf912b03c3761c06755",
+  "previous_plan_sha256": "9e5b9a18b8ce808d58f222eaf99471af7683e965fd33e0e6dbd6586033e3396d",
+  "previous_state_sha256": "dba6376bc6cdb8b6a1ec037bcabf7545cd82aa7b937df732432ceef1f7306bf3",
+  "model_and_input": {
+    "coco_sha256": "f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36",
+    "dataset_fingerprint": "c3d63dfa73314a36b5522f4651f5fd7d784bd8a054e78916f821160729862e2b"
+  },
+  "selection_evidence": [
+    {
+      "experiment_id": "E1",
+      "validation_run": "experiments/runs/val-E1_20261104T163213Z_a8b24f7c",
+      "validation_record_sha256": "ce5787a4cdd5bc8bc06be71c65195205188edab02673949fde66e9b2b38b3815",
+      "training_record_sha256": "a286bb55c77462b3f0039d9f2ca2b5fd0eae5b979ad71c1105137b87690c8131",
+      "checkpoint_sha256": "0ec8895995297b781bf112215af073721b9775cbbbd27e7ac36b248f0b242e1d"
+    },
+    {
+      "experiment_id": "E4-800",
+      "validation_run": "experiments/runs/val-E4-800_20261106T052421Z_e3007fd6",
+      "validation_record_sha256": "1564bde2e475593c168bc0ffa53c53a98fed88492ca7c3ab6354b7bfbeb9923c",
+      "training_record_sha256": "e5652798fa685aa6903bca14f2277fbe13337f59cc087c56ecee4a27ae24fff6",
+      "checkpoint_sha256": "e00b60d6d6fc8e1094b3eafc75ef5934f16b223b52e325a9ecd9ce0c95643e21"
+    }
+  ],
+  "selection_rationale": "공통 Validation mAP50-95가 가장 높았던 E4-800의 해상도 800을 100 epoch로 재검증한다. AP 차이는 작고 E1보다 Fire Recall/정상 오탐이 불리하므로 개선을 가정하지 않고 E1을 기준 및 대안으로 보존한다. 학습률 0.01, 기본 HSV, mosaic 1.0, batch 16을 유지한다. E5는 이번 자동 실행 범위에서 제외한다.",
+  "selected_overrides": {
+    "epochs": 100,
+    "imgsz": 800
+  },
+  "selected_common_settings": {
+    "patience": 0,
+    "lr0": 0.01,
+    "optimizer": "MuSGD",
+    "batch": 16,
+    "seed": 42,
+    "amp": false,
+    "hsv_s": 0.7,
+    "hsv_v": 0.4,
+    "mosaic": 1.0
+  },
+  "completed_core_results": [
+    {
+      "id": "E1",
+      "training_run": "/root/drone-fire-detection/experiments/runs/E1_20261104T055200Z_0a27f400",
+      "validation_run": "/root/drone-fire-detection/experiments/runs/val-E1_20261104T163213Z_a8b24f7c",
+      "training_record_sha256": "a286bb55c77462b3f0039d9f2ca2b5fd0eae5b979ad71c1105137b87690c8131",
+      "validation_record_sha256": "ce5787a4cdd5bc8bc06be71c65195205188edab02673949fde66e9b2b38b3815",
+      "best_sha256": "0ec8895995297b781bf112215af073721b9775cbbbd27e7ac36b248f0b242e1d",
+      "epochs": 100,
+      "completion": null,
+      "map50_95": 0.45159733405158464,
+      "fire_recall": 0.7214484679665738,
+      "negative_fp_images": 26,
+      "report": "/root/drone-fire-detection/reports/010_server_e1.md"
+    },
+    {
+      "id": "E2-A",
+      "training_run": "/root/drone-fire-detection/experiments/runs/E2-A_20261104T164814Z_296fcf56",
+      "validation_run": "/root/drone-fire-detection/experiments/runs/val-E2-A_20261104T231840Z_bb931608",
+      "training_record_sha256": "70493e50dcd1095e1ef890165a563acfff05691a22993111b48bb7b95293105d",
+      "validation_record_sha256": "22c5ef80e6fb30f556d871555e49723b72cf009982b59fc37723228dff2be32a",
+      "best_sha256": "741b332d9c7608fdc283ed115a0dff30181e17cff782b18ce7617e11c3fd8741",
+      "epochs": 60,
+      "completion": {
+        "reason": "epoch_limit",
+        "requested_epochs": 60,
+        "epochs_completed": 60,
+        "patience": 15,
+        "metric": "validation mAP50-95",
+        "best_epoch": 47,
+        "best_fitness": 0.45964,
+        "epochs_without_improvement": 13,
+        "stopper_patience": 15,
+        "trainer_stop": true
+      },
+      "map50_95": 0.45098646805055964,
+      "fire_recall": 0.7000928505106778,
+      "negative_fp_images": 37,
+      "report": "/root/drone-fire-detection/reports/010_server_e2-a.md"
+    },
+    {
+      "id": "E2-C",
+      "training_run": "/root/drone-fire-detection/experiments/runs/E2-C_20261104T233752Z_955d89d3",
+      "validation_run": "/root/drone-fire-detection/experiments/runs/val-E2-C_20261105T060701Z_caee1f35",
+      "training_record_sha256": "a92465988c7e556a18cd43e9c3c9f33061afad01547c97bf0723ed176433b4f9",
+      "validation_record_sha256": "b775ce4a94e4edd78821dc537595e6c2cd3ccc19fe4e8ea15b292ce1d7130ee9",
+      "best_sha256": "84089ee71cbca18629da018403ccd694ae5870562113e295082f7ee12718595e",
+      "epochs": 60,
+      "completion": {
+        "reason": "epoch_limit",
+        "requested_epochs": 60,
+        "epochs_completed": 60,
+        "patience": 15,
+        "metric": "validation mAP50-95",
+        "best_epoch": 56,
+        "best_fitness": 0.45462,
+        "epochs_without_improvement": 4,
+        "stopper_patience": 15,
+        "trainer_stop": true
+      },
+      "map50_95": 0.44755551827302453,
+      "fire_recall": 0.6894150417827298,
+      "negative_fp_images": 32,
+      "report": "/root/drone-fire-detection/reports/010_server_e2-c.md"
+    },
+    {
+      "id": "E3-HSV",
+      "training_run": "/root/drone-fire-detection/experiments/runs/E3-HSV_20261105T062831Z_ac2d2122",
+      "validation_run": "/root/drone-fire-detection/experiments/runs/val-E3-HSV_20261105T125747Z_58213238",
+      "training_record_sha256": "a77925a011e2226577aab91aa8943101d9e8cbea6046623a0e940ac506bc1e6c",
+      "validation_record_sha256": "8b7ac25a40621b35456b20065c90e586a7b2ed387aa36dd43ba822a1098bc004",
+      "best_sha256": "ebd140ab648e5dab6c148c81c3e68c3f3e80c72a8f6b35a2eccd66cc7a29cb4b",
+      "epochs": 60,
+      "completion": {
+        "reason": "epoch_limit",
+        "requested_epochs": 60,
+        "epochs_completed": 60,
+        "patience": 15,
+        "metric": "validation mAP50-95",
+        "best_epoch": 50,
+        "best_fitness": 0.45895,
+        "epochs_without_improvement": 10,
+        "stopper_patience": 15,
+        "trainer_stop": true
+      },
+      "map50_95": 0.4503458975157001,
+      "fire_recall": 0.7061281337047354,
+      "negative_fp_images": 35,
+      "report": "/root/drone-fire-detection/reports/010_server_e3-hsv.md"
+    },
+    {
+      "id": "E3-Mosaic",
+      "training_run": "/root/drone-fire-detection/experiments/runs/E3-Mosaic_20261105T131902Z_3acebed8",
+      "validation_run": "/root/drone-fire-detection/experiments/runs/val-E3-Mosaic_20261105T194501Z_21744411",
+      "training_record_sha256": "6ef5353a5d321a9526922e1a43c4a0374dce62354a4d54c543694c07dfc79fa1",
+      "validation_record_sha256": "f12a87b7c5c018d960dec97235faa4f1903241c2fffb322ddea2cdd4e6f2ad67",
+      "best_sha256": "46735a65f9b902e215ecd2cd5479acbc3d772f4064231841db07adbb9b9c696a",
+      "epochs": 60,
+      "completion": {
+        "reason": "epoch_limit",
+        "requested_epochs": 60,
+        "epochs_completed": 60,
+        "patience": 15,
+        "metric": "validation mAP50-95",
+        "best_epoch": 53,
+        "best_fitness": 0.45007,
+        "epochs_without_improvement": 7,
+        "stopper_patience": 15,
+        "trainer_stop": true
+      },
+      "map50_95": 0.44384520037028796,
+      "fire_recall": 0.6894150417827298,
+      "negative_fp_images": 33,
+      "report": "/root/drone-fire-detection/reports/010_server_e3-mosaic.md"
+    },
+    {
+      "id": "E4-800",
+      "training_run": "/root/drone-fire-detection/experiments/runs/E4-800_20261105T200326Z_96a4ad87",
+      "validation_run": "/root/drone-fire-detection/experiments/runs/val-E4-800_20261106T052421Z_e3007fd6",
+      "training_record_sha256": "e5652798fa685aa6903bca14f2277fbe13337f59cc087c56ecee4a27ae24fff6",
+      "validation_record_sha256": "1564bde2e475593c168bc0ffa53c53a98fed88492ca7c3ab6354b7bfbeb9923c",
+      "best_sha256": "e00b60d6d6fc8e1094b3eafc75ef5934f16b223b52e325a9ecd9ce0c95643e21",
+      "epochs": 60,
+      "completion": {
+        "reason": "epoch_limit",
+        "requested_epochs": 60,
+        "epochs_completed": 60,
+        "patience": 15,
+        "metric": "validation mAP50-95",
+        "best_epoch": 57,
+        "best_fitness": 0.46147,
+        "epochs_without_improvement": 3,
+        "stopper_patience": 15,
+        "trainer_stop": true
+      },
+      "map50_95": 0.4523383787127946,
+      "fire_recall": 0.7121634168987929,
+      "negative_fp_images": 34,
+      "report": "/root/drone-fire-detection/reports/010_server_e4-800.md"
+    }
+  ],
+  "planned_flow": [
+    "preserve completed core queue and source hashes",
+    "verify and prepare immutable E6 continuation plan",
+    "train E6 from pinned COCO",
+    "verify completed training",
+    "common Validation of best.pt",
+    "comparison and report",
+    "await final selection; no automatic freeze or Test"
+  ],
+  "E5_included": false,
+  "test_evaluated": false
+}

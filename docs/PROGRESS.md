@@ -198,3 +198,9 @@
 - E3-Mosaic는 60 epoch와 공통 Validation·보고를 완료했다. mAP50-95 0.44385, Fire Recall 0.68942. [실측 보고서](../reports/010_server_e3-mosaic.md).
 - E4-800는 60 epoch와 공통 Validation·보고를 완료했다. mAP50-95 0.45234, Fire Recall 0.71216. [실측 보고서](../reports/010_server_e4-800.md).
 - 핵심 큐는 오류 없이 awaiting_analysis로 종료했다. 완료 실험을 재학습하지 않으며 Test는 미평가다.
+
+## 2026-11-06: E6 자동 실행 이관 준비
+
+- 사용자 승인에 따라 E4-800 해상도를 100 epoch/patience 0으로 재검증하는 E6를 선정했다. E1을 기준과 대안으로 유지한다.
+- 기존 완료 큐·계획·소스·보고서를 보존했다. [설정 및 이관 준비](../reports/016_e6_queue_preparation.md).
+- 이 항목은 준비 기록이며 E6 실행·완료 결과가 아니다. E5와 Test는 자동 실행하지 않는다.
