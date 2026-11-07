@@ -439,9 +439,11 @@ E6는 고정 COCO에서 새로 학습하고 best.pt 공통 Validation과 비교 
 
 ## E6 모델을 전달받아 사용
 
-공유할 핵심 모델은 E6의 `train/weights/best.pt`다. 전달용 `dfire-e6-yolov8n.zip`에는
+공유할 핵심 모델은 E6의 `train/weights/best.pt`다. 전달용 `dfire-e6-inference.zip`에는
 가중치, `predict.py`, 의존성, `docs/USAGE.md`, 모델 카드와 체크섬을 담았다.
 공유 ZIP을 풀고 동봉한 가이드를 따라 그 폴더에 `.venv`를 생성한다.
+학습 운영·재현 자료는 별도 `dfire-e6-training-source.zip`으로 제공하며,
+출처 안내에 정확한 학습 Git revision의 다운로드 주소를 기록했다.
 
 ```powershell
 .\.venv\Scripts\python.exe predict.py --source "C:\images\example.jpg"
