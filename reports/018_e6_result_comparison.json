@@ -1,0 +1,673 @@
+{
+  "kind": "measured_E6_common_validation_comparison",
+  "verified_at_kst": "2026-11-07T13:23:06.389859+09:00",
+  "integrity": {
+    "verified_at_utc": "2026-11-07T04:23:06.389859+00:00",
+    "git": {
+      "commit": "bbc9a3a662f41eb64896c335a92b713481fae398",
+      "status": "M docs/PROGRESS.md\n?? reports/010_server_e6.json\n?? reports/010_server_e6.md",
+      "dirty": true,
+      "tracked_diff_sha256": "e3d06a41f8c8d5d8afa782cfb3eb256b68c9d97dc8f57a9f942de94fb2f17b66"
+    },
+    "plan_sha256": "f5886430b41043924cb73d8c705265f3f487d85b9915bae87d7b741487492446",
+    "full_plan_input_source_and_model_verification": "passed",
+    "e6_training_and_validation_links": "passed",
+    "completed_core_tasks_unchanged": true,
+    "e6_run_count": 1,
+    "queue_status": "awaiting_final_selection",
+    "queue_finished_at_utc": "2026-11-06T22:30:36.343473+00:00",
+    "active_recorded_processes": [],
+    "test_evaluations": [],
+    "manager": {
+      "pid": 27051,
+      "process_created_at": 1793947285.41,
+      "sid": 27051
+    },
+    "e6_workers": [
+      {
+        "pid": 27081,
+        "process_created_at": 1793947332.53,
+        "stage": "train",
+        "log": "/root/drone-fire-detection/work/server-queue-jobs/E6/train-1.log",
+        "receipt": "/root/drone-fire-detection/work/server-queue-jobs/E6/train-1.json",
+        "started_at_utc": "2026-11-06T06:42:12.557400+00:00",
+        "exit_code": 0,
+        "finished_at_utc": "2026-11-06T22:13:21.513875+00:00"
+      },
+      {
+        "pid": 32267,
+        "process_created_at": 1794003228.11,
+        "stage": "val",
+        "log": "/root/drone-fire-detection/work/server-queue-jobs/E6/val-2.log",
+        "receipt": "/root/drone-fire-detection/work/server-queue-jobs/E6/val-2.json",
+        "started_at_utc": "2026-11-06T22:13:48.133905+00:00",
+        "exit_code": 0,
+        "finished_at_utc": "2026-11-06T22:30:05.157118+00:00"
+      }
+    ],
+    "best_sha256": "d25cdb6a21bb6afbdfd60bf0ac1678f1d2148436ee74ef59f7c1255d6caebc39",
+    "training_record_sha256": "d5a5817930373ccb18e487789d54f18da6dfeb4423c24b2c6d9895dae8c2d72b",
+    "validation_record_sha256": "056889a8b5437149eb915e8bc199dda78cfac979c1ea0faf622f1c73ef1f321e",
+    "report_sha256": "cd3895e5c1ce598472b1e955445538cfe83fc6a0ec6cc52a6ccc3aa1e337126e"
+  },
+  "timeline": {
+    "training_started_kst": "2026-11-06T15:43:02.495252+09:00",
+    "training_finished_kst": "2026-11-07T07:13:16.326649+09:00",
+    "queue_finished_kst": "2026-11-07T07:30:36.343473+09:00",
+    "training_wall_seconds": 55813.82066876674,
+    "common_validation_wall_seconds": 919.4932485590689
+  },
+  "results": [
+    {
+      "id": "E0",
+      "epochs": 50,
+      "imgsz": 640,
+      "map50": 0.7669176505654496,
+      "map50_95": 0.4445945004116395,
+      "class_ap50_95": {
+        "smoke": 0.5233038012155353,
+        "fire": 0.3658851996077438
+      },
+      "operating_classes": {
+        "smoke": {
+          "tp": 1527,
+          "fp": 459,
+          "fn": 362,
+          "precision": 0.7688821752265861,
+          "recall": 0.8083642138697724,
+          "f1": 0.7881290322580645
+        },
+        "fire": {
+          "tp": 1497,
+          "fp": 912,
+          "fn": 657,
+          "precision": 0.6214196762141968,
+          "recall": 0.6949860724233984,
+          "f1": 0.656147271531887
+        }
+      },
+      "negative_images_with_fp": 27,
+      "negative_images": 1610,
+      "training_wall_seconds": 19414.31393059902,
+      "inference_ms_per_image": 5.2084070324886955,
+      "pipeline_ms_per_image": 7.054062173208451,
+      "source_json": "reports\\007_remote_e0_baseline.json",
+      "source_json_sha256": "8d202abcf95b1c56684cf340eaf66b8100fd7ea0772bda2aad9e9a2c24556fb3"
+    },
+    {
+      "id": "E1",
+      "epochs": 100,
+      "imgsz": 640,
+      "map50": 0.7765106046782708,
+      "map50_95": 0.45159733405158464,
+      "class_ap50_95": {
+        "smoke": 0.525553060549725,
+        "fire": 0.3776416075534442
+      },
+      "operating_classes": {
+        "smoke": {
+          "tp": 1559,
+          "fp": 429,
+          "fn": 330,
+          "precision": 0.78420523138833,
+          "recall": 0.8253043938591847,
+          "f1": 0.8042300748001032
+        },
+        "fire": {
+          "tp": 1554,
+          "fp": 914,
+          "fn": 600,
+          "precision": 0.6296596434359806,
+          "recall": 0.7214484679665738,
+          "f1": 0.672436174816097
+        }
+      },
+      "negative_images_with_fp": 26,
+      "negative_images": 1610,
+      "training_wall_seconds": 38288.11189937219,
+      "inference_ms_per_image": 5.157609481407743,
+      "pipeline_ms_per_image": 6.981037399651826,
+      "source_json": "reports\\010_server_e1.json",
+      "source_json_sha256": "fb338c18d5cc6dcf454a5afc7e691c4375dff1d50b1c1ebc3055db4f16b30fab"
+    },
+    {
+      "id": "E2-A",
+      "epochs": 60,
+      "imgsz": 640,
+      "map50": 0.7737358044412712,
+      "map50_95": 0.45098646805055964,
+      "class_ap50_95": {
+        "smoke": 0.5289970808462502,
+        "fire": 0.3729758552548693
+      },
+      "operating_classes": {
+        "smoke": {
+          "tp": 1542,
+          "fp": 475,
+          "fn": 347,
+          "precision": 0.7645017352503718,
+          "recall": 0.8163049232398094,
+          "f1": 0.7895545314900153
+        },
+        "fire": {
+          "tp": 1508,
+          "fp": 894,
+          "fn": 646,
+          "precision": 0.6278101582014988,
+          "recall": 0.7000928505106778,
+          "f1": 0.6619841966637401
+        }
+      },
+      "negative_images_with_fp": 37,
+      "negative_images": 1610,
+      "training_wall_seconds": 23342.5327532487,
+      "inference_ms_per_image": 5.0788705579190365,
+      "pipeline_ms_per_image": 6.909670257408318,
+      "source_json": "reports\\010_server_e2-a.json",
+      "source_json_sha256": "28f86e2fced925e062503db02731d22ee5162553293a3cbdbf3d395255750b85"
+    },
+    {
+      "id": "E2-C",
+      "epochs": 60,
+      "imgsz": 640,
+      "map50": 0.7673126435597653,
+      "map50_95": 0.44755551827302453,
+      "class_ap50_95": {
+        "smoke": 0.5248269900470264,
+        "fire": 0.3702840464990225
+      },
+      "operating_classes": {
+        "smoke": {
+          "tp": 1528,
+          "fp": 434,
+          "fn": 361,
+          "precision": 0.7787971457696228,
+          "recall": 0.8088935944944415,
+          "f1": 0.7935601142560375
+        },
+        "fire": {
+          "tp": 1485,
+          "fp": 892,
+          "fn": 669,
+          "precision": 0.6247370635254522,
+          "recall": 0.6894150417827298,
+          "f1": 0.6554844405208563
+        }
+      },
+      "negative_images_with_fp": 32,
+      "negative_images": 1610,
+      "training_wall_seconds": 23282.571554023772,
+      "inference_ms_per_image": 5.0890039609331525,
+      "pipeline_ms_per_image": 6.930936274155218,
+      "source_json": "reports\\010_server_e2-c.json",
+      "source_json_sha256": "9066e140cc3ead1cc04e01a743f076f82437d61c0ce7ea193642e5cdf10e941b"
+    },
+    {
+      "id": "E3-HSV",
+      "epochs": 60,
+      "imgsz": 640,
+      "map50": 0.7713136696564762,
+      "map50_95": 0.4503458975157001,
+      "class_ap50_95": {
+        "smoke": 0.5263587337304234,
+        "fire": 0.37433306130097677
+      },
+      "operating_classes": {
+        "smoke": {
+          "tp": 1534,
+          "fp": 492,
+          "fn": 355,
+          "precision": 0.7571569595261599,
+          "recall": 0.8120698782424564,
+          "f1": 0.7836526181353768
+        },
+        "fire": {
+          "tp": 1521,
+          "fp": 921,
+          "fn": 633,
+          "precision": 0.6228501228501229,
+          "recall": 0.7061281337047354,
+          "f1": 0.6618798955613577
+        }
+      },
+      "negative_images_with_fp": 35,
+      "negative_images": 1610,
+      "training_wall_seconds": 23282.32763972087,
+      "inference_ms_per_image": 5.145224513207578,
+      "pipeline_ms_per_image": 6.9915738758321515,
+      "source_json": "reports\\010_server_e3-hsv.json",
+      "source_json_sha256": "d7b26889b645e3758a6ec5c8ce4316ef4654c2be870d3351cf7de917928da8fc"
+    },
+    {
+      "id": "E3-Mosaic",
+      "epochs": 60,
+      "imgsz": 640,
+      "map50": 0.764930601255488,
+      "map50_95": 0.44384520037028796,
+      "class_ap50_95": {
+        "smoke": 0.5224730114732667,
+        "fire": 0.36521738926730946
+      },
+      "operating_classes": {
+        "smoke": {
+          "tp": 1529,
+          "fp": 450,
+          "fn": 360,
+          "precision": 0.7726124305204649,
+          "recall": 0.8094229751191107,
+          "f1": 0.7905894519131335
+        },
+        "fire": {
+          "tp": 1485,
+          "fp": 884,
+          "fn": 669,
+          "precision": 0.6268467707893626,
+          "recall": 0.6894150417827298,
+          "f1": 0.6566438204731373
+        }
+      },
+      "negative_images_with_fp": 33,
+      "negative_images": 1610,
+      "training_wall_seconds": 23100.534490828868,
+      "inference_ms_per_image": 5.196792213989663,
+      "pipeline_ms_per_image": 7.345756065608671,
+      "source_json": "reports\\010_server_e3-mosaic.json",
+      "source_json_sha256": "5e422857aa9f4352a8d0fddaee4053a2c651066c39ad40ff62fd15d6869ea6e9"
+    },
+    {
+      "id": "E4-800",
+      "epochs": 60,
+      "imgsz": 800,
+      "map50": 0.7804657877631305,
+      "map50_95": 0.4523383787127946,
+      "class_ap50_95": {
+        "smoke": 0.5245572719667692,
+        "fire": 0.38011948545881974
+      },
+      "operating_classes": {
+        "smoke": {
+          "tp": 1570,
+          "fp": 456,
+          "fn": 319,
+          "precision": 0.7749259624876604,
+          "recall": 0.8311275807305453,
+          "f1": 0.8020434227330779
+        },
+        "fire": {
+          "tp": 1534,
+          "fp": 957,
+          "fn": 620,
+          "precision": 0.6158169409875552,
+          "recall": 0.7121634168987929,
+          "f1": 0.6604951560818083
+        }
+      },
+      "negative_images_with_fp": 34,
+      "negative_images": 1610,
+      "training_wall_seconds": 33591.904470266774,
+      "inference_ms_per_image": 6.00990787518842,
+      "pipeline_ms_per_image": 8.705493729934638,
+      "source_json": "reports\\010_server_e4-800.json",
+      "source_json_sha256": "5a8895e2fa15a2645b02d39ef02f12d5781d21a32c4a9ccbd295b1be7b752dbb"
+    },
+    {
+      "id": "E6",
+      "epochs": 100,
+      "imgsz": 800,
+      "map50": 0.7851955982471351,
+      "map50_95": 0.45713764138304364,
+      "class_ap50_95": {
+        "smoke": 0.5295824306871999,
+        "fire": 0.38469285207888715
+      },
+      "operating_classes": {
+        "smoke": {
+          "tp": 1567,
+          "fp": 474,
+          "fn": 322,
+          "precision": 0.7677609015188633,
+          "recall": 0.8295394388565378,
+          "f1": 0.7974554707379135
+        },
+        "fire": {
+          "tp": 1562,
+          "fp": 891,
+          "fn": 592,
+          "precision": 0.6367713004484304,
+          "recall": 0.7251624883936861,
+          "f1": 0.6780985456913392
+        }
+      },
+      "negative_images_with_fp": 28,
+      "negative_images": 1610,
+      "training_wall_seconds": 55813.82066876674,
+      "inference_ms_per_image": 6.042384242041494,
+      "pipeline_ms_per_image": 8.692674067936546,
+      "source_json": "reports/010_server_e6.json",
+      "source_json_sha256": "cd3895e5c1ce598472b1e955445538cfe83fc6a0ec6cc52a6ccc3aa1e337126e"
+    }
+  ],
+  "E6_minus_reference": {
+    "E1": {
+      "map50_95_pp": 0.5540307331458993,
+      "fire_recall_pp": 0.371402042711233,
+      "fire_precision_pp": 0.7111657012449868,
+      "smoke_precision_pp": -1.6444329869466645,
+      "negative_images_with_fp": 2,
+      "training_time_ratio": 1.4577323848053714,
+      "inference_time_ratio": 1.1715474511638009
+    },
+    "E4-800": {
+      "map50_95_pp": 0.47992626702490493,
+      "fire_recall_pp": 1.299907149489321,
+      "fire_precision_pp": 2.0954359460875205,
+      "smoke_precision_pp": -0.7165060968797099,
+      "negative_images_with_fp": -6,
+      "training_time_ratio": 1.6615259405184741,
+      "inference_time_ratio": 1.0054038044388585
+    }
+  },
+  "E1_to_E6_training_setting_difference": {
+    "imgsz": [
+      640,
+      800
+    ]
+  },
+  "best_training_epoch": 79,
+  "internal_training_validation_rows": [
+    {
+      "epoch": "50",
+      "time": "27998.2",
+      "train/box_loss": "1.27295",
+      "train/cls_loss": "0.98204",
+      "train/dfl_loss": "1.31249",
+      "metrics/precision(B)": "0.78209",
+      "metrics/recall(B)": "0.70971",
+      "metrics/mAP50(B)": "0.78343",
+      "metrics/mAP50-95(B)": "0.45873",
+      "val/box_loss": "1.21493",
+      "val/cls_loss": "1.18888",
+      "val/dfl_loss": "1.21703",
+      "lr/pg0": "0.015447",
+      "lr/pg1": "0.005149",
+      "lr/pg2": "0.015447",
+      "lr/pg3": "0.005149",
+      "lr/pg4": "0.015447",
+      "lr/pg5": "0.005149",
+      "lr/pg6": "0.015447",
+      "lr/pg7": "0.005149"
+    },
+    {
+      "epoch": "60",
+      "time": "33565.8",
+      "train/box_loss": "1.222",
+      "train/cls_loss": "0.91236",
+      "train/dfl_loss": "1.27198",
+      "metrics/precision(B)": "0.79318",
+      "metrics/recall(B)": "0.7168",
+      "metrics/mAP50(B)": "0.79017",
+      "metrics/mAP50-95(B)": "0.46444",
+      "val/box_loss": "1.20922",
+      "val/cls_loss": "1.04514",
+      "val/dfl_loss": "1.21109",
+      "lr/pg0": "0.012477",
+      "lr/pg1": "0.004159",
+      "lr/pg2": "0.012477",
+      "lr/pg3": "0.004159",
+      "lr/pg4": "0.012477",
+      "lr/pg5": "0.004159",
+      "lr/pg6": "0.012477",
+      "lr/pg7": "0.004159"
+    },
+    {
+      "epoch": "79",
+      "time": "44149.5",
+      "train/box_loss": "1.13609",
+      "train/cls_loss": "0.79858",
+      "train/dfl_loss": "1.21406",
+      "metrics/precision(B)": "0.78323",
+      "metrics/recall(B)": "0.73375",
+      "metrics/mAP50(B)": "0.79202",
+      "metrics/mAP50-95(B)": "0.46706",
+      "val/box_loss": "1.21551",
+      "val/cls_loss": "0.99062",
+      "val/dfl_loss": "1.22398",
+      "lr/pg0": "0.006834",
+      "lr/pg1": "0.002278",
+      "lr/pg2": "0.006834",
+      "lr/pg3": "0.002278",
+      "lr/pg4": "0.006834",
+      "lr/pg5": "0.002278",
+      "lr/pg6": "0.006834",
+      "lr/pg7": "0.002278"
+    },
+    {
+      "epoch": "90",
+      "time": "50266.6",
+      "train/box_loss": "1.08532",
+      "train/cls_loss": "0.74596",
+      "train/dfl_loss": "1.1791",
+      "metrics/precision(B)": "0.78425",
+      "metrics/recall(B)": "0.74017",
+      "metrics/mAP50(B)": "0.79299",
+      "metrics/mAP50-95(B)": "0.46596",
+      "val/box_loss": "1.21577",
+      "val/cls_loss": "0.97555",
+      "val/dfl_loss": "1.22687",
+      "lr/pg0": "0.003567",
+      "lr/pg1": "0.001189",
+      "lr/pg2": "0.003567",
+      "lr/pg3": "0.001189",
+      "lr/pg4": "0.003567",
+      "lr/pg5": "0.001189",
+      "lr/pg6": "0.003567",
+      "lr/pg7": "0.001189"
+    },
+    {
+      "epoch": "100",
+      "time": "55725.6",
+      "train/box_loss": "1.02982",
+      "train/cls_loss": "0.62099",
+      "train/dfl_loss": "1.15171",
+      "metrics/precision(B)": "0.78756",
+      "metrics/recall(B)": "0.73975",
+      "metrics/mAP50(B)": "0.7926",
+      "metrics/mAP50-95(B)": "0.46591",
+      "val/box_loss": "1.21662",
+      "val/cls_loss": "0.95514",
+      "val/dfl_loss": "1.23256",
+      "lr/pg0": "0.000597",
+      "lr/pg1": "0.000199",
+      "lr/pg2": "0.000597",
+      "lr/pg3": "0.000199",
+      "lr/pg4": "0.000597",
+      "lr/pg5": "0.000199",
+      "lr/pg6": "0.000597",
+      "lr/pg7": "0.000199"
+    }
+  ],
+  "training_results_csv_sha256": "015ce8150239560383344266a3e3eaf8879b904f9647fd8a1bf306fad0ca92b1",
+  "effective_settings": {
+    "args": {
+      "task": "detect",
+      "mode": "train",
+      "model": "/root/drone-fire-detection/models/coco/yolov8n.pt",
+      "data": "/root/drone-fire-detection/data/processed/dfire-fold1-v2/data.yaml",
+      "epochs": 100,
+      "time": null,
+      "patience": 0,
+      "batch": 16,
+      "imgsz": 800,
+      "save": true,
+      "save_period": 1,
+      "cache": false,
+      "device": "0",
+      "workers": 0,
+      "project": "/root/drone-fire-detection/experiments/runs/E6_20261106T064302Z_a85a037e",
+      "name": "train",
+      "exist_ok": false,
+      "pretrained": true,
+      "optimizer": "MuSGD",
+      "verbose": true,
+      "seed": 42,
+      "deterministic": true,
+      "single_cls": false,
+      "rect": false,
+      "cos_lr": false,
+      "close_mosaic": 10,
+      "resume": false,
+      "amp": false,
+      "fraction": 1.0,
+      "profile": false,
+      "freeze": null,
+      "multi_scale": 0.0,
+      "compile": false,
+      "overlap_mask": true,
+      "mask_ratio": 4,
+      "dropout": 0.0,
+      "val": true,
+      "split": "val",
+      "save_json": false,
+      "conf": null,
+      "iou": 0.7,
+      "max_det": 300,
+      "half": false,
+      "dnn": false,
+      "plots": true,
+      "source": null,
+      "vid_stride": 1,
+      "stream_buffer": false,
+      "visualize": false,
+      "augment": false,
+      "agnostic_nms": false,
+      "classes": null,
+      "retina_masks": false,
+      "embed": null,
+      "show": false,
+      "save_frames": false,
+      "save_txt": false,
+      "save_conf": false,
+      "save_crop": false,
+      "show_labels": true,
+      "show_conf": true,
+      "show_boxes": true,
+      "line_width": null,
+      "format": "torchscript",
+      "keras": false,
+      "optimize": false,
+      "int8": false,
+      "dynamic": false,
+      "simplify": true,
+      "opset": null,
+      "workspace": null,
+      "nms": false,
+      "lr0": 0.01,
+      "lrf": 0.01,
+      "momentum": 0.937,
+      "weight_decay": 0.0005,
+      "warmup_epochs": 3.0,
+      "warmup_momentum": 0.8,
+      "warmup_bias_lr": 0.1,
+      "box": 7.5,
+      "cls": 0.5,
+      "dfl": 1.5,
+      "pose": 12.0,
+      "kobj": 1.0,
+      "rle": 1.0,
+      "angle": 1.0,
+      "nbs": 64,
+      "hsv_h": 0.015,
+      "hsv_s": 0.7,
+      "hsv_v": 0.4,
+      "degrees": 0.0,
+      "translate": 0.1,
+      "scale": 0.5,
+      "shear": 0.0,
+      "perspective": 0.0,
+      "flipud": 0.0,
+      "fliplr": 0.5,
+      "bgr": 0.0,
+      "mosaic": 1.0,
+      "mixup": 0.0,
+      "cutmix": 0.0,
+      "copy_paste": 0.0,
+      "copy_paste_mode": "flip",
+      "auto_augment": "randaugment",
+      "erasing": 0.4,
+      "cfg": null,
+      "tracker": "botsort.yaml",
+      "save_dir": "/root/drone-fire-detection/experiments/runs/E6_20261106T064302Z_a85a037e/train"
+    },
+    "optimizer_class": "MuSGD",
+    "parameter_groups": [
+      {
+        "lr": 0.03,
+        "initial_lr": 0.03,
+        "weight_decay": 0.0005,
+        "parameter_count": 0,
+        "use_muon": false
+      },
+      {
+        "lr": 0.01,
+        "initial_lr": 0.01,
+        "weight_decay": 0.0005,
+        "parameter_count": 0,
+        "use_muon": false
+      },
+      {
+        "lr": 0.03,
+        "initial_lr": 0.03,
+        "weight_decay": 0.0,
+        "parameter_count": 0,
+        "use_muon": false
+      },
+      {
+        "lr": 0.01,
+        "initial_lr": 0.01,
+        "weight_decay": 0.0,
+        "parameter_count": 5200,
+        "use_muon": false
+      },
+      {
+        "lr": 0.03,
+        "initial_lr": 0.03,
+        "weight_decay": 0.0,
+        "parameter_count": 0,
+        "use_muon": false
+      },
+      {
+        "lr": 0.01,
+        "initial_lr": 0.01,
+        "weight_decay": 0.0,
+        "parameter_count": 5398,
+        "use_muon": false
+      },
+      {
+        "lr": 0.03,
+        "initial_lr": 0.03,
+        "weight_decay": 0.0005,
+        "parameter_count": 0,
+        "use_muon": true
+      },
+      {
+        "lr": 0.01,
+        "initial_lr": 0.01,
+        "weight_decay": 0.0005,
+        "parameter_count": 3000640,
+        "use_muon": true
+      }
+    ],
+    "accumulate": 4,
+    "scheduler": "LambdaLR",
+    "warmup_note": "First batch is logged separately; warmup changes actual group learning rates."
+  },
+  "interpretation": "E6 has the highest observed common mAP50-95 across these single-seed runs",
+  "comparison_limits": [
+    "One seed (42) per condition; variability across seeds is unmeasured",
+    "E4-800 has a 60-epoch schedule; E1 and E6 both have 100-epoch schedules",
+    "Model selection reuses Validation; held-out Test remains pending final freezing",
+    "Source video/session identities are unavailable",
+    "Latency uses the same server MIG GPU, batch 1 and FP32"
+  ],
+  "test_evaluated": false
+}
