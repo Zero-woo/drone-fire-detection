@@ -219,12 +219,12 @@ RTX 5070의 E0는 mAP50-95 44.75%, 학습 3시간 7분 50초였다. A100 MIG의 
 
 D-Fire 공식 fold 1의 목록을 사용했다. Train 13,776장, Validation 3,445장, Test 4,306장이다. smoke와 fire 클래스 순서를 모든 실행에서 고정했다. 원본을 보존하고 파생 라벨의 경계 clipping 및 면적 0 박스 제거 정책을 기록했다.
 
-입력 fingerprint  
-c3d63dfa73314a36b5522f4651f5fd7d  
+입력 fingerprint<br>
+c3d63dfa73314a36b5522f4651f5fd7d<br>
 784bd8a054e78916f821160729862e2b
 
-COCO YOLOv8n 초기 모델 SHA256  
-f59b3d833e2ff32e194b5bb8e08d211d  
+COCO YOLOv8n 초기 모델 SHA256<br>
+f59b3d833e2ff32e194b5bb8e08d211d<br>
 c7c5bdf144b90d2c8412c47ccfc83b36
 
 ### 문서에 사용한 비교 기록
