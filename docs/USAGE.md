@@ -436,3 +436,22 @@ E6는 고정 COCO에서 새로 학습하고 best.pt 공통 Validation과 비교 
 실패/OOM/체크섬 불일치는 상태와 run을 보존하고 자동 재시도나 설정 변경을 하지 않는다.
 일시 중단의 재개는 기존과 같이 정확한 run의 last.pt/설정/입력 해시를 검증한
 `start --resume`으로만 수행한다. 준비/회귀 fixture와 실제 E6 완료 결과를 구분한다.
+
+## E6 모델을 전달받아 사용
+
+공유할 핵심 모델은 E6의 `train/weights/best.pt`다. 전달용 `dfire-e6-yolov8n.zip`에는
+가중치, `predict.py`, 의존성, `docs/USAGE.md`, 모델 카드와 체크섬을 담았다.
+공유 ZIP을 풀고 동봉한 가이드를 따라 그 폴더에 `.venv`를 생성한다.
+
+```powershell
+.\.venv\Scripts\python.exe predict.py --source "C:\images\example.jpg"
+```
+
+기본 실행 장치는 CPU이며 imgsz 800, confidence 0.25, NMS IoU 0.7을 사용한다.
+클래스는 0 smoke / 1 fire다. 결과 bbox 이미지·영상은 `results/prediction-<ID>/media/`에,
+검출 JSON은 같은 prediction 폴더에 저장된다. NVIDIA용 PyTorch가 설치된 환경에서는
+`--device 0`으로 GPU를 지정한다. 실행 시 모델 SHA256을 확인한다.
+
+실제 공유 파일 위치·파일별 SHA256·CPU 검증과 GPU 인식 오류 기록은
+[공유 파일 보고서](../reports/019_e6_sharing_package.md)에 있다.
+Ultralytics의 라이선스 안내와 소스 출처는 ZIP의 `NOTICES.md`에 동봉했다.

@@ -1,0 +1,123 @@
+{
+  "kind": "E6_sharing_artifact_and_execution_verification",
+  "created_at_utc": "2026-11-07T04:33:29.569453+00:00",
+  "local_archive": "C:\\git\\drone-fire-detection\\outputs\\model-share-E6_20261107T043329Z_59b33a99\\dfire-e6-yolov8n.zip",
+  "local_package": "C:\\git\\drone-fire-detection\\outputs\\model-share-E6_20261107T043329Z_59b33a99\\dfire-e6-yolov8n",
+  "archive_sha256": "dd836cfede5c865baf2e025b5d061ae1c2c89e32b7fba08d6cdad2130b76569a",
+  "archive_size_bytes": 6177636,
+  "file_sha256": {
+    "best.pt": "d25cdb6a21bb6afbdfd60bf0ac1678f1d2148436ee74ef59f7c1255d6caebc39",
+    "docs/USAGE.md": "4cdce6bbe8c36f65c994a282c8cf3a487355c51eba255e244eb596c274bba00b",
+    "LICENSE-ULTRALYTICS.txt": "0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0",
+    "manifest.json": "79cfb48c59d043bcd66d2717f15ca1fb338422a01c23af8eeca8f99a4c232462",
+    "MODEL_CARD.md": "c4671482e646e0e732a90202fdc278edd2d6812c9e5b87b0a82dcab16b06c457",
+    "NOTICES.md": "437523493a158ee19fab41a2aabf9e1902d8e35c8c4db9b1d41c68a7f30c222a",
+    "predict.py": "82aede48feafd15f1b3cd3268079092f284875b66432b6b61ca7d8f8ba3ec009",
+    "README.md": "cb33a470802d6b5f69472ab889f27bf6cb71cb0f1a068461a9ba76d3d6aac06a",
+    "requirements.txt": "82bd7a1c3383b9d9247859275660169a93ecb087e5ff66ab8702247f5b1a6e6b",
+    "source/training-source.zip": "c315554b51750b7cfd4faf34a4671cb22d33c969965ad3f7675a9b8d2e93b978"
+  },
+  "checkpoint_sha256": "d25cdb6a21bb6afbdfd60bf0ac1678f1d2148436ee74ef59f7c1255d6caebc39",
+  "source_training_record": "reports/010_server_e6.json",
+  "source_training_record_sha256": "cd3895e5c1ce598472b1e955445538cfe83fc6a0ec6cc52a6ccc3aa1e337126e",
+  "verification": {
+    "kind": "portable_inference_verification_not_new_model_experiment",
+    "verified_at_utc": "2026-11-07T04:36:37.105377+00:00",
+    "archive": "/root/drone-fire-detection/work/e6-share-bundle-20261107.zip",
+    "archive_sha256": "dd836cfede5c865baf2e025b5d061ae1c2c89e32b7fba08d6cdad2130b76569a",
+    "all_packaged_checksums": "passed",
+    "cases": [
+      {
+        "case": "cpu-fire-image",
+        "device": "cpu",
+        "input": "/root/drone-fire-detection/data/processed/dfire-fold1-v2/val/images/WEB06334.jpg",
+        "input_sha256": "51f17f2219795c23e269238e32d7404dee4513642c57d7e392efafd348b12f88",
+        "source_split": "val",
+        "exit_code": 0,
+        "elapsed_seconds": 3.4127860963344574,
+        "frames": 1,
+        "detections_per_frame": [
+          3
+        ],
+        "detected_classes": [
+          "fire",
+          "smoke"
+        ],
+        "output": "/root/drone-fire-detection/work/e6-share-check_20261107_cpu-verified/cpu-fire-image/prediction-e559c9e4",
+        "annotated_media": [
+          "/root/drone-fire-detection/work/e6-share-check_20261107_cpu-verified/cpu-fire-image/prediction-e559c9e4/media/WEB06334.jpg"
+        ]
+      },
+      {
+        "case": "cpu-smoke-image",
+        "device": "cpu",
+        "input": "/root/drone-fire-detection/data/processed/dfire-fold1-v2/val/images/WEB05562.jpg",
+        "input_sha256": "b233fea2ba1305c8804ab46a3a148ba69681e94161b23ffc6bc7233946fc3c86",
+        "source_split": "val",
+        "exit_code": 0,
+        "elapsed_seconds": 3.566122923977673,
+        "frames": 1,
+        "detections_per_frame": [
+          2
+        ],
+        "detected_classes": [
+          "fire",
+          "smoke"
+        ],
+        "output": "/root/drone-fire-detection/work/e6-share-check_20261107_cpu-verified/cpu-smoke-image/prediction-7c73770f",
+        "annotated_media": [
+          "/root/drone-fire-detection/work/e6-share-check_20261107_cpu-verified/cpu-smoke-image/prediction-7c73770f/media/WEB05562.jpg"
+        ]
+      },
+      {
+        "case": "cpu-two-frame-video",
+        "device": "cpu",
+        "input": "/root/drone-fire-detection/work/e6-share-check_20261107_cpu-verified/two-frame-val-derived.avi",
+        "input_sha256": "b9006c2fa425016addd6cd88e76dc9cabad73c7b67d04729e16486a5dbdf7295",
+        "source_split": "val",
+        "exit_code": 0,
+        "elapsed_seconds": 4.357634708285332,
+        "frames": 2,
+        "detections_per_frame": [
+          2,
+          2
+        ],
+        "detected_classes": [
+          "smoke"
+        ],
+        "output": "/root/drone-fire-detection/work/e6-share-check_20261107_cpu-verified/cpu-two-frame-video/prediction-e2f09bfa",
+        "annotated_media": [
+          "/root/drone-fire-detection/work/e6-share-check_20261107_cpu-verified/cpu-two-frame-video/prediction-e2f09bfa/media/two-frame-val-derived.avi"
+        ]
+      }
+    ],
+    "checksum_corruption_rejected": true,
+    "video_note": "Two-frame video derived from one Validation image for file-format execution verification",
+    "test_evaluated": false,
+    "python": "/root/drone-fire-detection/.venv/bin/python",
+    "server_git": {
+      "commit": "bbc9a3a662f41eb64896c335a92b713481fae398",
+      "status": "M docs/PROGRESS.md\n?? reports/010_server_e6.json\n?? reports/010_server_e6.md",
+      "dirty": true,
+      "tracked_diff_sha256": "e3d06a41f8c8d5d8afa782cfb3eb256b68c9d97dc8f57a9f942de94fb2f17b66"
+    },
+    "gpu_check": {
+      "status": "blocked_by_cuda_device_visibility",
+      "attempted_device": "0",
+      "torch_cuda_available": false,
+      "torch_cuda_device_count": 0,
+      "observed_error": "Invalid CUDA device=0; NVML cannot initialize",
+      "failed_attempt_log": "/root/drone-fire-detection/work/e6-share-check_20261107/gpu-smoke-image.log"
+    },
+    "queue_status": "awaiting_final_selection"
+  },
+  "packaging_decisions": {
+    "default_device": "cpu",
+    "model_file": "best.pt",
+    "imgsz": 800,
+    "confidence": 0.25,
+    "nms_iou": 0.7,
+    "licensing_information": "Ultralytics default AGPL-3.0 and upstream notice text",
+    "exact_training_source_included": true
+  }
+}
