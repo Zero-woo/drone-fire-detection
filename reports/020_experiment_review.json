@@ -1,219 +1,12 @@
 {
-  "kind": "measured_E0_E6_reader_report",
-  "prepared_date_kst": "2026-11-07",
-  "source_git_commit": "e232b6a16ca046620bf255eb9b5a8218390f415d",
+  "kind": "measured_server_E0_E6_reader_report",
+  "prepared_date_kst": "2026-11-10",
+  "measurement_scope": "A100 MIG GPU server only",
+  "measurements_through_kst": "2026-11-07",
+  "source_git_commit": "f8224a18fc181b3fdf086054eee4e42fe1a651b2",
   "records": [
     {
-      "id": "E0 RTX",
-      "settings": {
-        "epochs": 50,
-        "imgsz": 640,
-        "batch": 16,
-        "seed": 42,
-        "optimizer": "MuSGD",
-        "lr0": 0.01,
-        "lrf": 0.01,
-        "cos_lr": false,
-        "momentum": 0.937,
-        "weight_decay": 0.0005,
-        "warmup_epochs": 3.0,
-        "warmup_momentum": 0.8,
-        "warmup_bias_lr": 0.1,
-        "hsv_h": 0.015,
-        "hsv_s": 0.7,
-        "hsv_v": 0.4,
-        "degrees": 0.0,
-        "translate": 0.1,
-        "scale": 0.5,
-        "shear": 0.0,
-        "perspective": 0.0,
-        "flipud": 0.0,
-        "fliplr": 0.5,
-        "mosaic": 1.0,
-        "mixup": 0.0,
-        "copy_paste": 0.0,
-        "close_mosaic": 10,
-        "device": "0",
-        "workers": 0,
-        "patience": 0,
-        "deterministic": true,
-        "amp": false,
-        "cache": false,
-        "nbs": 64,
-        "save_period": 1,
-        "val": true,
-        "plots": true,
-        "compile": false
-      },
-      "epochs": 50,
-      "best_epoch": 46,
-      "metrics": {
-        "precision": 0.7739392620052554,
-        "recall": 0.7003204277449923,
-        "map50": 0.7682703613062294,
-        "map50_95": 0.4474509895147398,
-        "f1_macro": 0.7351824544622252,
-        "classes": {
-          "smoke": {
-            "precision": 0.8329457528187415,
-            "recall": 0.7707439073089857,
-            "ap50": 0.8388586587910832,
-            "ap50_95": 0.5242200557284544,
-            "f1": 0.8006385275974276
-          },
-          "fire": {
-            "precision": 0.7149327711917693,
-            "recall": 0.6298969481809988,
-            "ap50": 0.6976820638213757,
-            "ap50_95": 0.3706819233010251,
-            "f1": 0.6697263813270228
-          }
-        },
-        "point_note": "Ultralytics P/R/F1 use the best mean-F1 confidence on this split; AP integrates confidence.",
-        "speed_ms_per_image": {
-          "preprocess": 0.0983785195830339,
-          "inference": 0.8374371552361374,
-          "loss": 0.00033082733814792466,
-          "postprocess": 0.4996189265005042
-        }
-      },
-      "operating": {
-        "settings": {
-          "ap_conf": 0.001,
-          "operating_conf": 0.25,
-          "nms_iou": 0.7,
-          "match_iou": 0.5,
-          "max_det": 300,
-          "batch": 16,
-          "warmup_images": 3,
-          "max_case_images": 20
-        },
-        "matching": "class-aware greedy descending IoU, one-to-one",
-        "classes": {
-          "smoke": {
-            "tp": 1530,
-            "fp": 467,
-            "fn": 359,
-            "precision": 0.7661492238357537,
-            "recall": 0.8099523557437798,
-            "f1": 0.7874420998455995
-          },
-          "fire": {
-            "tp": 1488,
-            "fp": 922,
-            "fn": 666,
-            "precision": 0.6174273858921162,
-            "recall": 0.6908077994428969,
-            "f1": 0.6520595968448729
-          }
-        },
-        "images": 3445,
-        "negative_images": 1610,
-        "negative_fp_detections": 41,
-        "negative_images_with_fp": 37,
-        "inference_ms_per_image": 4.905711085074656,
-        "inference_fps": 203.84404679730173,
-        "pipeline_ms_per_image": 6.819207746270606,
-        "pipeline_fps": 146.64460113374543,
-        "analysis_wall_seconds_including_io_and_case_export": 31.118089199997485,
-        "timing_note": "Batch=1, FP32; warmed before measurement. Inference FPS excludes I/O, preprocessing and NMS."
-      },
-      "training_seconds": 11270.472325999988,
-      "validation_seconds": 71.13231829996221,
-      "gpu": {
-        "index": 0,
-        "name": "NVIDIA GeForce RTX 5070",
-        "capability": [
-          12,
-          0
-        ],
-        "memory_bytes": 12820480000
-      },
-      "environment": {
-        "created_at_utc": "2026-10-31T10:13:48.310247+00:00",
-        "python": "3.10.0",
-        "platform": "Windows-10-10.0.26200-SP0",
-        "packages": {
-          "Jinja2": "3.1.6",
-          "MarkupSafe": "3.0.3",
-          "PyYAML": "6.0.3",
-          "certifi": "2026.10.23",
-          "charset-normalizer": "3.5.2",
-          "contourpy": "1.3.2",
-          "cycler": "0.12.1",
-          "filelock": "4.1.0",
-          "fonttools": "4.65.0",
-          "fsspec": "2026.9.0",
-          "idna": "3.20",
-          "kiwisolver": "1.5.1",
-          "matplotlib": "3.10.8",
-          "mpmath": "1.3.0",
-          "networkx": "3.4.2",
-          "numpy": "2.2.6",
-          "opencv-python": "4.12.0.88",
-          "packaging": "26.3",
-          "pillow": "12.1.0",
-          "pip": "21.2.3",
-          "polars": "2.0.0",
-          "polars-runtime-32": "2.0.0",
-          "psutil": "7.2.2",
-          "pyparsing": "3.3.3",
-          "python-dateutil": "3.0.0",
-          "requests": "2.34.2",
-          "scipy": "1.15.3",
-          "setuptools": "57.4.0",
-          "six": "1.17.0",
-          "sympy": "1.14.0",
-          "torch": "2.10.0+cu128",
-          "torchvision": "0.25.0+cu128",
-          "typing_extensions": "4.16.0",
-          "tzdata": "2026.6",
-          "ultralytics": "8.4.0",
-          "ultralytics-thop": "2.2.3",
-          "urllib3": "2.8.0"
-        },
-        "git": {
-          "commit": "44e9e24087cfc9db8dd765bab01ea55d6349dbb6",
-          "status": "",
-          "dirty": false,
-          "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-        },
-        "torch": "2.10.0+cu128",
-        "cuda_runtime": "12.8",
-        "cudnn": 91002,
-        "cuda_available": true,
-        "gpus": [
-          {
-            "index": 0,
-            "name": "NVIDIA GeForce RTX 5070",
-            "capability": [
-              12,
-              0
-            ],
-            "memory_bytes": 12820480000
-          }
-        ],
-        "cuda_compute_probe": "passed",
-        "nvidia_smi": "NVIDIA GeForce RTX 5070, 610.88, 12227 MiB"
-      },
-      "started_kst": "2026-10-31T19:13:48.684620+09:00",
-      "finished_kst": "2026-10-31T22:21:39.191118+09:00",
-      "peak_allocated_gib": 3.2476754188537598,
-      "peak_reserved_gib": 5.2109375,
-      "checkpoint_sha256": "6181df582cf9dfbfbeaacf61481df39c565e5f8ac9ddca4765f8c03349c1b696",
-      "source": "reports/004_e0_baseline.json",
-      "source_sha256": "4c466e1fa01156ec4437ed89a16e405a206e295814b657b658bb3038bdd42dd5",
-      "training_git": {
-        "commit": "44e9e24087cfc9db8dd765bab01ea55d6349dbb6",
-        "status": "",
-        "dirty": false,
-        "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-      },
-      "training_run": "C:\\git\\drone-fire-detection\\experiments\\runs\\E0_20261031T101348Z_cb79e173",
-      "validation_run": null
-    },
-    {
-      "id": "E0 MIG",
+      "id": "E0",
       "settings": {
         "epochs": 50,
         "imgsz": 640,
@@ -430,7 +223,7 @@
       "peak_reserved_gib": 5.55078125,
       "checkpoint_sha256": "793526814adbd0c2a9d31054c1c37563c3c77fdef6cded429f062b964a4ee85d",
       "source": "reports/007_remote_e0_baseline.json",
-      "source_sha256": "8d202abcf95b1c56684cf340eaf66b8100fd7ea0772bda2aad9e9a2c24556fb3",
+      "source_sha256": "104106f76fe9833d6e07295c3f0b316a0834b7058d446cf6177154681ab98a0f",
       "training_git": {
         "commit": "f9b93483c95a122860e736d2080fb30cbc95d597",
         "status": "",
@@ -2049,7 +1842,6 @@
   ],
   "totals": {
     "server_training_seconds": 240116.11740682693,
-    "all_training_seconds": 251386.58973282692,
     "server_common_validation_seconds": 7767.552885901183
   },
   "metric_definitions": {
@@ -2066,19 +1858,19 @@
   "figures": {
     "metrics": {
       "path": "reports/figures/020_metrics_overview.png",
-      "sha256": "64466cfdc8a2c11defc9e52393afe586e1374e1d1e3b533f91f396560df0b984"
+      "sha256": "f820daef8d594960438c2129e2a5a5802375c0a92bfeea51b97956db2c2362d1"
     },
     "deltas": {
       "path": "reports/figures/020_delta_vs_e1.png",
-      "sha256": "48cd37881664d84590e874d242e78bcd1cc55677c47fd6dae136409d61c0dc8a"
+      "sha256": "a6231c0d6347f520b1bcee8f373d7c791b91f67c9feaa2b747fb761ba5737427"
     },
     "operating": {
       "path": "reports/figures/020_operating_tradeoffs.png",
-      "sha256": "924e873fb320e17d92768476d1ef730cb432139404588709686f77db65baa024"
+      "sha256": "0ff4950bedea67b135d7ef09dc91849434d168c9e100f4c552ee6910202b3a56"
     },
     "cost": {
       "path": "reports/figures/020_training_cost.png",
-      "sha256": "848157ab1bc18f6b8182a968642410a72282e0b69c5105afdefb9fe8085d1fb3"
+      "sha256": "48ff1cbf9a225b36bb95dee128a33a9563304742fadf4f0b45b6fbb7347b03b0"
     },
     "curves": {
       "path": "reports/figures/020_learning_curves.png",
@@ -2086,8 +1878,8 @@
     }
   },
   "pdf": {
-    "path": "outputs/experiment-review-E0-E6_20261107/dfire-experiment-review-E0-E6.pdf",
-    "sha256": "3fd41a10ee035f79aac4f003ff05412c8a09d79cb419ee4709688176d6dec542",
+    "path": "outputs/experiment-review-E0-E6_20261110/dfire-experiment-review-E0-E6.pdf",
+    "sha256": "2fde2c7090f5b85875dddea5f6d48089ba74f48461d63d721cc8d58fb060b047",
     "pages": 9
   },
   "generation_environment": {
@@ -2096,22 +1888,24 @@
     "reportlab": "5.1.0"
   },
   "quality_checks": {
-    "checked_at_kst": "2026-11-07T18:07:39.369522+09:00",
+    "checked_at_kst": "2026-11-10T12:28:44.838079+09:00",
+    "completed_server_runs": 8,
     "source_json_values_and_sha256": "passed",
-    "E1_E6_trace_csv_sha256": "passed",
+    "server_gpu_scope": "passed",
     "sum_of_training_durations": "passed",
+    "E1_E6_trace_csv_sha256": "passed",
     "pdf_visual_pages_reviewed": 9,
     "pdf_missing_glyph_check": "passed",
     "rendered_page_sha256": {
-      "page-01.png": "c968dd412c39b175d1b6069f34b86d485bb520b06f3d01f3a9ea055a484577db",
-      "page-02.png": "8aa44c5e818865f70bebdbaab1ae26f5f6c33c990e6063a44ff9c30ddc3e25ff",
-      "page-03.png": "89ffbdd1a6f7f720653cc5d05653d221c28a195fea438a0f841a63cc7463c972",
-      "page-04.png": "bb5b5ce5d2ac2c012715dde036e8976a274ce025ced87d8fff869c4ee3952c2f",
-      "page-05.png": "485377f22245d33f0bc9742bf45a300dca68e1333999bb4307a3811d5b5028b7",
-      "page-06.png": "ee2b1b9f54c7e594ee4df0cf01b24e41b7177acd6dab96860a86019dcdc9c2d9",
-      "page-07.png": "683ddbed86c6225c6012c48805aa9e2a62ebebac7a985657d857b1f95cf7cd23",
-      "page-08.png": "c993bda06fdf672afdf4c504c6924aaeeff09067d7b04efee66a3203bbf30c2e",
-      "page-09.png": "2be273b9b6d7b6a61f75ba25bf0dc92e82010b73f1dd34e1d78d352db3d481b0"
+      "page-01.png": "9f2026127c228c00526271b260fa375d838d25d5f600e56b4609d3455e5431c1",
+      "page-02.png": "97524b385ca96abb439a8338f8e39d8f22498ee520d860a222712dde02926bb7",
+      "page-03.png": "3477c56b7f414218ca890b5f4a33f830e1d40af9781a953a7d35a89d01089b7e",
+      "page-04.png": "2737ac380ee120816fb9ba6c1f9433e70009610d379920e2c726c1a6cee4b73d",
+      "page-05.png": "83ede531ad3a8ed254f12b4fb3bae47e6748c342f0165a492feef046b23012b7",
+      "page-06.png": "27c733311336de032e162baa94507776ef15c21c696f58abfe99041e3f3ba25b",
+      "page-07.png": "5d43c6c2d0f1b8d2e932bc27ae7d027c82d3e698634b9604005dcadeef70ef96",
+      "page-08.png": "0a9c8d34adfd0665693fe3c25f1595d76277bc259fda412e57fcc490de4219ea",
+      "page-09.png": "225af12e81305533141a3d670d311bb5cf36a1b56f87bf436199422415a4147e"
     }
   }
 }

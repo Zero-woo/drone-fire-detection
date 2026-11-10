@@ -1,7 +1,7 @@
 # Drone Fire Detection
 
 Reproducible YOLOv8n fine-tuning on D-Fire to study the effect of training
-hyperparameters on fire and smoke detection with an NVIDIA RTX 5070.
+hyperparameters on fire and smoke detection on a GPU server.
 
 ## Project Structure
 

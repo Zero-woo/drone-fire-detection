@@ -33,10 +33,9 @@
 수행하지 않았으며 Colab 학습 속도나 정확도 측정값을 생성하지 않았다.
 Google 계정 연결과 ZIP 업로드, GPU 런타임 선택 및 셀 실행은 사용자가 수행한다.
 
-Colab의 GPU 종류와 사용 가능 시간은 가용성·요금제에 따라 달라지므로 5070 대비
-속도 향상은 실제 epoch 시간을 측정해야 판단할 수 있다.
-Windows E0와 Colab E1의 직접 비교에는 GPU·OS·Python 차이가 포함된다.
-엄격한 epoch 비교에는 Colab에서 E0/E1을 같은 환경으로 실행하는 것이 좋다.
+Colab의 GPU 종류와 사용 가능 시간은 가용성·요금제에 따라 달라진다.
+실제 실행 시 GPU·OS·Python 및 epoch 시간을 기록한다.
+현재 실험 결과 비교에는 A100 MIG 서버에서 완료된 E0부터 E6까지의 기록을 사용한다.
 
 노트북은 Colab에서 새 실험을 시작하거나 그 Colab 실험을 재개하는 범위다.
 Windows의 진행 중 checkpoint를 그대로 이동하거나 Colab run을 PC에서 바로 재개하는

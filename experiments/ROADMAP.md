@@ -5,7 +5,7 @@
 MuSGD / FP32 / 기본 HSV / mosaic 1.0이다. E1과 E4-800의 Validation SHA256을
 선택 근거로 고정하며 E1을 비교 기준과 대안으로 유지한다. E5와 Test는 자동 실행하지 않는다.
 
-1. 환경 및 데이터: CUDA 실제 연산, RTX 5070, D-Fire 파일·좌표·중복 검사,
+1. 환경 및 데이터: GPU 서버의 CUDA 실제 연산, D-Fire 파일·좌표·중복 검사,
    공식 분할 고정, COCO 및 공개 체크포인트 SHA256 검증.
 2. E0: COCO YOLOv8n, 50 epochs, 640, batch 16, seed 42, MuSGD, lr0 0.01.
 3. E1: E0와 동일하며 100 epochs. Early stopping을 끄고 validation으로 비교한다.

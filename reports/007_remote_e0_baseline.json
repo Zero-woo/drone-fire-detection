@@ -771,22 +771,12 @@
     "peak_allocated_bytes": 579570176,
     "peak_reserved_bytes": 822083584
   },
-  "comparison_with_windows_E0": {
-    "same_training_settings": true,
-    "same_validation_settings": true,
-    "same_initial_model": true,
-    "same_dataset_fingerprint": true,
-    "map50_delta_percentage_points": -0.13527107407798056,
-    "map50_95_delta_percentage_points": -0.28564891031003237,
-    "fire_recall_at_025_delta_percentage_points": 0.41782729805014407,
-    "training_wall_time_ratio": 1.722582103840662,
-    "limitation": "The GPU, OS, Python and source revision differ; this is an E0 baseline in another environment, not a hyperparameter improvement or a repeated-seed significance analysis."
-  },
   "times_kst": {
     "training_started": "2026-11-04T01:47:35.954686+09:00",
     "training_finished": "2026-11-04T07:11:10.285738+09:00",
     "workflow_finished": "2026-11-04T07:12:51.631844+09:00"
   },
   "test_evaluated": false,
-  "e1_started": false
+  "e1_started": false,
+  "comparison_scope": "A100 MIG server experiments E0 through E6"
 }

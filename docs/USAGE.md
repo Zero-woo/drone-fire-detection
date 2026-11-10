@@ -201,15 +201,15 @@ Google도 많은 작은 Drive I/O 대신 archive를 로컬에 풀어 사용하�
 중간 저장이 완료되지 않은 checkpoint는 거부한다. 마지막 정상 저장 epoch 이후 진행분은
 복구되지 않을 수 있다. Windows의 진행 중 run을 그대로 이동해 재개하는 기능은 별도 작업이다.
 
-GPU 종류·사용 시간·메모리는 Colab의 가용성·요금제에 따라 달라진다. 무료 Colab이 RTX 5070보다
-빠르다고 보장할 수 없다. 실제 GPU 이름과 epoch 시간을 확인한 뒤 계속할지 판단한다.
+GPU 종류·사용 시간·메모리는 Colab의 가용성·요금제에 따라 달라진다.
+실제 epoch 시간과 실행 환경을 각 run에 기록한다.
 유료 요금제도 원하는 GPU가 항상 배정되는 것은 아니다.
 [공식 리소스 안내](https://research.google.com/colaboratory/faq.html#resource-limits)
 
 기본 notebook은 FP32·workers 0 등 기존 실험 조건을 유지한다. 속도 개선을 위해 AMP,
 worker 수나 batch를 바꾸면 별도 설정·실험으로 기록한다. Colab과 Windows의 속도는
 같은 하드웨어에서의 학습 조건 비교와 구분하고 환경을 함께 보고한다.
-Windows E0와 Colab E1 사이에는 GPU·OS·Python 환경 차이가 생길 수 있다.
+현재 실험 비교는 A100 MIG GPU 서버에서 수행한 E0부터 E6까지의 실측값을 사용한다.
 엄격한 epoch 효과 비교에는 Colab에서도 E0와 E1을 같은 환경으로 실행하는 것이 좋다.
 Test는 최종 모델 선택 후에만 평가한다.
 
