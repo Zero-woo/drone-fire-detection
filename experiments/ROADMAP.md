@@ -1,5 +1,13 @@
 # 실험 로드맵
 
+**2026-11-10 사용자 모델 선택과 동결.** 후속 추론·통합 실험의 기준으로 E6 best.pt를
+선택했다. `E6-d25cdb6a21bb` revision에 가중치 SHA256과 imgsz 800,
+confidence 0.25, NMS IoU 0.7, max_det 300, FP32를 고정했다.
+서버 선택 기록 원본과 현재 PC의 경로 이관 기록을 함께 보존했다.
+Validation까지 완료했으며 Test는 후속 단계다. 새로운 독립 학습은 고정 COCO에서 시작한다.
+반납용 보존 범위와 실제 검증 결과는
+[백업 보고서](../reports/021_server_retirement_backup.md)에 기록한다.
+
 **2026-11-06 E6 자동 실행 승인:** 완료된 핵심 큐를 보존하고 E6 한 작업만 추가한다.
 선택 조건은 100 epochs / patience 0 / imgsz 800 / batch 16 / lr0 0.01 / seed 42 /
 MuSGD / FP32 / 기본 HSV / mosaic 1.0이다. E1과 E4-800의 Validation SHA256을

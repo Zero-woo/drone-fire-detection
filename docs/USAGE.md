@@ -457,3 +457,43 @@ E6는 고정 COCO에서 새로 학습하고 best.pt 공통 Validation과 비교 
 실제 공유 파일 위치·파일별 SHA256·CPU 검증과 GPU 인식 오류 기록은
 [공유 파일 보고서](../reports/019_e6_sharing_package.md)에 있다.
 Ultralytics의 라이선스 안내와 소스 출처는 ZIP의 `NOTICES.md`에 동봉했다.
+
+## 서버 반납용 백업과 고정된 E6
+
+2026-11-10에 선택한 모델은 `models/frozen/E6-d25cdb6a21bb/`에 있다.
+`best.pt`의 SHA256은
+`d25cdb6a21bb6afbdfd60bf0ac1678f1d2148436ee74ef59f7c1255d6caebc39`다.
+`model_revision.json`에 imgsz 800, confidence 0.25, NMS IoU 0.7,
+max_det 300, FP32와 Validation 근거를 고정했다.
+
+프로젝트의 `.venv`에 공유 패키지의 `requirements.txt`에 명시된 추론 의존성을 설치한
+환경에서 다음과 같이 사용한다. 이 PC에서는 이관한 모델·기록의 체크섬과 경로를 검증했다.
+실제 CPU 추론 실행 근거는 앞선 공유 패키지 보고서에 있다.
+
+```powershell
+.\.venv\Scripts\python.exe models/frozen/E6-d25cdb6a21bb/predict.py --source "C:\images\example.jpg" --output outputs/frozen-E6-predictions
+```
+
+백업은 `outputs/server-retirement-backup_20261110/`에 보관한다.
+`backup-index.json`에는 전송이 끝나 SHA256이 일치한 ZIP만 등록한다.
+`metadata/verification.json`에 ZIP 내부 파일과 입력 데이터 검증 결과를 기록한다.
+`files/experiments/runs/`에는 8개 실험의 best/last 및 원래 학습·Validation 기록이 있다.
+원래 서버 경로가 남아 있는 기록은 측정 시점의 근거로 보존한다.
+
+전처리된 입력 21,527장과 라벨·분할은 다음 명령으로 복원한다.
+원본 D-Fire/raw와 공식 분할 목록 원본은 이번 점검 당시 양쪽 프로젝트 경로에 없었다.
+
+```powershell
+.\.venv\Scripts\python.exe firelab.py import-colab --archive outputs/server-retirement-backup_20261110/prepared-dfire-fold1-v2.zip --sha256 cb6c4abbaca83496d4dc578ec804b3e5b5d839ce7c89f1fe58ffc66e4f6a0476
+```
+
+다른 PC로 옮길 때는 백업 폴더와 고정 모델 폴더 전체를 함께 복사한다.
+고정 모델의 `model_revision.json`은 상대 경로를 사용하며,
+`selection.json`은 현재 PC에 맞춘 절대 경로와 재계산한 체크섬을 사용한다.
+다른 경로에서 선택 기록을 사용할 때에는 원본 `provenance/selection.server.json`과
+가중치 SHA256을 보존하고 새 경로 및 체크섬을 연결한 이관 기록을 별도로 작성해야 한다.
+Test는 아직 미평가이며, 새 독립 학습 실험은 기존 정책에 따라 고정 COCO에서 시작한다.
+후속 추론·통합 실험에서는 이 E6 고정본을 기준 모델로 사용한다.
+
+검증 완료 범위와 중간 epoch 보관 상태는
+[서버 반납용 보존 보고서](../reports/021_server_retirement_backup.md)에 기록한다.

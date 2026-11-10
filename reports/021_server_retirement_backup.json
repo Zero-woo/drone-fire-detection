@@ -1,0 +1,307 @@
+{
+  "kind": "verified_server_retirement_backup",
+  "recorded_at_utc": "2026-11-10T04:09:17.875165+00:00",
+  "scope_authorization": "User explicitly selected best/last, results and prepared inputs only on 2026-11-10.",
+  "local_git_before_record_commit": {
+    "commit": "267093c92ebb60e9172fc2cfad6b847b9d3c6d71",
+    "status": "M docs/USAGE.md\n M experiments/ROADMAP.md\n M models/README.md",
+    "dirty": true,
+    "tracked_diff_sha256": "eacf806d624acec58fa656ec2e11a1d5ea8ed97f44bb15dea3fa8644d0a6680f"
+  },
+  "server_git_at_audit": {
+    "commit": "bbc9a3a662f41eb64896c335a92b713481fae398",
+    "status": "M docs/PROGRESS.md\n?? reports/010_server_e6.json\n?? reports/010_server_e6.md",
+    "dirty": true,
+    "tracked_diff_sha256": "e3d06a41f8c8d5d8afa782cfb3eb256b68c9d97dc8f57a9f942de94fb2f17b66"
+  },
+  "server_queue_status_at_audit": "awaiting_final_selection",
+  "server_queue_plan_sha256": "f5886430b41043924cb73d8c705265f3f487d85b9915bae87d7b741487492446",
+  "recorded_queue_processes_alive_at_audit": [],
+  "initial_local_state": {
+    "E6_shared_checkpoint_present": true,
+    "other_server_experiment_checkpoints_found": false,
+    "previously_reported_E0_archive_found": false,
+    "formal_frozen_selection_found": false
+  },
+  "backup_root": "outputs/server-retirement-backup_20261110",
+  "verified_at_utc": "2026-11-10T04:09:09.208110+00:00",
+  "verified_archive_bytes": 3384143888,
+  "archives": [
+    {
+      "name": "core-artifacts.zip",
+      "remote_path": "/root/drone-fire-detection/outputs/server-retirement_20261110/core-artifacts.zip",
+      "bytes": 234582905,
+      "sha256": "e7ecc9ef4827ce74f3ba786aebf739beb793c9ea2a84a427689db20c2d1eb982",
+      "file_count": 798,
+      "uncompressed_bytes": 316326179,
+      "sha256_verified": true,
+      "verified_content_files": 798
+    },
+    {
+      "name": "prepared-dfire-fold1-v2.zip",
+      "remote_path": "/root/drone-fire-detection/work/dfire-fold1-v2.zip",
+      "bytes": 3149560983,
+      "sha256": "cb6c4abbaca83496d4dc578ec804b3e5b5d839ce7c89f1fe58ffc66e4f6a0476",
+      "sha256_verified": true,
+      "verified_content_files": 43059
+    }
+  ],
+  "core_files_verified": 798,
+  "best_last_files_verified": 16,
+  "experiments": [
+    {
+      "id": "E0",
+      "training_run": "experiments/runs/E0_20261103T164735Z_40e89a6c",
+      "validation_run": "experiments/runs/val-E0_20261103T221126Z_f11e3517",
+      "weights": [
+        {
+          "name": "best.pt",
+          "path": "experiments/runs/E0_20261103T164735Z_40e89a6c/train/weights/best.pt",
+          "bytes": 6228458,
+          "sha256": "793526814adbd0c2a9d31054c1c37563c3c77fdef6cded429f062b964a4ee85d"
+        },
+        {
+          "name": "last.pt",
+          "path": "experiments/runs/E0_20261103T164735Z_40e89a6c/train/weights/last.pt",
+          "bytes": 6228458,
+          "sha256": "e39b3ccb09d9cdef6888a40ada172b68408f65f69808ca033dc2108dd9e99765"
+        }
+      ],
+      "training_record_sha256": "7ed3d17e6f11b1a7cd7006e7feea0075e3d6f8f3107bbae9ed379d4018074bc0",
+      "validation_record_sha256": "0b7c4be9cbc078a12342d3295113be60bb35805b3642360d89de09f7be4082f9"
+    },
+    {
+      "id": "E1",
+      "training_run": "experiments/runs/E1_20261104T055200Z_0a27f400",
+      "validation_run": "experiments/runs/val-E1_20261104T163213Z_a8b24f7c",
+      "weights": [
+        {
+          "name": "best.pt",
+          "path": "experiments/runs/E1_20261104T055200Z_0a27f400/train/weights/best.pt",
+          "bytes": 6237162,
+          "sha256": "0ec8895995297b781bf112215af073721b9775cbbbd27e7ac36b248f0b242e1d"
+        },
+        {
+          "name": "last.pt",
+          "path": "experiments/runs/E1_20261104T055200Z_0a27f400/train/weights/last.pt",
+          "bytes": 6237162,
+          "sha256": "5d99af87b5bc816c6cb4456b4a4506da66c40a75ccff37894a31d54e8255cb6b"
+        }
+      ],
+      "training_record_sha256": "a286bb55c77462b3f0039d9f2ca2b5fd0eae5b979ad71c1105137b87690c8131",
+      "validation_record_sha256": "ce5787a4cdd5bc8bc06be71c65195205188edab02673949fde66e9b2b38b3815"
+    },
+    {
+      "id": "E2-A",
+      "training_run": "experiments/runs/E2-A_20261104T164814Z_296fcf56",
+      "validation_run": "experiments/runs/val-E2-A_20261104T231840Z_bb931608",
+      "weights": [
+        {
+          "name": "best.pt",
+          "path": "experiments/runs/E2-A_20261104T164814Z_296fcf56/train/weights/best.pt",
+          "bytes": 6230250,
+          "sha256": "741b332d9c7608fdc283ed115a0dff30181e17cff782b18ce7617e11c3fd8741"
+        },
+        {
+          "name": "last.pt",
+          "path": "experiments/runs/E2-A_20261104T164814Z_296fcf56/train/weights/last.pt",
+          "bytes": 6230250,
+          "sha256": "9d2a02562d2c3e1ed3e00c8917c0a4527422fc8442dd8dd9f31d68adcc771745"
+        }
+      ],
+      "training_record_sha256": "70493e50dcd1095e1ef890165a563acfff05691a22993111b48bb7b95293105d",
+      "validation_record_sha256": "22c5ef80e6fb30f556d871555e49723b72cf009982b59fc37723228dff2be32a"
+    },
+    {
+      "id": "E2-C",
+      "training_run": "experiments/runs/E2-C_20261104T233752Z_955d89d3",
+      "validation_run": "experiments/runs/val-E2-C_20261105T060701Z_caee1f35",
+      "weights": [
+        {
+          "name": "best.pt",
+          "path": "experiments/runs/E2-C_20261104T233752Z_955d89d3/train/weights/best.pt",
+          "bytes": 6230250,
+          "sha256": "84089ee71cbca18629da018403ccd694ae5870562113e295082f7ee12718595e"
+        },
+        {
+          "name": "last.pt",
+          "path": "experiments/runs/E2-C_20261104T233752Z_955d89d3/train/weights/last.pt",
+          "bytes": 6230250,
+          "sha256": "1c6c06c457734f9cee195694ba051d6e8a50d3f33ed1a0b97f148d9a9dbeed74"
+        }
+      ],
+      "training_record_sha256": "a92465988c7e556a18cd43e9c3c9f33061afad01547c97bf0723ed176433b4f9",
+      "validation_record_sha256": "b775ce4a94e4edd78821dc537595e6c2cd3ccc19fe4e8ea15b292ce1d7130ee9"
+    },
+    {
+      "id": "E3-HSV",
+      "training_run": "experiments/runs/E3-HSV_20261105T062831Z_ac2d2122",
+      "validation_run": "experiments/runs/val-E3-HSV_20261105T125747Z_58213238",
+      "weights": [
+        {
+          "name": "best.pt",
+          "path": "experiments/runs/E3-HSV_20261105T062831Z_ac2d2122/train/weights/best.pt",
+          "bytes": 6230250,
+          "sha256": "ebd140ab648e5dab6c148c81c3e68c3f3e80c72a8f6b35a2eccd66cc7a29cb4b"
+        },
+        {
+          "name": "last.pt",
+          "path": "experiments/runs/E3-HSV_20261105T062831Z_ac2d2122/train/weights/last.pt",
+          "bytes": 6230250,
+          "sha256": "8fbd1f2782ac5ac714bf556e8e5ef7a9133623e67ca924aeaeb96b3cb808bdbb"
+        }
+      ],
+      "training_record_sha256": "a77925a011e2226577aab91aa8943101d9e8cbea6046623a0e940ac506bc1e6c",
+      "validation_record_sha256": "8b7ac25a40621b35456b20065c90e586a7b2ed387aa36dd43ba822a1098bc004"
+    },
+    {
+      "id": "E3-Mosaic",
+      "training_run": "experiments/runs/E3-Mosaic_20261105T131902Z_3acebed8",
+      "validation_run": "experiments/runs/val-E3-Mosaic_20261105T194501Z_21744411",
+      "weights": [
+        {
+          "name": "best.pt",
+          "path": "experiments/runs/E3-Mosaic_20261105T131902Z_3acebed8/train/weights/best.pt",
+          "bytes": 6230250,
+          "sha256": "46735a65f9b902e215ecd2cd5479acbc3d772f4064231841db07adbb9b9c696a"
+        },
+        {
+          "name": "last.pt",
+          "path": "experiments/runs/E3-Mosaic_20261105T131902Z_3acebed8/train/weights/last.pt",
+          "bytes": 6230250,
+          "sha256": "ff56fa3b94d19262143eed6e49fa205035c8fa0c4669710851d8c194a259ab5e"
+        }
+      ],
+      "training_record_sha256": "6ef5353a5d321a9526922e1a43c4a0374dce62354a4d54c543694c07dfc79fa1",
+      "validation_record_sha256": "f12a87b7c5c018d960dec97235faa4f1903241c2fffb322ddea2cdd4e6f2ad67"
+    },
+    {
+      "id": "E4-800",
+      "training_run": "experiments/runs/E4-800_20261105T200326Z_96a4ad87",
+      "validation_run": "experiments/runs/val-E4-800_20261106T052421Z_e3007fd6",
+      "weights": [
+        {
+          "name": "best.pt",
+          "path": "experiments/runs/E4-800_20261105T200326Z_96a4ad87/train/weights/best.pt",
+          "bytes": 6247594,
+          "sha256": "e00b60d6d6fc8e1094b3eafc75ef5934f16b223b52e325a9ecd9ce0c95643e21"
+        },
+        {
+          "name": "last.pt",
+          "path": "experiments/runs/E4-800_20261105T200326Z_96a4ad87/train/weights/last.pt",
+          "bytes": 6247594,
+          "sha256": "0a170018704050dc3a6707f64969f86db2ae162044ef9ededfcc2135af0a8998"
+        }
+      ],
+      "training_record_sha256": "e5652798fa685aa6903bca14f2277fbe13337f59cc087c56ecee4a27ae24fff6",
+      "validation_record_sha256": "1564bde2e475593c168bc0ffa53c53a98fed88492ca7c3ab6354b7bfbeb9923c"
+    },
+    {
+      "id": "E6",
+      "training_run": "experiments/runs/E6_20261106T064302Z_a85a037e",
+      "validation_run": "experiments/runs/val-E6_20261106T221439Z_cc61a7bc",
+      "weights": [
+        {
+          "name": "best.pt",
+          "path": "experiments/runs/E6_20261106T064302Z_a85a037e/train/weights/best.pt",
+          "bytes": 6254506,
+          "sha256": "d25cdb6a21bb6afbdfd60bf0ac1678f1d2148436ee74ef59f7c1255d6caebc39"
+        },
+        {
+          "name": "last.pt",
+          "path": "experiments/runs/E6_20261106T064302Z_a85a037e/train/weights/last.pt",
+          "bytes": 6254506,
+          "sha256": "56fdedf815ac09ec07ca1df4ea91387c8f96173d00dbee0c596317bd822e8783"
+        }
+      ],
+      "training_record_sha256": "d5a5817930373ccb18e487789d54f18da6dfeb4423c24b2c6d9895dae8c2d72b",
+      "validation_record_sha256": "056889a8b5437149eb915e8bc199dda78cfac979c1ea0faf622f1c73ef1f321e"
+    }
+  ],
+  "prepared_dataset": {
+    "dataset_fingerprint": "c3d63dfa73314a36b5522f4651f5fd7d784bd8a054e78916f821160729862e2b",
+    "images": 21527,
+    "image_label_files_verified": 43054,
+    "artifact_files_verified": 5,
+    "split_images": {
+      "train": 13776,
+      "val": 3445,
+      "test": 4306
+    },
+    "original_split_source_hashes": {
+      "train": {
+        "path": "data/raw/Data splitting/5-fold cross validation/dfire_train1.txt",
+        "sha256": "16968c188a4573dbdc16f7c083023449701f8dc2fe04afdf8efb641f186d210c",
+        "count": 13776
+      },
+      "val": {
+        "path": "data/raw/Data splitting/5-fold cross validation/dfire_valid1.txt",
+        "sha256": "8050e2210717f6f508ef5d67239e824bd130ca76f5ff85bb578e8f0e4f2545dc",
+        "count": 3445
+      },
+      "test": {
+        "path": "data/raw/Data splitting/dfire_test.txt",
+        "sha256": "6164d7d26255c1ff55366d5d12e855dc7077e635df85210703f89799e60bf3b1",
+        "count": 4306
+      }
+    },
+    "all_archive_crc_checks": "passed"
+  },
+  "raw_originals_available_in_audited_project_paths": false,
+  "epoch_checkpoints_excluded_by_user": 550,
+  "epoch_archive_bytes_excluded": 9306769848,
+  "frozen_revision": {
+    "kind": "immutable_E6_model_revision",
+    "revision": "E6-d25cdb6a21bb",
+    "created_at_utc": "2026-11-10T03:55:27.764914+00:00",
+    "weights": "best.pt",
+    "checkpoint_sha256": "d25cdb6a21bb6afbdfd60bf0ac1678f1d2148436ee74ef59f7c1255d6caebc39",
+    "classes": {
+      "0": "smoke",
+      "1": "fire"
+    },
+    "inference": {
+      "imgsz": 800,
+      "confidence": 0.25,
+      "nms_iou": 0.7,
+      "max_det": 300,
+      "half": false
+    },
+    "dataset_fingerprint": "c3d63dfa73314a36b5522f4651f5fd7d784bd8a054e78916f821160729862e2b",
+    "source_selection": "provenance/selection.server.json",
+    "source_selection_sha256": "eb84f50227972b2ed7ac2b21223c03ccd5acfa0bcdab191971448f7e454e2633",
+    "local_selection": "selection.json",
+    "local_selection_sha256": "98df868bc32eddbdb97457c71fd27264679d0f251c5effd1a9da31a08b94fec9",
+    "validation_record": "provenance/evaluation.json",
+    "validation_record_sha256": "056889a8b5437149eb915e8bc199dda78cfac979c1ea0faf622f1c73ef1f321e",
+    "test_evaluated": false,
+    "revision_sha256": "5edd74a13e617e9fed1234da163159d4f506960985a7d8e105ecc7417590d729"
+  },
+  "frozen_revision_path": "models/frozen/E6-d25cdb6a21bb",
+  "freeze_receipt": {
+    "frozen_at_utc": "2026-11-10T03:44:47.223999+00:00",
+    "selection_path": "/root/drone-fire-detection/outputs/final-selection_20261110T034447Z_e32ec273/selection.json",
+    "selection_file_sha256": "615b17c25a1c69c924135741aca2afec86438e9377e9612ca28e62b7799980a6",
+    "selection_sha256": "eb84f50227972b2ed7ac2b21223c03ccd5acfa0bcdab191971448f7e454e2633",
+    "checkpoint_sha256": "d25cdb6a21bb6afbdfd60bf0ac1678f1d2148436ee74ef59f7c1255d6caebc39",
+    "validation_record_sha256": "056889a8b5437149eb915e8bc199dda78cfac979c1ea0faf622f1c73ef1f321e",
+    "settings": {
+      "imgsz": 800,
+      "confidence": 0.25,
+      "nms_iou": 0.7,
+      "max_det": 300,
+      "half": false
+    },
+    "test_evaluated": false,
+    "git": {
+      "commit": "bbc9a3a662f41eb64896c335a92b713481fae398",
+      "status": "M docs/PROGRESS.md\n?? reports/010_server_e6.json\n?? reports/010_server_e6.md",
+      "dirty": true,
+      "tracked_diff_sha256": "e3d06a41f8c8d5d8afa782cfb3eb256b68c9d97dc8f57a9f942de94fb2f17b66"
+    }
+  },
+  "verification_file_sha256": "933d60c32430b7634b400724689ff9186eefb7637ea6608ce8d4ff2d1bf6dc56",
+  "test_evaluated": false,
+  "new_training_performed": false,
+  "server_shutdown_or_deletion_performed": false
+}

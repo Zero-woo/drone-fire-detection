@@ -1,6 +1,15 @@
 # GPU 서버 Codex 실험 인계 프롬프트
 
-**2026-11-06 최신 승인:** 핵심 큐의 완료 기록을 보존한 채 E6를 자동 큐에 추가한다.
+**2026-11-10 최신 사용자 선택.** E6 완료 후 best.pt를 후속 추론·통합 실험의 기준 모델로
+선택하고 기존 freeze 절차로 동결했다. 서버 원본 선택 기록은
+`outputs/final-selection_20261110T034447Z_e32ec273/selection.json`이며
+모델 SHA256은 `d25cdb6a21bb6afbdfd60bf0ac1678f1d2148436ee74ef59f7c1255d6caebc39`다.
+imgsz 800 / confidence 0.25 / NMS IoU 0.7 / max_det 300 / FP32를 고정했다.
+사용자가 선택한 best/last·결과·전처리 입력의 PC 보존과 체크섬 검증이 완료됐다.
+중간 epoch 550개는 PC 보존 범위에서 제외했으며 Test는 미평가다.
+실제 보존 위치·원본 raw 부재·검증 근거는 `reports/021_server_retirement_backup.md/.json`을 따른다.
+
+**2026-11-06 실행 승인 기록:** 핵심 큐의 완료 기록을 보존한 채 E6를 자동 큐에 추가한다.
 E6는 고정 COCO에서 100 epochs / patience 0 / imgsz 800 / batch 16 / lr0 0.01 /
 seed 42 / MuSGD / FP32 / 기본 HSV / mosaic 1.0으로 새로 학습한다.
 E1과 E4-800의 공통 Validation을 선택 근거로 고정했으며 E1은 비교 기준과 대안이다.
