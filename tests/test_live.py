@@ -180,6 +180,19 @@ class LiveTests(unittest.TestCase):
         self.assertEqual(len(rows), 2)
         self.assertTrue(all(row["frame_shape"] == [48, 64, 3] for row in rows))
 
+        closed_run = self.root / "closed-run"
+        closed_run.mkdir()
+        with patch.object(live, "CpuDetector", return_value=Detector()), \
+                patch.object(live, "new_run", return_value=closed_run), \
+                patch.object(cv2, "namedWindow"), patch.object(cv2, "pollKey", return_value=-1), \
+                patch.object(cv2, "getWindowProperty", side_effect=cv2.error("Window already closed")), \
+                patch.object(cv2, "destroyAllWindows"):
+            code = main(["live", "--config", str(path), "--source", str(video)])
+        self.assertEqual(code, 0)
+        closed = read_json(closed_run / "session.json")
+        self.assertEqual((closed["status"], closed["stopped_by"], closed["capture_shutdown"]),
+                         ("completed", "window_closed", "joined"))
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -241,7 +241,11 @@ def live(config_path="configs/live.json", source=None, camera_name=None, target_
             while True:
                 if display:
                     key = cv2.pollKey() & 0xFF
-                    if key in (27, ord("q")) or cv2.getWindowProperty(window, cv2.WND_PROP_VISIBLE) < 1:
+                    try:
+                        visible = cv2.getWindowProperty(window, cv2.WND_PROP_VISIBLE) >= 1
+                    except cv2.error:
+                        visible = False  # A window closed by its title-bar button can already be destroyed.
+                    if key in (27, ord("q")) or not visible:
                         stopped_by = "window_closed"
                         break
                 now = time.perf_counter()
