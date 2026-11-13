@@ -1,0 +1,1005 @@
+{
+  "kind": "cpu_live_inference_execution_verification",
+  "recorded_at_utc": "2026-11-13T14:52:22.070375+00:00",
+  "hardware": {
+    "cpu": "Intel Core i3-1315U",
+    "installed_memory_gib": 15.7
+  },
+  "source_commit": "f117907f44a28405b5f6ef48aeb6f42e8111bb02",
+  "checkpoint_sha256": "d25cdb6a21bb6afbdfd60bf0ac1678f1d2148436ee74ef59f7c1255d6caebc39",
+  "frozen_revision": {
+    "kind": "immutable_E6_model_revision",
+    "revision": "E6-d25cdb6a21bb",
+    "created_at_utc": "2026-11-10T03:55:27.764914+00:00",
+    "weights": "best.pt",
+    "checkpoint_sha256": "d25cdb6a21bb6afbdfd60bf0ac1678f1d2148436ee74ef59f7c1255d6caebc39",
+    "classes": {
+      "0": "smoke",
+      "1": "fire"
+    },
+    "inference": {
+      "imgsz": 800,
+      "confidence": 0.25,
+      "nms_iou": 0.7,
+      "max_det": 300,
+      "half": false
+    },
+    "dataset_fingerprint": "c3d63dfa73314a36b5522f4651f5fd7d784bd8a054e78916f821160729862e2b",
+    "source_selection": "provenance/selection.server.json",
+    "source_selection_sha256": "eb84f50227972b2ed7ac2b21223c03ccd5acfa0bcdab191971448f7e454e2633",
+    "local_selection": "selection.json",
+    "local_selection_sha256": "98df868bc32eddbdb97457c71fd27264679d0f251c5effd1a9da31a08b94fec9",
+    "validation_record": "provenance/evaluation.json",
+    "validation_record_sha256": "056889a8b5437149eb915e8bc199dda78cfac979c1ea0faf622f1c73ef1f321e",
+    "test_evaluated": false,
+    "revision_sha256": "5edd74a13e617e9fed1234da163159d4f506960985a7d8e105ecc7417590d729"
+  },
+  "deployment_path": "outputs/live-model_20261113T140021Z_e0934a01/deployment.json",
+  "deployment_sha256": "9354ef177c8a08525b5273fb51f3b5c3ad1c61b523c8e080dd9e464a87b43b59",
+  "deployment_file_sha256": "6649b5a9d97e31f3e495939a7c0653658da3ef26e62a27cb0bf6f433e5285a70",
+  "deployment_artifacts": {
+    "best_openvino_model/best.bin": "e3d5ee53b90ae4a8babd7d8ad8f234990ce45cc130426aad20b38c79d090ee13",
+    "best_openvino_model/best.xml": "20cfe941303d2518d1a6bcd8a47baf788345af237e41252eb04a8d023151de93",
+    "best_openvino_model/metadata.yaml": "85827dbdf2288ff1e4209bda39e256da00325334259d89a912027d1b3cd07293"
+  },
+  "source_sha256": {
+    "src/fire_detection/cli.py": "f52b38a4c464ec776b5b821ccb1b8a1b2d8b529214f075e3f07184f3c42727f3",
+    "src/fire_detection/live.py": "6e6a9f00ad5c0d0bf573058b51ceca0e2d5e4449230659bebceb1b75dcf1e3e6",
+    "src/fire_detection/live_model.py": "72a09750ab3372535a70f39bc47c9610c1c6e16192ee44a5ee3da18aa5b8e2cf",
+    "configs/live.json": "ad996f46069181ab352da0b43f94fc877be0920ff451edc830ffd0afba72e382",
+    "requirements-cpu.txt": "eabda499453bf85c91588682ba5ff01bb54ccfaf64f49238b9e17ea896d90081"
+  },
+  "tests": {
+    "discovered": 84,
+    "passed": 56,
+    "linux_only_skipped": 28,
+    "log_sha256": "060db906fd0dab8ae631c5b4da9ad9d4335558d51b2439c29e07e41dbc65640e"
+  },
+  "export_parity": {
+    "kind": "two_validation_image_export_parity_check",
+    "created_at_utc": "2026-11-13T14:47:19.300860+00:00",
+    "model_sha256": "d25cdb6a21bb6afbdfd60bf0ac1678f1d2148436ee74ef59f7c1255d6caebc39",
+    "cases": [
+      {
+        "input": "work\\live-check-20261113\\WEB05562.jpg",
+        "input_sha256": "b233fea2ba1305c8804ab46a3a148ba69681e94161b23ffc6bc7233946fc3c86",
+        "source_split": "val",
+        "pytorch": [
+          {
+            "class_id": 0,
+            "class_name": "smoke",
+            "confidence": 0.9371408224105835,
+            "bbox": [
+              0.0,
+              12.525586128234863,
+              1280.0,
+              704.95849609375
+            ]
+          },
+          {
+            "class_id": 1,
+            "class_name": "fire",
+            "confidence": 0.7621698975563049,
+            "bbox": [
+              465.98162841796875,
+              448.8587341308594,
+              928.4130859375,
+              710.3353271484375
+            ]
+          }
+        ],
+        "openvino": [
+          {
+            "class_id": 0,
+            "class_name": "smoke",
+            "confidence": 0.9371408820152283,
+            "bbox": [
+              0.0,
+              12.525586128234863,
+              1280.0,
+              704.9586181640625
+            ]
+          },
+          {
+            "class_id": 1,
+            "class_name": "fire",
+            "confidence": 0.762170135974884,
+            "bbox": [
+              465.98162841796875,
+              448.85858154296875,
+              928.4130859375,
+              710.3353271484375
+            ]
+          }
+        ],
+        "matches": [
+          {
+            "iou": 0.9999998237081322,
+            "confidence_absolute_difference": 5.960464477539063e-08
+          },
+          {
+            "iou": 0.9999994164380076,
+            "confidence_absolute_difference": 2.384185791015625e-07
+          }
+        ]
+      },
+      {
+        "input": "work\\live-check-20261113\\WEB06334.jpg",
+        "input_sha256": "51f17f2219795c23e269238e32d7404dee4513642c57d7e392efafd348b12f88",
+        "source_split": "val",
+        "pytorch": [
+          {
+            "class_id": 0,
+            "class_name": "smoke",
+            "confidence": 0.7599140405654907,
+            "bbox": [
+              0.0012109375093132257,
+              8.71109390258789,
+              641.469482421875,
+              429.9692077636719
+            ]
+          },
+          {
+            "class_id": 0,
+            "class_name": "smoke",
+            "confidence": 0.5373627543449402,
+            "bbox": [
+              698.486572265625,
+              10.420702934265137,
+              1023.9788818359375,
+              414.5331115722656
+            ]
+          },
+          {
+            "class_id": 1,
+            "class_name": "fire",
+            "confidence": 0.3460776209831238,
+            "bbox": [
+              829.5476684570312,
+              369.8836669921875,
+              845.4640502929688,
+              385.064453125
+            ]
+          }
+        ],
+        "openvino": [
+          {
+            "class_id": 0,
+            "class_name": "smoke",
+            "confidence": 0.7599153518676758,
+            "bbox": [
+              0.0012109375093132257,
+              8.71109390258789,
+              641.4695434570312,
+              429.9692077636719
+            ]
+          },
+          {
+            "class_id": 0,
+            "class_name": "smoke",
+            "confidence": 0.5373619794845581,
+            "bbox": [
+              698.486572265625,
+              10.420762062072754,
+              1023.9788818359375,
+              414.5331115722656
+            ]
+          },
+          {
+            "class_id": 1,
+            "class_name": "fire",
+            "confidence": 0.34607788920402527,
+            "bbox": [
+              829.5476684570312,
+              369.8837585449219,
+              845.4640502929688,
+              385.064453125
+            ]
+          }
+        ],
+        "matches": [
+          {
+            "iou": 0.9999999048508661,
+            "confidence_absolute_difference": 1.3113021850585938e-06
+          },
+          {
+            "iou": 0.9999998536847512,
+            "confidence_absolute_difference": 7.748603820800781e-07
+          },
+          {
+            "iou": 0.9999939691703991,
+            "confidence_absolute_difference": 2.682209014892578e-07
+          }
+        ]
+      }
+    ],
+    "passed": true
+  },
+  "sessions": [
+    {
+      "path": "outputs/live_20261113T140118Z_8ea4bded",
+      "session": {
+        "status": "completed",
+        "created_at_utc": "2026-11-13T14:01:18.716860+00:00",
+        "config": {
+          "revision": "models/frozen/E6-d25cdb6a21bb/model_revision.json",
+          "revision_sha256": "5edd74a13e617e9fed1234da163159d4f506960985a7d8e105ecc7417590d729",
+          "camera_name": "DroidCam Source 2",
+          "width": 1280,
+          "height": 720,
+          "capture_fps": 30,
+          "target_fps": 5,
+          "threads": 4,
+          "source_timeout_seconds": 5,
+          "event_window_seconds": 0.5,
+          "event_min_hits": 3,
+          "event_match_iou": 0.3
+        },
+        "model_revision_sha256": "5edd74a13e617e9fed1234da163159d4f506960985a7d8e105ecc7417590d729",
+        "checkpoint_sha256": "d25cdb6a21bb6afbdfd60bf0ac1678f1d2148436ee74ef59f7c1255d6caebc39",
+        "inference": {
+          "imgsz": 800,
+          "confidence": 0.25,
+          "nms_iou": 0.7,
+          "max_det": 300,
+          "half": false
+        },
+        "source": {
+          "kind": "file",
+          "path": "C:\\git\\drone-fire-detection\\work\\live-check-20261113\\validation-playback.avi",
+          "sha256": "2f416e7ff92dc28d61cf1424d2094d6815a0e4b827126ad6256cca1f8c7e7fc4"
+        },
+        "environment": {
+          "created_at_utc": "2026-11-13T14:01:18.824412+00:00",
+          "python": "3.11.9",
+          "platform": "Windows-10-10.0.26200-SP0",
+          "packages": {
+            "Jinja2": "3.1.6",
+            "MarkupSafe": "3.0.3",
+            "PyNaCl": "1.6.2",
+            "PyYAML": "6.0.3",
+            "bcrypt": "5.0.0",
+            "certifi": "2026.10.23",
+            "cffi": "2.1.1",
+            "charset-normalizer": "3.5.2",
+            "contourpy": "1.3.3",
+            "cryptography": "50.0.2",
+            "cv2_enumerate_cameras": "1.4.0",
+            "cycler": "0.12.1",
+            "filelock": "4.2.4",
+            "flatbuffers": "25.12.19",
+            "fonttools": "4.68.0",
+            "fsspec": "2026.9.0",
+            "idna": "3.20",
+            "invoke": "3.0.3",
+            "kiwisolver": "1.5.1",
+            "matplotlib": "3.10.8",
+            "mpmath": "1.3.0",
+            "networkx": "3.6.1",
+            "numpy": "2.2.6",
+            "onnxruntime": "1.31.1",
+            "opencv-python": "4.12.0.88",
+            "openvino": "2025.4.1",
+            "openvino-telemetry": "2025.2.0",
+            "packaging": "26.3",
+            "paramiko": "5.1.0",
+            "pillow": "12.1.0",
+            "pip": "24.0",
+            "polars": "2.1.0",
+            "polars-runtime-32": "2.1.0",
+            "protobuf": "7.36.2",
+            "psutil": "7.2.2",
+            "pycparser": "3.12",
+            "pymupdf": "2.1",
+            "pymupdf4llm": "2.1",
+            "pymupdf_layout": "2.1",
+            "pyparsing": "3.3.3",
+            "pypdf": "7.0.0",
+            "python-dateutil": "4.0.0",
+            "reportlab": "5.1.0",
+            "requests": "2.34.2",
+            "scipy": "1.17.1",
+            "setuptools": "65.5.0",
+            "sympy": "1.14.0",
+            "tabulate": "0.10.0",
+            "torch": "2.10.0+cpu",
+            "torchvision": "0.25.0+cpu",
+            "typing_extensions": "4.16.0",
+            "tzdata": "2026.6",
+            "ultralytics": "8.4.0",
+            "ultralytics-thop": "2.2.5",
+            "urllib3": "2.8.0"
+          },
+          "git": {
+            "commit": "07658d79014b20a98e59f704754e0bfa43d69597",
+            "status": "M src/fire_detection/cli.py\n?? configs/live.json\n?? requirements-cpu.txt\n?? scripts/setup_cpu.ps1\n?? src/fire_detection/live.py\n?? src/fire_detection/live_model.py\n?? tests/test_live.py",
+            "dirty": true,
+            "tracked_diff_sha256": "64eb77293d610bb1821b89279ee05eadbd52f8cf2f343ee8d15fad4bf49aec4e"
+          },
+          "matplotlib_backend_env": "Agg"
+        },
+        "display": false,
+        "timing_note": "PC VideoCapture.read return to result/log/overlay preparation; phone/network/driver buffering precedes this clock.",
+        "input_hash_note": "SHA256 of contiguous decoded BGR uint8 frame bytes, with shape recorded per frame.",
+        "bbox_coordinates": "pixel xyxy in the original decoded frame",
+        "runtime": {
+          "backend": "pytorch",
+          "device": "cpu",
+          "threads": 4,
+          "precision": "FP32"
+        },
+        "source_effective": {
+          "width": 1280.0,
+          "height": 720.0,
+          "reported_fps": 30.0,
+          "backend": "FFMPEG"
+        },
+        "capture_started_at_utc": "2026-11-13T14:01:25.713440+00:00",
+        "stopped_by": "duration",
+        "capture_shutdown": "joined",
+        "finished_at_utc": "2026-11-13T14:01:37.774420+00:00",
+        "processed_frames": 53,
+        "capture_elapsed_seconds": 12.05896390000271,
+        "captured_frames": 362,
+        "replaced_frames": 308,
+        "summary": {
+          "predict_ms": {
+            "mean": 209.45298301884114,
+            "p95": 332.8998400000273
+          },
+          "pc_read_to_overlay_ms": {
+            "mean": 226.16233773606956,
+            "p95": 350.4814399973838
+          },
+          "latency_sample_frames": 53,
+          "processing_fps": 4.395070790450587
+        }
+      },
+      "session_sha256": "9531b26cd3a994a5f7e316884f6013b4263f959b1cf154ed68f5c9ca007f4d69",
+      "detections_sha256": "0f4a020a0a132776b29c0c268819e68fa2ef822b716cc0229f5095e7339a869b",
+      "events_sha256": "2ed0f508e251c2f83f767890283724530bf6bdc586f5d3c121ed6d24dbd2b6d2",
+      "detection_count": 128,
+      "event_count": 5,
+      "log_checks": "passed"
+    },
+    {
+      "path": "outputs/live_20261113T143650Z_10d9a68a",
+      "session": {
+        "status": "completed",
+        "created_at_utc": "2026-11-13T14:36:50.045014+00:00",
+        "config": {
+          "revision": "models/frozen/E6-d25cdb6a21bb/model_revision.json",
+          "revision_sha256": "5edd74a13e617e9fed1234da163159d4f506960985a7d8e105ecc7417590d729",
+          "camera_name": "DroidCam Source 2",
+          "width": 1280,
+          "height": 720,
+          "capture_fps": 30,
+          "target_fps": 5,
+          "threads": 4,
+          "source_timeout_seconds": 5,
+          "event_window_seconds": 0.5,
+          "event_min_hits": 3,
+          "event_match_iou": 0.3
+        },
+        "model_revision_sha256": "5edd74a13e617e9fed1234da163159d4f506960985a7d8e105ecc7417590d729",
+        "checkpoint_sha256": "d25cdb6a21bb6afbdfd60bf0ac1678f1d2148436ee74ef59f7c1255d6caebc39",
+        "inference": {
+          "imgsz": 800,
+          "confidence": 0.25,
+          "nms_iou": 0.7,
+          "max_det": 300,
+          "half": false
+        },
+        "source": {
+          "kind": "file",
+          "path": "C:\\git\\drone-fire-detection\\work\\live-check-20261113\\validation-playback.avi",
+          "sha256": "2f416e7ff92dc28d61cf1424d2094d6815a0e4b827126ad6256cca1f8c7e7fc4"
+        },
+        "environment": {
+          "created_at_utc": "2026-11-13T14:36:50.174470+00:00",
+          "python": "3.11.9",
+          "platform": "Windows-10-10.0.26200-SP0",
+          "packages": {
+            "Jinja2": "3.1.6",
+            "MarkupSafe": "3.0.3",
+            "PyNaCl": "1.6.2",
+            "PyYAML": "6.0.3",
+            "bcrypt": "5.0.0",
+            "certifi": "2026.10.23",
+            "cffi": "2.1.1",
+            "charset-normalizer": "3.5.2",
+            "contourpy": "1.3.3",
+            "cryptography": "50.0.2",
+            "cv2_enumerate_cameras": "1.4.0",
+            "cycler": "0.12.1",
+            "filelock": "4.2.4",
+            "flatbuffers": "25.12.19",
+            "fonttools": "4.68.0",
+            "fsspec": "2026.9.0",
+            "idna": "3.20",
+            "invoke": "3.0.3",
+            "kiwisolver": "1.5.1",
+            "matplotlib": "3.10.8",
+            "mpmath": "1.3.0",
+            "networkx": "3.6.1",
+            "numpy": "2.2.6",
+            "onnxruntime": "1.31.1",
+            "opencv-python": "4.12.0.88",
+            "openvino": "2025.4.1",
+            "openvino-telemetry": "2025.2.0",
+            "packaging": "26.3",
+            "paramiko": "5.1.0",
+            "pillow": "12.1.0",
+            "pip": "24.0",
+            "polars": "2.1.0",
+            "polars-runtime-32": "2.1.0",
+            "protobuf": "7.36.2",
+            "psutil": "7.2.2",
+            "pycparser": "3.12",
+            "pymupdf": "2.1",
+            "pymupdf4llm": "2.1",
+            "pymupdf_layout": "2.1",
+            "pyparsing": "3.3.3",
+            "pypdf": "7.0.0",
+            "python-dateutil": "4.0.0",
+            "reportlab": "5.1.0",
+            "requests": "2.34.2",
+            "scipy": "1.17.1",
+            "setuptools": "65.5.0",
+            "sympy": "1.14.0",
+            "tabulate": "0.10.0",
+            "torch": "2.10.0+cpu",
+            "torchvision": "0.25.0+cpu",
+            "typing_extensions": "4.16.0",
+            "tzdata": "2026.6",
+            "ultralytics": "8.4.0",
+            "ultralytics-thop": "2.2.5",
+            "urllib3": "2.8.0"
+          },
+          "git": {
+            "commit": "07658d79014b20a98e59f704754e0bfa43d69597",
+            "status": "M src/fire_detection/cli.py\n?? configs/live.json\n?? requirements-cpu.txt\n?? scripts/setup_cpu.ps1\n?? src/fire_detection/live.py\n?? src/fire_detection/live_model.py\n?? tests/test_live.py",
+            "dirty": true,
+            "tracked_diff_sha256": "64eb77293d610bb1821b89279ee05eadbd52f8cf2f343ee8d15fad4bf49aec4e"
+          },
+          "matplotlib_backend_env": "Agg"
+        },
+        "display": false,
+        "timing_note": "PC VideoCapture.read return to result/log/overlay preparation; phone/network/driver buffering precedes this clock.",
+        "input_hash_note": "SHA256 of contiguous decoded BGR uint8 frame bytes, with shape recorded per frame.",
+        "bbox_coordinates": "pixel xyxy in the original decoded frame",
+        "runtime": {
+          "backend": "openvino",
+          "device": "cpu",
+          "threads": 4,
+          "precision": "FP32",
+          "deployment_sha256": "9354ef177c8a08525b5273fb51f3b5c3ad1c61b523c8e080dd9e464a87b43b59",
+          "execution_devices": [
+            "CPU"
+          ]
+        },
+        "source_effective": {
+          "width": 1280.0,
+          "height": 720.0,
+          "reported_fps": 30.0,
+          "backend": "FFMPEG"
+        },
+        "capture_started_at_utc": "2026-11-13T14:37:06.151205+00:00",
+        "stopped_by": "duration",
+        "capture_shutdown": "joined",
+        "finished_at_utc": "2026-11-13T14:37:18.582045+00:00",
+        "processed_frames": 54,
+        "capture_elapsed_seconds": 12.428951299996697,
+        "captured_frames": 370,
+        "replaced_frames": 315,
+        "summary": {
+          "predict_ms": {
+            "mean": 201.29727962988977,
+            "p95": 287.2585050045018
+          },
+          "pc_read_to_overlay_ms": {
+            "mean": 219.58866111028195,
+            "p95": 299.3724750012916
+          },
+          "latency_sample_frames": 54,
+          "processing_fps": 4.344694793358339
+        }
+      },
+      "session_sha256": "ec085783b7b031d1fab7c749eb750d742023ca04a871e9c03ca50787acab2df9",
+      "detections_sha256": "b5a6875ba8bd579f21d51e1e766140e7c55c0c22419c414a97e9f799ebd7fa13",
+      "events_sha256": "e9f1a7528cd1abc6adb975c1ec1b337e7b773a42e109c74c2c8de76e07148158",
+      "detection_count": 132,
+      "event_count": 5,
+      "log_checks": "passed"
+    },
+    {
+      "path": "outputs/live_20261113T144253Z_6e85aaf1",
+      "session": {
+        "status": "completed",
+        "created_at_utc": "2026-11-13T14:42:53.428982+00:00",
+        "config": {
+          "revision": "models/frozen/E6-d25cdb6a21bb/model_revision.json",
+          "revision_sha256": "5edd74a13e617e9fed1234da163159d4f506960985a7d8e105ecc7417590d729",
+          "camera_name": "DroidCam Source 2",
+          "width": 1280,
+          "height": 720,
+          "capture_fps": 30,
+          "target_fps": 5,
+          "threads": 4,
+          "source_timeout_seconds": 5,
+          "event_window_seconds": 0.5,
+          "event_min_hits": 3,
+          "event_match_iou": 0.3
+        },
+        "model_revision_sha256": "5edd74a13e617e9fed1234da163159d4f506960985a7d8e105ecc7417590d729",
+        "checkpoint_sha256": "d25cdb6a21bb6afbdfd60bf0ac1678f1d2148436ee74ef59f7c1255d6caebc39",
+        "inference": {
+          "imgsz": 800,
+          "confidence": 0.25,
+          "nms_iou": 0.7,
+          "max_det": 300,
+          "half": false
+        },
+        "source": {
+          "kind": "stream",
+          "url": "http://192.168.200.107:4747/video",
+          "address_sha256": "04f48b093240fbc84e0514fac323f208346f4dbb33ea3469c6b4b30a14f22199"
+        },
+        "environment": {
+          "created_at_utc": "2026-11-13T14:42:55.118093+00:00",
+          "python": "3.11.9",
+          "platform": "Windows-10-10.0.26200-SP0",
+          "packages": {
+            "Jinja2": "3.1.6",
+            "MarkupSafe": "3.0.3",
+            "PyNaCl": "1.6.2",
+            "PyYAML": "6.0.3",
+            "bcrypt": "5.0.0",
+            "certifi": "2026.10.23",
+            "cffi": "2.1.1",
+            "charset-normalizer": "3.5.2",
+            "contourpy": "1.3.3",
+            "cryptography": "50.0.2",
+            "cv2_enumerate_cameras": "1.4.0",
+            "cycler": "0.12.1",
+            "filelock": "4.2.4",
+            "flatbuffers": "25.12.19",
+            "fonttools": "4.68.0",
+            "fsspec": "2026.9.0",
+            "idna": "3.20",
+            "invoke": "3.0.3",
+            "kiwisolver": "1.5.1",
+            "matplotlib": "3.10.8",
+            "mpmath": "1.3.0",
+            "networkx": "3.6.1",
+            "numpy": "2.2.6",
+            "onnxruntime": "1.31.1",
+            "opencv-python": "4.12.0.88",
+            "openvino": "2025.4.1",
+            "openvino-telemetry": "2025.2.0",
+            "packaging": "26.3",
+            "paramiko": "5.1.0",
+            "pillow": "12.1.0",
+            "pip": "24.0",
+            "polars": "2.1.0",
+            "polars-runtime-32": "2.1.0",
+            "protobuf": "7.36.2",
+            "psutil": "7.2.2",
+            "pycparser": "3.12",
+            "pymupdf": "2.1",
+            "pymupdf4llm": "2.1",
+            "pymupdf_layout": "2.1",
+            "pyparsing": "3.3.3",
+            "pypdf": "7.0.0",
+            "python-dateutil": "4.0.0",
+            "reportlab": "5.1.0",
+            "requests": "2.34.2",
+            "scipy": "1.17.1",
+            "setuptools": "65.5.0",
+            "sympy": "1.14.0",
+            "tabulate": "0.10.0",
+            "torch": "2.10.0+cpu",
+            "torchvision": "0.25.0+cpu",
+            "typing_extensions": "4.16.0",
+            "tzdata": "2026.6",
+            "ultralytics": "8.4.0",
+            "ultralytics-thop": "2.2.5",
+            "urllib3": "2.8.0"
+          },
+          "git": {
+            "commit": "07658d79014b20a98e59f704754e0bfa43d69597",
+            "status": "M docs/USAGE.md\n M src/fire_detection/cli.py\n?? configs/live.json\n?? requirements-cpu.txt\n?? scripts/setup_cpu.ps1\n?? src/fire_detection/live.py\n?? src/fire_detection/live_model.py\n?? tests/test_live.py",
+            "dirty": true,
+            "tracked_diff_sha256": "212211b265b0ceaae9c2bdeba5b818b6dcfd543f12214fbd54f5f12a810f4fec"
+          },
+          "matplotlib_backend_env": "Agg"
+        },
+        "display": false,
+        "timing_note": "PC VideoCapture.read return to result/log/overlay preparation; phone/network/driver buffering precedes this clock.",
+        "input_hash_note": "SHA256 of contiguous decoded BGR uint8 frame bytes, with shape recorded per frame.",
+        "bbox_coordinates": "pixel xyxy in the original decoded frame",
+        "runtime": {
+          "backend": "openvino",
+          "device": "cpu",
+          "threads": 4,
+          "precision": "FP32",
+          "deployment_sha256": "9354ef177c8a08525b5273fb51f3b5c3ad1c61b523c8e080dd9e464a87b43b59",
+          "execution_devices": [
+            "CPU"
+          ]
+        },
+        "source_effective": {
+          "width": 640.0,
+          "height": 480.0,
+          "reported_fps": 25.0,
+          "backend": "FFMPEG"
+        },
+        "capture_started_at_utc": "2026-11-13T14:43:06.449900+00:00",
+        "stopped_by": "duration",
+        "capture_shutdown": "joined",
+        "finished_at_utc": "2026-11-13T14:43:21.461298+00:00",
+        "processed_frames": 75,
+        "capture_elapsed_seconds": 15.010419199999887,
+        "captured_frames": 450,
+        "replaced_frames": 374,
+        "summary": {
+          "predict_ms": {
+            "mean": 118.78553733365455,
+            "p95": 136.26385999668852
+          },
+          "pc_read_to_overlay_ms": {
+            "mean": 138.6227506661089,
+            "p95": 164.28288999959477
+          },
+          "latency_sample_frames": 75,
+          "processing_fps": 4.996529344097237
+        }
+      },
+      "session_sha256": "4d2dadc8faf61745682cf2d9c59fd990e22adf86f0e343ca09bfa3232849a1ae",
+      "detections_sha256": "f87001e8effee5bbf52ab7d7e10348dd832419c52a224ec085a5d7071b3b3a95",
+      "events_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "detection_count": 0,
+      "event_count": 0,
+      "log_checks": "passed"
+    },
+    {
+      "path": "outputs/live_20261113T144445Z_9f5227ed",
+      "session": {
+        "status": "completed",
+        "created_at_utc": "2026-11-13T14:44:45.930883+00:00",
+        "config": {
+          "revision": "models/frozen/E6-d25cdb6a21bb/model_revision.json",
+          "revision_sha256": "5edd74a13e617e9fed1234da163159d4f506960985a7d8e105ecc7417590d729",
+          "camera_name": "DroidCam Source 2",
+          "width": 1280,
+          "height": 720,
+          "capture_fps": 30,
+          "target_fps": 5,
+          "threads": 4,
+          "source_timeout_seconds": 5,
+          "event_window_seconds": 0.5,
+          "event_min_hits": 3,
+          "event_match_iou": 0.3
+        },
+        "model_revision_sha256": "5edd74a13e617e9fed1234da163159d4f506960985a7d8e105ecc7417590d729",
+        "checkpoint_sha256": "d25cdb6a21bb6afbdfd60bf0ac1678f1d2148436ee74ef59f7c1255d6caebc39",
+        "inference": {
+          "imgsz": 800,
+          "confidence": 0.25,
+          "nms_iou": 0.7,
+          "max_det": 300,
+          "half": false
+        },
+        "source": {
+          "kind": "stream",
+          "url": "http://192.168.200.107:4747/video",
+          "address_sha256": "04f48b093240fbc84e0514fac323f208346f4dbb33ea3469c6b4b30a14f22199"
+        },
+        "environment": {
+          "created_at_utc": "2026-11-13T14:44:46.010119+00:00",
+          "python": "3.11.9",
+          "platform": "Windows-10-10.0.26200-SP0",
+          "packages": {
+            "Jinja2": "3.1.6",
+            "MarkupSafe": "3.0.3",
+            "PyNaCl": "1.6.2",
+            "PyYAML": "6.0.3",
+            "bcrypt": "5.0.0",
+            "certifi": "2026.10.23",
+            "cffi": "2.1.1",
+            "charset-normalizer": "3.5.2",
+            "contourpy": "1.3.3",
+            "cryptography": "50.0.2",
+            "cv2_enumerate_cameras": "1.4.0",
+            "cycler": "0.12.1",
+            "filelock": "4.2.4",
+            "flatbuffers": "25.12.19",
+            "fonttools": "4.68.0",
+            "fsspec": "2026.9.0",
+            "idna": "3.20",
+            "invoke": "3.0.3",
+            "kiwisolver": "1.5.1",
+            "matplotlib": "3.10.8",
+            "mpmath": "1.3.0",
+            "networkx": "3.6.1",
+            "numpy": "2.2.6",
+            "onnxruntime": "1.31.1",
+            "opencv-python": "4.12.0.88",
+            "openvino": "2025.4.1",
+            "openvino-telemetry": "2025.2.0",
+            "packaging": "26.3",
+            "paramiko": "5.1.0",
+            "pillow": "12.1.0",
+            "pip": "24.0",
+            "polars": "2.1.0",
+            "polars-runtime-32": "2.1.0",
+            "protobuf": "7.36.2",
+            "psutil": "7.2.2",
+            "pycparser": "3.12",
+            "pymupdf": "2.1",
+            "pymupdf4llm": "2.1",
+            "pymupdf_layout": "2.1",
+            "pyparsing": "3.3.3",
+            "pypdf": "7.0.0",
+            "python-dateutil": "4.0.0",
+            "reportlab": "5.1.0",
+            "requests": "2.34.2",
+            "scipy": "1.17.1",
+            "setuptools": "65.5.0",
+            "sympy": "1.14.0",
+            "tabulate": "0.10.0",
+            "torch": "2.10.0+cpu",
+            "torchvision": "0.25.0+cpu",
+            "typing_extensions": "4.16.0",
+            "tzdata": "2026.6",
+            "ultralytics": "8.4.0",
+            "ultralytics-thop": "2.2.5",
+            "urllib3": "2.8.0"
+          },
+          "git": {
+            "commit": "07658d79014b20a98e59f704754e0bfa43d69597",
+            "status": "M docs/USAGE.md\n M src/fire_detection/cli.py\n?? configs/live.json\n?? requirements-cpu.txt\n?? scripts/setup_cpu.ps1\n?? src/fire_detection/live.py\n?? src/fire_detection/live_model.py\n?? tests/test_live.py",
+            "dirty": true,
+            "tracked_diff_sha256": "212211b265b0ceaae9c2bdeba5b818b6dcfd543f12214fbd54f5f12a810f4fec"
+          },
+          "matplotlib_backend_env": "Agg"
+        },
+        "display": true,
+        "timing_note": "PC VideoCapture.read return to result/log/overlay preparation; phone/network/driver buffering precedes this clock.",
+        "input_hash_note": "SHA256 of contiguous decoded BGR uint8 frame bytes, with shape recorded per frame.",
+        "bbox_coordinates": "pixel xyxy in the original decoded frame",
+        "runtime": {
+          "backend": "openvino",
+          "device": "cpu",
+          "threads": 4,
+          "precision": "FP32",
+          "deployment_sha256": "9354ef177c8a08525b5273fb51f3b5c3ad1c61b523c8e080dd9e464a87b43b59",
+          "execution_devices": [
+            "CPU"
+          ]
+        },
+        "source_effective": {
+          "width": 640.0,
+          "height": 480.0,
+          "reported_fps": 25.0,
+          "backend": "FFMPEG"
+        },
+        "capture_started_at_utc": "2026-11-13T14:44:54.551384+00:00",
+        "stopped_by": "duration",
+        "capture_shutdown": "joined",
+        "finished_at_utc": "2026-11-13T14:45:24.579455+00:00",
+        "processed_frames": 137,
+        "capture_elapsed_seconds": 30.01696929999889,
+        "captured_frames": 902,
+        "replaced_frames": 764,
+        "summary": {
+          "predict_ms": {
+            "mean": 141.52805693405102,
+            "p95": 194.78689999959883
+          },
+          "pc_read_to_overlay_ms": {
+            "mean": 160.49933649649898,
+            "p95": 222.99518000218077
+          },
+          "latency_sample_frames": 137,
+          "processing_fps": 4.564085022401148
+        }
+      },
+      "session_sha256": "a64e54b84e99500138879059b7d4a430e8fd5e818a8d4244fdd2f0a6e8671674",
+      "detections_sha256": "980db161f8e6796e3097af44db4e23ebebab09b0061ebc4fd2326ddae6f95f1b",
+      "events_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "detection_count": 0,
+      "event_count": 0,
+      "log_checks": "passed"
+    },
+    {
+      "path": "outputs/live_20261113T144915Z_7f1de071",
+      "session": {
+        "status": "completed",
+        "created_at_utc": "2026-11-13T14:49:15.052326+00:00",
+        "config": {
+          "revision": "models/frozen/E6-d25cdb6a21bb/model_revision.json",
+          "revision_sha256": "5edd74a13e617e9fed1234da163159d4f506960985a7d8e105ecc7417590d729",
+          "camera_name": "DroidCam Source 2",
+          "width": 1280,
+          "height": 720,
+          "capture_fps": 30,
+          "target_fps": 5,
+          "threads": 4,
+          "source_timeout_seconds": 5,
+          "event_window_seconds": 0.5,
+          "event_min_hits": 3,
+          "event_match_iou": 0.3
+        },
+        "model_revision_sha256": "5edd74a13e617e9fed1234da163159d4f506960985a7d8e105ecc7417590d729",
+        "checkpoint_sha256": "d25cdb6a21bb6afbdfd60bf0ac1678f1d2148436ee74ef59f7c1255d6caebc39",
+        "inference": {
+          "imgsz": 800,
+          "confidence": 0.25,
+          "nms_iou": 0.7,
+          "max_det": 300,
+          "half": false
+        },
+        "source": {
+          "kind": "stream",
+          "url": "http://192.168.200.107:4747/video",
+          "address_sha256": "04f48b093240fbc84e0514fac323f208346f4dbb33ea3469c6b4b30a14f22199"
+        },
+        "environment": {
+          "created_at_utc": "2026-11-13T14:49:15.118816+00:00",
+          "python": "3.11.9",
+          "platform": "Windows-10-10.0.26200-SP0",
+          "packages": {
+            "Jinja2": "3.1.6",
+            "MarkupSafe": "3.0.3",
+            "PyNaCl": "1.6.2",
+            "PyYAML": "6.0.3",
+            "bcrypt": "5.0.0",
+            "certifi": "2026.10.23",
+            "cffi": "2.1.1",
+            "charset-normalizer": "3.5.2",
+            "contourpy": "1.3.3",
+            "cryptography": "50.0.2",
+            "cv2_enumerate_cameras": "1.4.0",
+            "cycler": "0.12.1",
+            "filelock": "4.2.4",
+            "flatbuffers": "25.12.19",
+            "fonttools": "4.68.0",
+            "fsspec": "2026.9.0",
+            "idna": "3.20",
+            "invoke": "3.0.3",
+            "kiwisolver": "1.5.1",
+            "matplotlib": "3.10.8",
+            "mpmath": "1.3.0",
+            "networkx": "3.6.1",
+            "numpy": "2.2.6",
+            "onnxruntime": "1.31.1",
+            "opencv-python": "4.12.0.88",
+            "openvino": "2025.4.1",
+            "openvino-telemetry": "2025.2.0",
+            "packaging": "26.3",
+            "paramiko": "5.1.0",
+            "pillow": "12.1.0",
+            "pip": "24.0",
+            "polars": "2.1.0",
+            "polars-runtime-32": "2.1.0",
+            "protobuf": "7.36.2",
+            "psutil": "7.2.2",
+            "pycparser": "3.12",
+            "pymupdf": "2.1",
+            "pymupdf4llm": "2.1",
+            "pymupdf_layout": "2.1",
+            "pyparsing": "3.3.3",
+            "pypdf": "7.0.0",
+            "python-dateutil": "4.0.0",
+            "reportlab": "5.1.0",
+            "requests": "2.34.2",
+            "scipy": "1.17.1",
+            "setuptools": "65.5.0",
+            "sympy": "1.14.0",
+            "tabulate": "0.10.0",
+            "torch": "2.10.0+cpu",
+            "torchvision": "0.25.0+cpu",
+            "typing_extensions": "4.16.0",
+            "tzdata": "2026.6",
+            "ultralytics": "8.4.0",
+            "ultralytics-thop": "2.2.5",
+            "urllib3": "2.8.0"
+          },
+          "git": {
+            "commit": "f117907f44a28405b5f6ef48aeb6f42e8111bb02",
+            "status": "",
+            "dirty": false,
+            "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "matplotlib_backend_env": "Agg"
+        },
+        "display": true,
+        "timing_note": "PC VideoCapture.read return to result/log/overlay preparation; phone/network/driver buffering precedes this clock.",
+        "input_hash_note": "SHA256 of contiguous decoded BGR uint8 frame bytes, with shape recorded per frame.",
+        "bbox_coordinates": "pixel xyxy in the original decoded frame",
+        "runtime": {
+          "backend": "openvino",
+          "device": "cpu",
+          "threads": 4,
+          "precision": "FP32",
+          "deployment_sha256": "9354ef177c8a08525b5273fb51f3b5c3ad1c61b523c8e080dd9e464a87b43b59",
+          "execution_devices": [
+            "CPU"
+          ]
+        },
+        "source_effective": {
+          "width": 640.0,
+          "height": 480.0,
+          "reported_fps": 25.0,
+          "backend": "FFMPEG"
+        },
+        "capture_started_at_utc": "2026-11-13T14:49:21.408726+00:00",
+        "stopped_by": "duration",
+        "capture_shutdown": "joined",
+        "finished_at_utc": "2026-11-13T14:50:21.461294+00:00",
+        "processed_frames": 297,
+        "capture_elapsed_seconds": 60.036094199997024,
+        "captured_frames": 1803,
+        "replaced_frames": 1505,
+        "summary": {
+          "predict_ms": {
+            "mean": 143.00566733992534,
+            "p95": 193.40306000376586
+          },
+          "pc_read_to_overlay_ms": {
+            "mean": 163.2684646466085,
+            "p95": 222.19619999814313
+          },
+          "latency_sample_frames": 297,
+          "processing_fps": 4.9470240187612795
+        }
+      },
+      "session_sha256": "c6ea87cc48199b5dbe3527c37b0ffe93c3296608901b3c963020d499e054c664",
+      "detections_sha256": "8b0b6c920e1048e65ce06bb4decd3d16df9967ca4e65ef61dc811dea94036a7e",
+      "events_sha256": "023231848b5298f634d2951fefcc9bd109fbee6f250cca45d7d47e32f25c4f67",
+      "detection_count": 768,
+      "event_count": 64,
+      "log_checks": "passed"
+    }
+  ],
+  "final_live_session": "outputs/live_20261113T144915Z_7f1de071",
+  "input_split_for_saved_playback": "val",
+  "saved_playback": {
+    "kind": "validation_derived_playback_execution_fixture",
+    "sources": [
+      {
+        "file": "WEB05562.jpg",
+        "source_split": "val",
+        "sha256": "b233fea2ba1305c8804ab46a3a148ba69681e94161b23ffc6bc7233946fc3c86",
+        "original_path": "val/images/WEB05562.jpg"
+      },
+      {
+        "file": "WEB06334.jpg",
+        "source_split": "val",
+        "sha256": "51f17f2219795c23e269238e32d7404dee4513642c57d7e392efafd348b12f88",
+        "original_path": "val/images/WEB06334.jpg"
+      }
+    ],
+    "video": "validation-playback.avi",
+    "frames": 600,
+    "fps": 30,
+    "video_sha256": "2f416e7ff92dc28d61cf1424d2094d6815a0e4b827126ad6256cca1f8c7e7fc4"
+  },
+  "test_evaluated": false,
+  "release_commit": "b9b66fcbb5bd642045c28a92747a42a13da5327f",
+  "release_source_sha256": {
+    "src/fire_detection/cli.py": "f52b38a4c464ec776b5b821ccb1b8a1b2d8b529214f075e3f07184f3c42727f3",
+    "src/fire_detection/live.py": "bd6cfe668cdd3aeca7711914aa464c957facd509e9b1af97410e7e4f51bb9eeb",
+    "src/fire_detection/live_model.py": "72a09750ab3372535a70f39bc47c9610c1c6e16192ee44a5ee3da18aa5b8e2cf",
+    "configs/live.json": "ad996f46069181ab352da0b43f94fc877be0920ff451edc830ffd0afba72e382",
+    "requirements-cpu.txt": "eabda499453bf85c91588682ba5ff01bb54ccfaf64f49238b9e17ea896d90081"
+  },
+  "release_playback_smoke": {
+    "path": "outputs/live_20261113T145528Z_2bbc16e3",
+    "session_sha256": "94e044412029560b4d6f562757725f5a62af89df0371d30aedca9467b51e7a79",
+    "source_commit": "b9b66fcbb5bd642045c28a92747a42a13da5327f",
+    "processed_frames": 3,
+    "status": "completed"
+  }
+}
