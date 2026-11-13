@@ -232,3 +232,11 @@
 - DroidCam 가상 웹캠 선택, 최신 프레임 1개 처리, 5FPS 목표, bbox·처리 속도·PC 수신 이후 지연 표시, 반복 검출 및 실행 기록을 구현한다.
 - 기존 E6 revision과 설정을 근거로 CPU PyTorch 및 OpenVINO 실행 경로를 준비한다. 저장 영상 실행 검증과 연결된 카메라의 실제 관측을 기록한다.
 - 이 항목은 준비 기록이며 실제 모델·카메라 실행 결과는 후속 검증 기록에 남긴다.
+
+## 2026-11-13: E6 CPU 실시간 추론 구현
+
+- `firelab.py cameras`, `live`, `export-live`를 추가했다. DroidCam 가상 웹캠·HTTP 스트림 및 FPS에 맞춘 저장 영상 입력을 처리한다.
+- 수신 스레드의 최신 프레임 1개 교체, batch 1 CPU 추론, bbox·FPS·PC 수신 이후 지연 표시, 반복 검출 이벤트·이미지·실행 메타데이터 기록을 구현했다.
+- 원래 E6 revision을 검증하고 CPU PyTorch와 FP32 OpenVINO 실행 경로를 제공한다. OpenVINO는 CPU 장치·LATENCY·f32를 명시하며 XML/BIN·설정의 체크섬을 확인한다.
+- CPU 설치와 USB/IP 입력·종료·실행 기록 사용법을 문서화했다. Windows 회귀 테스트 84개 중 실행 대상 56개가 통과했고 Linux 큐 전용 28개는 건너뛰었다.
+- 실제 실행 관측과 측정값은 후속 실측 보고서에 기록한다.

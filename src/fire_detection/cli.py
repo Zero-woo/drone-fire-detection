@@ -8,7 +8,7 @@ from .common import ROOT, configure_plotting, environment, read_json, resolve, w
 
 
 def parser():
-    root = argparse.ArgumentParser(description="Reproducible D-Fire YOLOv8n GPU experiments")
+    root = argparse.ArgumentParser(description="Reproducible D-Fire experiments and frozen-model inference")
     sub = root.add_subparsers(dest="command", required=True)
     doctor = sub.add_parser("doctor", help="Probe CUDA convolution/backward and record environment")
     doctor.add_argument("--output", default="outputs/environment.json")
@@ -51,6 +51,19 @@ def parser():
     predict.add_argument("--iou", type=float, default=.7)
     predict.add_argument("--imgsz", type=int, default=640)
     predict.add_argument("--device", default="0")
+    sub.add_parser("cameras", help="List camera names and OpenCV indices without capturing video")
+    export_live = sub.add_parser("export-live", help="Export verified frozen E6 to FP32 OpenVINO")
+    export_live.add_argument("--config", default="configs/live.json")
+    live = sub.add_parser("live", help="Run frozen E6 on DroidCam or a paced video using CPU")
+    live.add_argument("--config", default="configs/live.json")
+    source = live.add_mutually_exclusive_group()
+    source.add_argument("--source", help="Camera index, DroidCam HTTP URL, or saved video path")
+    source.add_argument("--camera-name", help="Unique camera name substring, default from live config")
+    live.add_argument("--target-fps", type=float)
+    live.add_argument("--deployment", help="Verified export-live deployment.json for OpenVINO CPU")
+    live.add_argument("--no-display", action="store_true")
+    live.add_argument("--duration", type=float, help="Stop after this many capture seconds")
+    live.add_argument("--max-frames", type=int, help="Stop after this many processed frames")
     return root
 
 
@@ -114,7 +127,17 @@ def main(argv=None):
         elif args.command == "predict":
             from .inference import predict
             print(predict(args.source, args.run, args.confidence, args.iou, args.imgsz, args.device))
-    except (ValueError, RuntimeError, FileNotFoundError, FileExistsError, KeyError, OSError) as exc:
+        elif args.command == "cameras":
+            from .live import cameras
+            print(json.dumps(cameras(), ensure_ascii=False, indent=2))
+        elif args.command == "export-live":
+            from .live_model import export_openvino
+            print(export_openvino(read_json(resolve(args.config))))
+        elif args.command == "live":
+            from .live import live
+            print(live(args.config, args.source, args.camera_name, args.target_fps,
+                       args.deployment, not args.no_display, args.duration, args.max_frames))
+    except (ValueError, RuntimeError, FileNotFoundError, FileExistsError, KeyError, OSError, ImportError) as exc:
         print(f"ERROR: {exc}", file=sys.stderr)
         return 1
     return 0

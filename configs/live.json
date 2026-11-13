@@ -1,0 +1,14 @@
+{
+  "revision": "models/frozen/E6-d25cdb6a21bb/model_revision.json",
+  "revision_sha256": "5edd74a13e617e9fed1234da163159d4f506960985a7d8e105ecc7417590d729",
+  "camera_name": "DroidCam Source 2",
+  "width": 1280,
+  "height": 720,
+  "capture_fps": 30,
+  "target_fps": 5,
+  "threads": 4,
+  "source_timeout_seconds": 5,
+  "event_window_seconds": 0.5,
+  "event_min_hits": 3,
+  "event_match_iou": 0.3
+}

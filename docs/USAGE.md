@@ -1,7 +1,8 @@
 # 사용 방법
 
-모든 명령은 저장소 루트의 PowerShell에서 실행한다. Python 3.10과 NVIDIA 드라이버가
-필요하다. 시스템 Python에는 패키지를 설치하지 않는다.
+모든 명령은 저장소 루트의 PowerShell에서 실행한다. 학습 환경은 Python 3.10과 NVIDIA
+드라이버를 사용한다. i3 노트북의 CPU 실시간 추론 설치·실행은 아래 해당 항목을 따른다.
+모든 프로젝트 패키지는 저장소의 `.venv`에 설치한다.
 
 ```powershell
 .\scripts\setup.ps1
@@ -497,3 +498,120 @@ Test는 아직 미평가이며, 새 독립 학습 실험은 기존 정책에 따
 
 검증 완료 범위와 중간 epoch 보관 상태는
 [서버 반납용 보존 보고서](../reports/021_server_retirement_backup.md)에 기록한다.
+
+## DroidCam과 E6 CPU 실시간 추론
+
+2026-11-13 사용자 승인으로 라이브 입력을 추가했다. Windows 10/11, Python 3.11,
+i3-1315U의 CPU를 대상으로 한다. 모델은 `configs/live.json`에 지정한 고정 E6다.
+기존 가중치·revision은 해시를 검사하고, 별도 OpenVINO 변환본에는 원본 모델·설정 및
+파일별 SHA256을 연결한 `deployment.json`을 생성한다.
+
+### 설치와 카메라 준비
+
+새 PC에서는 저장소와 함께 `models/frozen/E6-d25cdb6a21bb/` 폴더를 복사한다.
+Git에서 내려받은 소스에 가중치를 추가한 뒤 다음 CPU 설치를 실행한다.
+설치 스크립트는 `.venv`를 만들고 CPU용 PyTorch 2.10.0, Ultralytics 8.4.0,
+OpenCV 4.12.0.88, OpenVINO 2025.4.1과 장치 목록 도구를 설치한다.
+
+```powershell
+.\scripts\setup_cpu.ps1
+```
+
+휴대폰과 DroidCam Windows 클라이언트를 USB로 연결하고 클라이언트에서 영상이 보이게 한다.
+영상은 1280×720 / 30FPS를 시작 설정으로 사용한다. Android USB 연결은 DroidCam 안내에
+따라 USB 디버깅과 드라이버를 설정한다. [공식 USB 연결 안내](https://droidcam.app/help/)
+
+다음 명령은 장치 이름과 인덱스를 출력한다.
+
+```powershell
+.\.venv\Scripts\python.exe firelab.py cameras
+```
+
+현재 노트북에서는 DirectShow의 `DroidCam Source 3`이 0, `DroidCam Source 2`가 1이다.
+기본값은 `DroidCam Source 2`라는 이름으로 선택하므로 인덱스가 바뀌어도 이름을 다시 찾는다.
+새 DroidCam의 `DroidCam Video`를 사용한다면 `--camera-name "DroidCam Video"`를 지정한다.
+이름에 대응하는 장치가 여러 개면 목록에서 확인한 `--source` 인덱스로 선택한다.
+
+휴대폰의 DroidCam에 IP 주소가 표시되면 HTTP 스트림에 직접 연결할 수도 있다.
+휴대폰과 노트북을 같은 Wi-Fi에 연결하고 영상 미리보기 등 다른 클라이언트 연결을
+종료한 뒤 다음과 같이 실행한다. 루트 주소를 입력하면 `/video` 경로를 사용한다.
+
+```powershell
+.\.venv\Scripts\python.exe firelab.py live --source http://192.168.200.107:4747
+```
+
+IP는 현재 휴대폰에 표시된 값으로 바꾼다. HTTP 스트림의 해상도와 촬영 FPS는
+휴대폰 앱에서 설정하며, 실제 수신 크기는 실행 기록에 남긴다.
+`DroidCam busy`가 나오면 다른 브라우저 미리보기나 PC 클라이언트의 연결을 해제한다.
+
+### CPU PyTorch 실행
+
+```powershell
+.\.venv\Scripts\python.exe firelab.py live
+# 장치를 명시할 경우
+.\.venv\Scripts\python.exe firelab.py live --source 1
+```
+
+해상도 800×800 letterbox, confidence 0.25, NMS IoU 0.7, max_det 300, FP32,
+batch 1을 사용한다. `configs/live.json`의 기본 분석 목표는 5FPS, CPU 스레드는 4개다.
+실시간 수신 스레드는 미처리 프레임 1개를 최신 프레임으로 교체하며,
+결과 화면은 추론에 사용한 프레임에 bbox를 그린다.
+
+화면에서 Q 또는 Esc를 누르거나 창을 닫으면 종료한다. 콘솔에서는 Ctrl+C로 종료할 수 있다.
+`--duration 30`은 수신을 시작한 뒤 약 30초 후 종료하며 모델 로딩·warmup은 별도다.
+카메라 중단 또는 기본 5초 수신 타임아웃은 원인을 기록하고 실패 상태로 끝난다.
+
+### OpenVINO CPU 실행
+
+다음 명령은 고정 E6를 복사해 FP32 OpenVINO로 변환하고 생성한 `deployment.json` 경로를 출력한다.
+
+```powershell
+.\.venv\Scripts\python.exe firelab.py export-live
+```
+
+출력된 경로를 `--deployment`에 지정한다. 아래는 이 노트북에서 생성한 변환본의 실행 예다.
+
+```powershell
+.\.venv\Scripts\python.exe firelab.py live --deployment outputs/live-model_20261113T140021Z_e0934a01/deployment.json
+# 휴대폰의 HTTP 스트림을 직접 사용할 경우
+.\.venv\Scripts\python.exe firelab.py live --source http://192.168.200.107:4747 --deployment outputs/live-model_20261113T140021Z_e0934a01/deployment.json
+```
+
+OpenVINO는 CPU 장치를 명시하고 LATENCY 모드, f32 inference precision hint,
+기본 스레드 4개를 사용한다. 변환 XML/BIN 및 메타데이터의 SHA256을 매번 확인한다.
+변환본의 설정과 원본 E6 revision이 다르면 실행을 중단한다.
+
+### 표시와 실행 기록
+
+- 각 bbox에 `fire` 또는 `smoke`와 confidence를 표시한다.
+- `FPS`는 warmup 후 처리 완료 프레임 수를 실제 수신 실행 시간으로 나눈 값이다.
+  `/5`는 설정한 목표다. `predict`는 전처리·추론·후처리 호출의 시간이다.
+- `PC age`는 `VideoCapture.read()`가 프레임을 반환한 시점부터 bbox 화면을 준비할 때까지다.
+  휴대폰 촬영·전송과 DroidCam/드라이버 내부 버퍼 시간은 이 측정 시점보다 앞선다.
+- `replaced frames`는 추론을 기다리던 프레임이 새 프레임으로 교체된 횟수다.
+- 같은 클래스의 박스를 IoU 0.3 이상으로 연결하고 최근 0.5초에 3회 검출되면
+  `CONFIRMED`를 표시한다. 해당 반복 검출의 이벤트 JSON과 bbox 이미지를 저장한다.
+  이 조건은 `event_window_seconds`, `event_min_hits`, `event_match_iou`로 조정한다.
+  목표 FPS를 낮출 때는 필요한 검출 횟수가 시간 창에 들어갈 수 있도록 함께 조정한다.
+
+각 실행은 `outputs/live_<시각>_<ID>/`에 생성한다.
+
+| 파일 | 내용 |
+| --- | --- |
+| `session.json` | 모델·설정·소프트웨어·Git·장치 정보, 실행 상태·종료 사유, 처리량·지연 요약 |
+| `detections.jsonl` | 원본 프레임 번호·크기·PC 수신 시각·BGR 픽셀 SHA256, bbox·지연·반복 검출 |
+| `events.jsonl` | 반복 검출 이벤트와 이미지 SHA256 |
+| `event-*.jpg` | 이벤트가 처음 확정된 프레임의 bbox 이미지 |
+
+지연 평균·p95는 마지막 최대 3,000개 처리 프레임을 집계하고 처리 FPS는 전체 수신 실행을
+집계한다. 전체 프레임별 기록은 JSONL에 보관한다. 실제 수신 크기·보고 FPS는
+`source_effective`와 `frame_shape`에서 확인한다.
+
+### 저장 영상으로 실행 점검
+
+```powershell
+.\.venv\Scripts\python.exe firelab.py live --source "C:\videos\sample.mp4" --no-display --duration 30
+```
+
+저장 영상은 원래 FPS에 맞춰 재생하며 동일한 최신 프레임 처리·이벤트·기록 경로를 사용한다.
+이 실행 점검과 원래 Validation 지표는 각각 해당 근거를 사용한다.
