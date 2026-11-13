@@ -225,3 +225,10 @@
 - E6 `d25cdb6a21bb` revision에 기존 Validation의 imgsz 800 / confidence 0.25 / NMS IoU 0.7 / max_det 300 / FP32를 고정했다. 서버 원본 selection과 PC 경로 이관 기록을 함께 보관한다.
 - 중간 epoch 550개는 사용자 선택으로 PC 보존 범위에서 제외했다. 원본 raw 및 공식 분할 목록 원본은 점검 당시 양쪽 프로젝트 경로에 없었으며, 실제 학습에 사용한 전처리 입력과 원래 분할 해시는 확보했다.
 - 백업은 `outputs/server-retirement-backup_20261110/`, 고정 모델은 `models/frozen/E6-d25cdb6a21bb/`에 있다. Test는 미평가다. [검증 결과와 파일 목록](../reports/021_server_retirement_backup.md).
+
+## 2026-11-13: DroidCam CPU 실시간 추론 구현 준비
+
+- 사용자 요청으로 라이브 카메라 입력과 고정 E6 CPU 추론을 작업 범위에 추가했다. 현재 PC의 CPU 식별값은 i3-1315U다.
+- DroidCam 가상 웹캠 선택, 최신 프레임 1개 처리, 5FPS 목표, bbox·처리 속도·PC 수신 이후 지연 표시, 반복 검출 및 실행 기록을 구현한다.
+- 기존 E6 revision과 설정을 근거로 CPU PyTorch 및 OpenVINO 실행 경로를 준비한다. 저장 영상 실행 검증과 연결된 카메라의 실제 관측을 기록한다.
+- 이 항목은 준비 기록이며 실제 모델·카메라 실행 결과는 후속 검증 기록에 남긴다.

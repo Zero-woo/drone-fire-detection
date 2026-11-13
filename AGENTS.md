@@ -12,7 +12,8 @@
 - Fine-tune COCO-pretrained YOLOv8n on D-Fire; compare hyperparameters on validation data.
 - Start each independent training experiment from the pinned COCO yolov8n.pt checkpoint.
 - Keep published fire/smoke weights as a reference; published scores are not local results.
-- Live-camera capture, FC integration and physical actuation are outside the current scope.
+- The user authorized DroidCam live-camera capture and frozen E6 CPU inference on 2026-11-13.
+  FC integration and physical actuation are outside the current scope.
 - Run `python -m unittest discover -s tests -v` after experiment logic changes.
 - Commit preparation, implementation and measured results as separate milestones.
 - Never label synthetic tests or prepared code as a real model experiment.
